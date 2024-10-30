@@ -9,22 +9,27 @@ var vend = 18;
 //var currh = hstart;
 var currv = vstart;
 
+var cardBuffer = new ConsoleBuffer(5, 5);
+cardBuffer.SetColor(QuickConsoleColor.Blue);
+cardBuffer.SetBackgroundColor(QuickConsoleColor.Black);
+cardBuffer.Box(0, 0, 5, 5, '#');
+
 while (true)
 {
     QuickConsole.Box(0, 0, 60, 20, '|', '-', '+', QuickConsoleColor.Yellow, QuickConsoleColor.Blue);
+    //QuickConsole.WriteBuffer();
+    //var s =QuickConsole.ReadText(5, 5, 10);
+    QuickConsole.Draw(2, currv, cardBuffer);
+    //QuickConsole.Text(2, 0, s);
     QuickConsole.WriteBuffer();
-    var s =QuickConsole.ReadText(5, 5, 10);
-    QuickConsole.Line(2, currv, 56, LineDirection.Horizontal, '*', QuickConsoleColor.Cyan, QuickConsoleColor.Black);
-    QuickConsole.Text(2, 0, s);
-    QuickConsole.WriteBuffer();
-    Thread.Sleep(250);
+    Thread.Sleep(100);
     QuickConsole.Box(0, 0, 60, 20, '|', '-', 'X', QuickConsoleColor.Yellow, QuickConsoleColor.Blue);
-    QuickConsole.Line(2, currv, 56, LineDirection.Horizontal, '*', QuickConsoleColor.Cyan, QuickConsoleColor.Black);
-    QuickConsole.Text(2, 1, s);
+    QuickConsole.Draw(2, currv, cardBuffer);
+    //QuickConsole.Text(2, 1, s);
     QuickConsole.WriteBuffer();
-    Thread.Sleep(250);
+    Thread.Sleep(100);
     currv++;
-    if (currv >= vend) currv = vstart;
+    if (currv >= vend - 4) currv = vstart;
 }
 
 //System.RevLayle.QuickConsole.ReadLine();

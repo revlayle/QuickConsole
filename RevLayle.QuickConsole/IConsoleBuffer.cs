@@ -4,6 +4,11 @@ namespace RevLayle;
 
 public interface IConsoleBuffer
 {
+    IConsoleBufferData Data { get; }
+    int Width { get; }
+    int Height { get; }
+    void WriteBuffer(Stream stream);
+    bool IsOutOfBounds(int x, int y);
     void SetColor(QuickConsoleColor color);
     void SetBackgroundColor(QuickConsoleColor color);
     void Text(int x, int y, string text);
@@ -25,4 +30,8 @@ public interface IConsoleBuffer
     string GetStringAt(int x, int y, int length);
     QuickConsoleColor GetColorAt(int x, int y);
     QuickConsoleColor GetBackgroundColorAt(int x, int y);
+    void Draw(int x, int y, IConsoleBuffer buffer);
+    void DrawChars(int x, int y, char[] chars);
+    void DrawForegroundColors(int x, int y, QuickConsoleColor[] colors);
+    void DrawBackgroundColors(int x, int y, QuickConsoleColor[] colors);
 }
