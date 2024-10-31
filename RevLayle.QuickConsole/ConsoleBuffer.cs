@@ -109,6 +109,31 @@ public class ConsoleBuffer : IConsoleBuffer
         _buffer.BackgroundColors[idx] = background;
     }
 
+    public void Rectangle(int x, int y, int width, int height, char c)
+    {
+        Rectangle(x, y, width, height, c, _currentForegroundColor, _currentBackgroundColor);
+    }
+
+    public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color)
+    {
+        Rectangle(x, y, width, height, c, color, _currentBackgroundColor);
+    }
+
+    public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
+    {
+        if (IsOutOfBounds(x, y)) return;
+        for (var i = 0; i < height; i++)
+        {
+            for (var j = 0; j < width; j++)
+            {
+                var idx = (j + x) + (i + y) * Width;
+                _buffer.Chars[idx] = c;
+                _buffer.ForegroundColors[idx] = color;
+                _buffer.BackgroundColors[idx] = background;
+            }
+        }
+    }
+
     public void Box(int x, int y, int width, int height, char c)
     {
         Box(x, y, width, height, c, c, c, _currentForegroundColor, _currentBackgroundColor);
@@ -154,6 +179,8 @@ public class ConsoleBuffer : IConsoleBuffer
                     var (_, tj) when tj == width - 1 => cSides,
                     _ => (char)0,
                 };
+                if (ch == 0)
+                    continue;
                 if ((j + x) >= Width || (i + y) >= Height)
                     continue;
                 var idx = (j + x) + (i + y) * Width;
@@ -214,29 +241,23 @@ public class ConsoleBuffer : IConsoleBuffer
         return _buffer.BackgroundColors[x + y * Width];
     }
 
-    public void DrawChars(int x, int y, char[] chars)
-    {
-        Array.Copy(chars, 0, _buffer.Chars, x + y * Width, chars.Length);
-    }
-    
-    public void DrawForegroundColors(int x, int y, QuickConsoleColor[] colors)
-    {
-        Array.Copy(colors, 0, _buffer.ForegroundColors, x + y * Width, colors.Length);
-    }
-    
-    public void DrawBackgroundColors(int x, int y, QuickConsoleColor[] colors)
-    {
-        Array.Copy(colors, 0, _buffer.BackgroundColors, x + y * Width, colors.Length);
-    }
-
-    public void Draw(int x, int y, IConsoleBuffer buffer)
+    public void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
     {
         var offset = 0;
-        for (var line = 0; line < buffer.Height; line++)
+        var idx = x + y * Width;
+        for (var bufferIdx = 0; bufferIdx < buffer.Data.Length; bufferIdx++)
         {
-            DrawChars(x, y + line, buffer.Data.Chars[offset..(offset + buffer.Width)]);
-            DrawForegroundColors(x, y + line, buffer.Data.ForegroundColors[offset..(offset + buffer.Width)]);
-            DrawBackgroundColors(x, y + line, buffer.Data.BackgroundColors[offset..(offset + buffer.Width)]);
+            var ch = buffer.Data.Chars[bufferIdx];
+            if (zeroCharIsTransparent == false || ch > 0)
+            {
+                _buffer.Chars[idx] = ch;
+                _buffer.ForegroundColors[idx] = buffer.Data.ForegroundColors[bufferIdx];
+                _buffer.BackgroundColors[idx] = buffer.Data.BackgroundColors[bufferIdx];
+            }
+
+            idx++;
+            if (bufferIdx % buffer.Width == buffer.Width - 1)
+                idx += Width - buffer.Width;
         }
     }
 }

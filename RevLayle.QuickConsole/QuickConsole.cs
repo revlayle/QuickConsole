@@ -76,6 +76,11 @@ public static class QuickConsole
     public static void Char(int x, int y, char c, QuickConsoleColor color) => _buffer.Char(x, y, c, color);
     public static void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background) =>
         _buffer.Char(x, y, c, color, background);
+    public static void Rectangle(int x, int y, int width, int height, char c) => _buffer.Rectangle(x, y, width, height, c);
+    public static void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color) => 
+        _buffer.Rectangle(x, y, width, height, c, color);
+    public static void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, 
+        QuickConsoleColor background) => _buffer.Rectangle(x, y, width, height, c, color, background);
     public static void Box(int x, int y, int width, int height, char c) => _buffer.Box(x, y, width, height, c);
     public static void Box(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
         _buffer.Box(x, y, width, height, c, color);
@@ -100,5 +105,6 @@ public static class QuickConsole
     public static string GetStringAt(int x, int y, int length) => _buffer.GetStringAt(x, y, length);
     public static QuickConsoleColor GetColorAt(int x, int y) => _buffer.GetColorAt(x, y);
     public static QuickConsoleColor GetBackgroundColorAt(int x, int y) => _buffer.GetBackgroundColorAt(x, y);
-    public static void Draw(int x, int y, IConsoleBuffer buffer) => _buffer.Draw(x, y, buffer);
+    public static void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent) 
+        => _buffer.Draw(x, y, buffer, zeroCharIsTransparent);
 }

@@ -17,6 +17,9 @@ public interface IConsoleBuffer
     void Char(int x, int y, char c);
     void Char(int x, int y, char c, QuickConsoleColor color);
     void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background);
+    void Rectangle(int x, int y, int width, int height, char c);
+    void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color);
+    void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background);
     void Box(int x, int y, int width, int height, char c);
     void Box(int x, int y, int width, int height, char c, QuickConsoleColor color);
     void Box(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background);
@@ -30,8 +33,5 @@ public interface IConsoleBuffer
     string GetStringAt(int x, int y, int length);
     QuickConsoleColor GetColorAt(int x, int y);
     QuickConsoleColor GetBackgroundColorAt(int x, int y);
-    void Draw(int x, int y, IConsoleBuffer buffer);
-    void DrawChars(int x, int y, char[] chars);
-    void DrawForegroundColors(int x, int y, QuickConsoleColor[] colors);
-    void DrawBackgroundColors(int x, int y, QuickConsoleColor[] colors);
+    void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent);
 }

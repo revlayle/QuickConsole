@@ -7,7 +7,7 @@ public enum QuickConsoleColor
     Green = 2,
     Yellow = 3,
     Blue = 4,
-    Magenta = 7,
+    Magenta = 5,
     Cyan = 6,
-    White = 8,
+    White = 7,
 }
