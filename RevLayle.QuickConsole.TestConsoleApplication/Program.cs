@@ -9,9 +9,11 @@ var vend = 18;
 //var currh = hstart;
 var currv = vstart;
 
-var cardBuffer = new ConsoleBuffer(20, 5);
-cardBuffer.SetColor(QuickConsoleColor.Black);
-cardBuffer.SetBackgroundColor(QuickConsoleColor.White);
+var cardBuffer = new ConsoleBuffer(20, 5)
+{
+    CurrentForegroundColor = QuickConsoleColor.Black,
+    CurrentBackgroundColor = QuickConsoleColor.White
+};
 cardBuffer.Box(0, 0, 20, 5, '#');
 
 while (true)

@@ -7,10 +7,10 @@ public interface IConsoleBuffer
     IConsoleBufferData Data { get; }
     int Width { get; }
     int Height { get; }
+    QuickConsoleColor CurrentForegroundColor { get; set; }
+    QuickConsoleColor CurrentBackgroundColor { get; set; }
     void WriteBuffer(Stream stream);
     bool IsOutOfBounds(int x, int y);
-    void SetColor(QuickConsoleColor color);
-    void SetBackgroundColor(QuickConsoleColor color);
     void Text(int x, int y, string text);
     void Text(int x, int y, string text, QuickConsoleColor color);
     void Text(int x, int y, string text, QuickConsoleColor color, QuickConsoleColor background);

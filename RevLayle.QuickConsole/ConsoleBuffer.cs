@@ -2,22 +2,17 @@ using System.Text;
 
 namespace RevLayle;
 
-public class ConsoleBuffer : IConsoleBuffer
+public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 {
-    public ConsoleBuffer(int width, int height)
-    {
-        BufferSize(width, height);
-    }
+    private readonly IConsoleBufferData _buffer = new ConsoleBufferData(width * height);
 
-    private IConsoleBufferData _buffer;
-
-    private QuickConsoleColor _currentForegroundColor = QuickConsoleColor.White;
-    private QuickConsoleColor _currentBackgroundColor = QuickConsoleColor.Black;
+    public QuickConsoleColor CurrentForegroundColor { get; set; } = QuickConsoleColor.White;
+    public QuickConsoleColor CurrentBackgroundColor { get; set; } = QuickConsoleColor.Black;
 
     public IConsoleBufferData Data => _buffer;
-    public int Width { get; private set; }
-    public int Height  { get; private set; }
-    
+    public int Width { get; private set; } = width;
+    public int Height  { get; private set; } = height;
+
     public void WriteBuffer(Stream stream)
     {
         var builder = new StringBuilder();
@@ -51,29 +46,17 @@ public class ConsoleBuffer : IConsoleBuffer
     
     public void BufferSize(int width, int height, bool keepOriginalBuffer = false)
     {
-        Height = height;
-        Width = width;
-        _buffer = new ConsoleBufferData(width * height);
-    }
-    
-    public void SetColor(QuickConsoleColor color)
-    {
-        _currentForegroundColor = color;
-    }
 
-    public void SetBackgroundColor(QuickConsoleColor color)
-    {
-        _currentBackgroundColor = color;
     }
 
     public void Text(int x, int y, string text)
     {
-        Text(x, y, text, _currentForegroundColor, _currentBackgroundColor);
+        Text(x, y, text, CurrentForegroundColor, CurrentBackgroundColor);
     }
 
     public void Text(int x, int y, string text, QuickConsoleColor color)
     {
-        Text(x, y, text, color, _currentBackgroundColor);
+        Text(x, y, text, color, CurrentBackgroundColor);
     }
 
     public void Text(int x, int y, string text, QuickConsoleColor color, QuickConsoleColor background)
@@ -85,19 +68,19 @@ public class ConsoleBuffer : IConsoleBuffer
         var maxLength = Math.Min(textArray.Length, Width - x);
         for (var i = 0; i < maxLength; i++)
         {
-            _buffer.ForegroundColors[colorIndexStart] = _currentForegroundColor;
-            _buffer.BackgroundColors[colorIndexStart++] = _currentBackgroundColor;
+            _buffer.ForegroundColors[colorIndexStart] = CurrentForegroundColor;
+            _buffer.BackgroundColors[colorIndexStart++] = CurrentBackgroundColor;
         }
     }
 
     public void Char(int x, int y, char c)
     {
-        Char(x, y, c, _currentForegroundColor, _currentBackgroundColor);
+        Char(x, y, c, CurrentForegroundColor, CurrentBackgroundColor);
     }
 
     public void Char(int x, int y, char c, QuickConsoleColor color)
     {
-        Char(x, y, c, color, _currentBackgroundColor);
+        Char(x, y, c, color, CurrentBackgroundColor);
     }
 
     public void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background)
@@ -111,12 +94,12 @@ public class ConsoleBuffer : IConsoleBuffer
 
     public void Rectangle(int x, int y, int width, int height, char c)
     {
-        Rectangle(x, y, width, height, c, _currentForegroundColor, _currentBackgroundColor);
+        Rectangle(x, y, width, height, c, CurrentForegroundColor, CurrentBackgroundColor);
     }
 
     public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color)
     {
-        Rectangle(x, y, width, height, c, color, _currentBackgroundColor);
+        Rectangle(x, y, width, height, c, color, CurrentBackgroundColor);
     }
 
     public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
@@ -136,12 +119,12 @@ public class ConsoleBuffer : IConsoleBuffer
 
     public void Box(int x, int y, int width, int height, char c)
     {
-        Box(x, y, width, height, c, c, c, _currentForegroundColor, _currentBackgroundColor);
+        Box(x, y, width, height, c, c, c, CurrentForegroundColor, CurrentBackgroundColor);
     }
 
     public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color)
     {
-        Box(x, y, width, height, c, c, c, color, _currentBackgroundColor);
+        Box(x, y, width, height, c, c, c, color, CurrentBackgroundColor);
     }
 
     public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
@@ -151,12 +134,12 @@ public class ConsoleBuffer : IConsoleBuffer
 
     public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner)
     {
-        Box(x, y, width, height, cSides, cTopBottom, cCorner, _currentForegroundColor, _currentBackgroundColor);
+        Box(x, y, width, height, cSides, cTopBottom, cCorner, CurrentForegroundColor, CurrentBackgroundColor);
     }
 
     public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color)
     {
-        Box(x, y, width, height, cSides, cTopBottom, cCorner, color, _currentBackgroundColor);
+        Box(x, y, width, height, cSides, cTopBottom, cCorner, color, CurrentBackgroundColor);
     }
 
     public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color,
@@ -193,12 +176,12 @@ public class ConsoleBuffer : IConsoleBuffer
 
     public void Line(int x, int y, int length, LineDirection direction, char c)
     {
-        Line(x, y, length, direction, c, _currentForegroundColor, _currentBackgroundColor);
+        Line(x, y, length, direction, c, CurrentForegroundColor, CurrentBackgroundColor);
     }
 
     public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color)
     {
-        Line(x, y, length, direction, c, color, _currentBackgroundColor);
+        Line(x, y, length, direction, c, color, CurrentBackgroundColor);
     }
 
     public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color, QuickConsoleColor background)
@@ -243,7 +226,6 @@ public class ConsoleBuffer : IConsoleBuffer
 
     public void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
     {
-        var offset = 0;
         var idx = x + y * Width;
         for (var bufferIdx = 0; bufferIdx < buffer.Data.Length; bufferIdx++)
         {
