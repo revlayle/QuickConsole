@@ -9,12 +9,12 @@ var vend = 18;
 //var currh = hstart;
 var currv = vstart;
 
-var cardBuffer = new ConsoleBuffer(20, 5)
+var cardBuffer = new ConsoleBuffer(100, 5)
 {
     CurrentForegroundColor = QuickConsoleColor.Black,
     CurrentBackgroundColor = QuickConsoleColor.White
 };
-cardBuffer.Box(0, 0, 20, 5, '#');
+cardBuffer.Box(0, 0, 100, 5, '#');
 
 while (true)
 {
@@ -31,7 +31,6 @@ while (true)
     // QuickConsole.WriteBuffer();
     // Thread.Sleep(100);
     currv++;
-    if (currv >= vend - 4) currv = vstart;
+    if (currv >= vend) currv = vstart;
+    if (QuickConsole.KeyAvailable && QuickConsole.ReadKey().Key == ConsoleKey.Enter) break;
 }
-
-//System.RevLayle.QuickConsole.ReadLine();

@@ -23,7 +23,7 @@ public static class QuickConsole
         _buffer.WriteBuffer(stream);
     }
 
-    public static bool KeyAvailable() => System.Console.KeyAvailable;
+    public static bool KeyAvailable => System.Console.KeyAvailable;
     public static ConsoleKeyInfo ReadKey() => System.Console.ReadKey(true);
 
     public static QuickConsoleColor CurrentForegroundColor

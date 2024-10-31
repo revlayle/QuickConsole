@@ -226,20 +226,22 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
     {
+        if (IsOutOfBounds(x, y)) return;
         var idx = x + y * Width;
+        var maxWidth = Math.Min(Width - x, buffer.Width);
         for (var bufferIdx = 0; bufferIdx < buffer.Data.Length; bufferIdx++)
         {
+            var bufferX = bufferIdx % buffer.Width;
+            if (bufferX == 0 && bufferIdx > 0)
+                idx += Width - buffer.Width;
             var ch = buffer.Data.Chars[bufferIdx];
-            if (zeroCharIsTransparent == false || ch > 0)
+            if (bufferX < maxWidth && idx < _buffer.Length && (zeroCharIsTransparent == false || ch > 0))
             {
                 _buffer.Chars[idx] = ch;
                 _buffer.ForegroundColors[idx] = buffer.Data.ForegroundColors[bufferIdx];
                 _buffer.BackgroundColors[idx] = buffer.Data.BackgroundColors[bufferIdx];
             }
-
             idx++;
-            if (bufferIdx % buffer.Width == buffer.Width - 1)
-                idx += Width - buffer.Width;
         }
     }
 }
