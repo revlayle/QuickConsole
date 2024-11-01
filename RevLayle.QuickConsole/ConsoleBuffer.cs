@@ -77,15 +77,18 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
+        var rowIdx = y * Width;
         for (var i = 0; i < height; i++)
         {
             for (var j = 0; j < width; j++)
             {
-                var idx = (j + x) + (i + y) * Width;
+                var idx = j + x + rowIdx;
+                if (idx >= _buffer.Length) break;
                 _buffer.Chars[idx] = c;
                 _buffer.ForegroundColors[idx] = color;
                 _buffer.BackgroundColors[idx] = background;
             }
+            rowIdx += Width;
         }
     }
 
@@ -103,6 +106,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
+        var rowIdx = y * Width;
         for (var i = 0; i < height; i++)
         {
             for (var j = 0; j < width; j++)
@@ -123,11 +127,13 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
                     continue;
                 if ((j + x) >= Width || (i + y) >= Height)
                     continue;
-                var idx = (j + x) + (i + y) * Width;
+                var idx = j + x + rowIdx;
                 _buffer.Chars[idx] = ch;
                 _buffer.ForegroundColors[idx] = color;
                 _buffer.BackgroundColors[idx] = background;
             }
+
+            rowIdx += Width;
         }
     }
 
@@ -143,6 +149,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         var maxLength = Math.Min(length, direction== LineDirection.Horizontal ? Width - x : Width - y);
         for (var i = 0; i < maxLength; i++)
         {
+            if (idx >= Data.Length) break;
             _buffer.Chars[idx] = c;
             _buffer.ForegroundColors[idx] = color;
             _buffer.BackgroundColors[idx] = background;
