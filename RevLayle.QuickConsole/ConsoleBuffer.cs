@@ -39,26 +39,11 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         stream.Flush();
     }
     
-    public bool IsOutOfBounds(int x, int y)
-    {
-        return x < 0 || x >= Width || y < 0 || y >= Height;
-    }
-    
-    public void BufferSize(int width, int height, bool keepOriginalBuffer = false)
-    {
+    public bool IsOutOfBounds(int x, int y) => x < 0 || x >= Width || y < 0 || y >= Height;
 
-    }
-
-    public void Text(int x, int y, string text)
-    {
-        Text(x, y, text, CurrentForegroundColor, CurrentBackgroundColor);
-    }
-
-    public void Text(int x, int y, string text, QuickConsoleColor color)
-    {
+    public void Text(int x, int y, string text) => Text(x, y, text, CurrentForegroundColor, CurrentBackgroundColor);
+    public void Text(int x, int y, string text, QuickConsoleColor color) =>
         Text(x, y, text, color, CurrentBackgroundColor);
-    }
-
     public void Text(int x, int y, string text, QuickConsoleColor color, QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
@@ -73,16 +58,9 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         }
     }
 
-    public void Char(int x, int y, char c)
-    {
-        Char(x, y, c, CurrentForegroundColor, CurrentBackgroundColor);
-    }
-
-    public void Char(int x, int y, char c, QuickConsoleColor color)
-    {
+    public void Char(int x, int y, char c) => Char(x, y, c, CurrentForegroundColor, CurrentBackgroundColor);
+    public void Char(int x, int y, char c, QuickConsoleColor color) =>
         Char(x, y, c, color, CurrentBackgroundColor);
-    }
-
     public void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
@@ -92,16 +70,10 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         _buffer.BackgroundColors[idx] = background;
     }
 
-    public void Rectangle(int x, int y, int width, int height, char c)
-    {
+    public void Rectangle(int x, int y, int width, int height, char c) =>
         Rectangle(x, y, width, height, c, CurrentForegroundColor, CurrentBackgroundColor);
-    }
-
-    public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color)
-    {
+    public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
         Rectangle(x, y, width, height, c, color, CurrentBackgroundColor);
-    }
-
     public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
@@ -117,31 +89,16 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         }
     }
 
-    public void Box(int x, int y, int width, int height, char c)
-    {
+    public void Box(int x, int y, int width, int height, char c) =>
         Box(x, y, width, height, c, c, c, CurrentForegroundColor, CurrentBackgroundColor);
-    }
-
-    public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color)
-    {
+    public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
         Box(x, y, width, height, c, c, c, color, CurrentBackgroundColor);
-    }
-
-    public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
-    {
+    public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background) =>
         Box(x, y, width, height, c, c, c, color, background);
-    }
-
-    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner)
-    {
+    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner) =>
         Box(x, y, width, height, cSides, cTopBottom, cCorner, CurrentForegroundColor, CurrentBackgroundColor);
-    }
-
-    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color)
-    {
+    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color) =>
         Box(x, y, width, height, cSides, cTopBottom, cCorner, color, CurrentBackgroundColor);
-    }
-
     public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color,
         QuickConsoleColor background)
     {
@@ -174,16 +131,10 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         }
     }
 
-    public void Line(int x, int y, int length, LineDirection direction, char c)
-    {
+    public void Line(int x, int y, int length, LineDirection direction, char c) =>
         Line(x, y, length, direction, c, CurrentForegroundColor, CurrentBackgroundColor);
-    }
-
-    public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color)
-    {
+    public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color) =>
         Line(x, y, length, direction, c, color, CurrentBackgroundColor);
-    }
-
     public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color, QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
