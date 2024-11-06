@@ -109,10 +109,8 @@ public static class QuickConsole
     public static void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color,
         QuickConsoleColor background)
         => _buffer.Line(x, y, length, direction, c, color, background);
-    public static char GetCharAt(int x, int y) => _buffer.GetCharAt(x, y);
+    public static ConsoleBufferCell GetCellAt(int x, int y) => _buffer.GetCellAt(x, y);
     public static string GetStringAt(int x, int y, int length) => _buffer.GetStringAt(x, y, length);
-    public static QuickConsoleColor GetColorAt(int x, int y) => _buffer.GetColorAt(x, y);
-    public static QuickConsoleColor GetBackgroundColorAt(int x, int y) => _buffer.GetBackgroundColorAt(x, y);
     public static void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
         => _buffer.Draw(x, y, buffer, zeroCharIsTransparent);
 }

@@ -4,12 +4,13 @@ namespace RevLayle;
 
 public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 {
-    private readonly IConsoleBufferData _buffer = new ConsoleBufferData(width * height);
+    //private readonly IConsoleBufferData _buffer = new ConsoleBufferData(width * height);
 
     public QuickConsoleColor CurrentForegroundColor { get; set; } = QuickConsoleColor.White;
     public QuickConsoleColor CurrentBackgroundColor { get; set; } = QuickConsoleColor.Black;
 
-    public IConsoleBufferData Data => _buffer;
+    public ConsoleBufferCell[] Cells { get; } = new ConsoleBufferCell[width * height];
+
     public int Width { get; private set; } = width;
     public int Height  { get; private set; } = height;
 
@@ -19,21 +20,22 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         var prevForegroundColor = -1;
         var prevBackgroundColor = -1;
         builder.Append("\x1b[1;1H");
-        for (var i = 0; i < _buffer.Length; i++)
+        for (var i = 0; i < Cells.Length; i++)
         {
+            var cell = Cells[i];
             if (i > 0 && i % Width == 0)
                 builder.Append('\n');
-            if ((int) _buffer.ForegroundColors[i] != prevForegroundColor)
+            if ((int) cell.Foreground != prevForegroundColor)
             {
-                prevForegroundColor = (int) _buffer.ForegroundColors[i];
+                prevForegroundColor = (int) cell.Foreground;
                 builder.Append($"\x1b[{30 + prevForegroundColor}m");
             }
-            if ((int) _buffer.BackgroundColors[i] != prevBackgroundColor)
+            if ((int) cell.Background != prevBackgroundColor)
             {
-                prevBackgroundColor = (int) _buffer.BackgroundColors[i];
+                prevBackgroundColor = (int) cell.Background;
                 builder.Append($"\x1b[{40 + prevBackgroundColor}m");
             }
-            builder.Append(char.IsControl(_buffer.Chars[i]) ? ' ' : _buffer.Chars[i]);
+            builder.Append(char.IsControl(cell.Character) ? ' ' : cell.Character);
         }
         stream.Write(Encoding.ASCII.GetBytes(builder.ToString()));
         stream.Flush();
@@ -48,13 +50,16 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     {
         if (IsOutOfBounds(x, y)) return;
         var textArray = text.ToCharArray();
-        Array.Copy(textArray, 0, _buffer.Chars, x + y * Width, textArray.Length);
-        var colorIndexStart = x + y * Width;
+        var idx = x + y * Width;
         var maxLength = Math.Min(textArray.Length, Width - x);
         for (var i = 0; i < maxLength; i++)
         {
-            _buffer.ForegroundColors[colorIndexStart] = CurrentForegroundColor;
-            _buffer.BackgroundColors[colorIndexStart++] = CurrentBackgroundColor;
+            var cell = new ConsoleBufferCell
+            {
+                Character = textArray[i],
+                Foreground = color,
+                Background = background,
+            };
         }
     }
 
@@ -64,10 +69,12 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background)
     {
         if (IsOutOfBounds(x, y)) return;
-        var idx = x + y * Width;
-        _buffer.Chars[idx] = c;
-        _buffer.ForegroundColors[idx] = color;
-        _buffer.BackgroundColors[idx] = background;
+        Cells[x + y * Width] = new ConsoleBufferCell
+        {
+            Character = c,
+            Foreground = color,
+            Background = background,
+        };
     }
 
     public void Rectangle(int x, int y, int width, int height, char c) =>
@@ -83,10 +90,13 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             for (var j = 0; j < width; j++)
             {
                 var idx = j + x + rowIdx;
-                if (idx >= _buffer.Length) break;
-                _buffer.Chars[idx] = c;
-                _buffer.ForegroundColors[idx] = color;
-                _buffer.BackgroundColors[idx] = background;
+                if (idx >= Cells.Length) break;
+                Cells[idx] = new ConsoleBufferCell
+                {
+                    Character = c,
+                    Foreground = color,
+                    Background = background,
+                };
             }
             rowIdx += Width;
         }
@@ -128,9 +138,12 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
                 if ((j + x) >= Width || (i + y) >= Height)
                     continue;
                 var idx = j + x + rowIdx;
-                _buffer.Chars[idx] = ch;
-                _buffer.ForegroundColors[idx] = color;
-                _buffer.BackgroundColors[idx] = background;
+                Cells[idx] = new ConsoleBufferCell
+                {
+                    Character = ch,
+                    Foreground = color,
+                    Background = background,
+                };
             }
 
             rowIdx += Width;
@@ -149,37 +162,28 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         var maxLength = Math.Min(length, direction== LineDirection.Horizontal ? Width - x : Width - y);
         for (var i = 0; i < maxLength; i++)
         {
-            if (idx >= Data.Length) break;
-            _buffer.Chars[idx] = c;
-            _buffer.ForegroundColors[idx] = color;
-            _buffer.BackgroundColors[idx] = background;
+            if (idx >= Cells.Length) break;
+            Cells[idx] = new ConsoleBufferCell
+            {
+                Character = c,
+                Foreground = color,
+                Background = background,
+            };
             idx += inc;
         }
     }
 
-    public char GetCharAt(int x, int y)
+    public ConsoleBufferCell GetCellAt(int x, int y)
     {
-        if (IsOutOfBounds(x, y)) return (char)0;
-        return _buffer.Chars[x + y * Width];
+        if (IsOutOfBounds(x, y)) throw new ArgumentException("X and/or Y out of bounds of console buffer");
+        return Cells[x + y * Width];
     }
 
     public string GetStringAt(int x, int y, int length)
     {
         if (IsOutOfBounds(x, y)) return string.Empty;
         var idx = x + y * Width;
-        return new string(_buffer.Chars[idx..(idx + length)]);
-    }
-
-    public QuickConsoleColor GetColorAt(int x, int y)
-    {
-        if (IsOutOfBounds(x, y)) return QuickConsoleColor.Black;
-        return _buffer.ForegroundColors[x + y * Width];
-    }
-
-    public QuickConsoleColor GetBackgroundColorAt(int x, int y)
-    {
-        if (IsOutOfBounds(x, y)) return QuickConsoleColor.Black;
-        return _buffer.BackgroundColors[x + y * Width];
+        return new string(Cells[idx..(idx + length)].Select(x => x.Character).ToArray());
     }
 
     public void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
@@ -187,18 +191,14 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         if (IsOutOfBounds(x, y)) return;
         var idx = x + y * Width;
         var maxWidth = Math.Min(Width - x, buffer.Width);
-        for (var bufferIdx = 0; bufferIdx < buffer.Data.Length; bufferIdx++)
+        for (var bufferIdx = 0; bufferIdx < buffer.Cells.Length; bufferIdx++)
         {
             var bufferX = bufferIdx % buffer.Width;
             if (bufferX == 0 && bufferIdx > 0)
                 idx += Width - buffer.Width;
-            var ch = buffer.Data.Chars[bufferIdx];
-            if (bufferX < maxWidth && idx < _buffer.Length && (zeroCharIsTransparent == false || ch > 0))
-            {
-                _buffer.Chars[idx] = ch;
-                _buffer.ForegroundColors[idx] = buffer.Data.ForegroundColors[bufferIdx];
-                _buffer.BackgroundColors[idx] = buffer.Data.BackgroundColors[bufferIdx];
-            }
+            var sourceCell = buffer.Cells[bufferIdx];
+            if (bufferX < maxWidth && idx < Cells.Length && (zeroCharIsTransparent == false || sourceCell.Character > 0))
+                Cells[idx] = sourceCell;
             idx++;
         }
     }

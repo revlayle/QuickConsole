@@ -4,7 +4,8 @@ namespace RevLayle;
 
 public interface IConsoleBuffer
 {
-    IConsoleBufferData Data { get; }
+    //IConsoleBufferData Data { get; }
+    ConsoleBufferCell[] Cells { get; }
     int Width { get; }
     int Height { get; }
     QuickConsoleColor CurrentForegroundColor { get; set; }
@@ -29,9 +30,7 @@ public interface IConsoleBuffer
     void Line(int x, int y, int length, LineDirection direction, char c);
     void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color);
     void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color, QuickConsoleColor background);
-    char GetCharAt(int x, int y);
+    ConsoleBufferCell GetCellAt(int x, int y);
     string GetStringAt(int x, int y, int length);
-    QuickConsoleColor GetColorAt(int x, int y);
-    QuickConsoleColor GetBackgroundColorAt(int x, int y);
     void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent);
 }
