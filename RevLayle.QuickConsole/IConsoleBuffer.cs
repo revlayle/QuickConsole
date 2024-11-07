@@ -4,7 +4,6 @@ namespace RevLayle;
 
 public interface IConsoleBuffer
 {
-    //IConsoleBufferData Data { get; }
     ConsoleBufferCell[] Cells { get; }
     int Width { get; }
     int Height { get; }
