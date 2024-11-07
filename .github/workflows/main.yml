@@ -1,0 +1,37 @@
+#Workflow triggered when a tag is pushed that looks like 'v1.0.0'
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+#Build job with 'ubuntu-latest' as environment to run on
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        id: version-number
+        with:
+          script: return context.ref.replace('v', '')
+          result-encoding: string
+	    # Pull code from the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Setup .NET 8
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8
+          source-url: https://nuget.pkg.github.com/revlayle/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} #Use the github action provided token
+      - name: Build
+        run: dotnet build ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}}
+      #- name: Test
+      #  run: dotnet test ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}} --no-build
+      - name: Pack
+        run: dotnet pack ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}} --no-build --output nupkgs
+      - name: Push
+        run: dotnet nuget push nupkgs/${PACKAGE_ID}.${{steps.version-number.outputs.result}}.nupkg
+        env:
+          PACKAGE_ID: "RevLayle.QuickConsole"
+          CSPROJ_FILE: "./RevLayle.QuickConsole/RevLayle.QuickConsole.csproj
