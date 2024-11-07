@@ -34,4 +34,4 @@ jobs:
         run: dotnet nuget push nupkgs/${PACKAGE_ID}.${{steps.version-number.outputs.result}}.nupkg
         env:
           PACKAGE_ID: "RevLayle.QuickConsole"
-          CSPROJ_FILE: "./RevLayle.QuickConsole/RevLayle.QuickConsole.csproj
+          CSPROJ_FILE: "./RevLayle.QuickConsole/RevLayle.QuickConsole.csproj"
