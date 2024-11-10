@@ -54,7 +54,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         var maxLength = Math.Min(textArray.Length, Width - x);
         for (var i = 0; i < maxLength; i++)
         {
-            var cell = new ConsoleBufferCell
+            Cells[idx + i] = new ConsoleBufferCell
             {
                 Character = textArray[i],
                 Foreground = color,
@@ -92,8 +92,8 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     {
         if (IsOutOfBounds(x, y)) return;
         cellSides = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
-        cellTopBottom = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
-        cellCorner = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
+        cellTopBottom = cellTopBottom.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
+        cellCorner = cellCorner.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var rowIdx = y * Width;
         for (var i = 0; i < height; i++)
         {
@@ -103,10 +103,10 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
                 {
                     (0, 0) => cellCorner,
                     (0, var tj) when tj == width - 1 => cellCorner,
-                    (0, _) => cellTopBottom,
-                    (var ti, 0) when ti == height - 1 => cellCorner,
-                    (_, 0) => cellSides,
                     var (ti, tj) when tj == width - 1 && ti == height - 1 => cellCorner,
+                    (var ti, 0) when ti == height - 1 => cellCorner,
+                    (0, _) => cellTopBottom,
+                    (_, 0) => cellSides,
                     var (ti, _) when ti == height - 1 => cellTopBottom,
                     var (_, tj) when tj == width - 1 => cellSides,
                     _ => ConsoleBufferCell.Zero,
@@ -148,7 +148,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     {
         if (IsOutOfBounds(x, y)) return string.Empty;
         var idx = x + y * Width;
-        return new string(Cells[idx..(idx + length)].Select(x => x.Character).ToArray());
+        return new string(Cells[idx..(idx + length)].Select(x => x.Character).ToArray()).Trim((char)0);
     }
 
     public void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
