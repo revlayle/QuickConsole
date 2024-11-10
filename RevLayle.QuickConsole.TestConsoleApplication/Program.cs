@@ -1,6 +1,7 @@
 ﻿using RevLayle;
 
-QuickConsole.BufferSize(60, 20);
+var quickConsole = new QuickConsole(new DotNetSystemConsole());
+quickConsole.BufferSize(60, 20);
 var vstart = 2;
 var vend = 18;
 
@@ -16,11 +17,11 @@ cardBuffer.Box(0, 0, 100, 5, ConsoleBufferCell.FromChar('#'));
 var coloredSpace = new ConsoleBufferCell { Character = ' ', Foreground = QuickConsoleColor.Yellow, Background = QuickConsoleColor.Blue };
 while (true)
 {
-    QuickConsole.Rectangle(0, 0, 60, 20, coloredSpace);
-    QuickConsole.Draw(2, currv, cardBuffer);
-    QuickConsole.WriteBuffer();
+    quickConsole.Rectangle(0, 0, 60, 20, coloredSpace);
+    quickConsole.Draw(2, currv, cardBuffer);
+    quickConsole.WriteBuffer();
     Thread.Sleep(200);
     currv++;
     if (currv >= vend) currv = vstart;
-    if (QuickConsole.KeyAvailable && QuickConsole.ReadKey().Key == ConsoleKey.Enter) break;
+    if (quickConsole.KeyAvailable && quickConsole.ReadKey().Key == ConsoleKey.Enter) break;
 }
