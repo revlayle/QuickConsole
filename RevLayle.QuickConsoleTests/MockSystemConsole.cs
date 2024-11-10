@@ -1,13 +1,20 @@
+using System.Text;
+
 namespace RevLayle.QuickConsoleTests;
 
-public class MockSystemConsole() : ISystemConsole
+public class MockSystemConsole : ISystemConsole
 {
+    private class MockTextWriter : TextWriter
+    {
+        public override Encoding Encoding => Encoding.UTF8;
+    }
+    
     private ConsoleKeyInfo[] _keyBuffer = [];
     private int _keyIdx = 0;
 
     public ConsoleKeyInfo[] KeyBuffer
     {
-        get => KeyBuffer;
+        get => _keyBuffer;
         set
         {
             _keyBuffer = value;
@@ -25,7 +32,7 @@ public class MockSystemConsole() : ISystemConsole
         throw new IndexOutOfRangeException("No more keys");
     }
 
-    public TextWriter Out { get; set; }
+    public TextWriter Out { get; init; } = new MockTextWriter();
 
     public void SetCursorPosition(int left, int top)
     {
