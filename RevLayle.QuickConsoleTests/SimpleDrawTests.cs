@@ -49,6 +49,26 @@ public class SimpleDrawTests
     }
     
     [Fact]
+    public void TestPartialRectangleTooWide()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var filled = new ConsoleBufferCell
+            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, filled, filled, filled, filled,
+            zero, filled, filled, filled, filled,
+            zero, filled, filled, filled, filled,
+            zero, filled, filled, filled, filled,
+        };
+        buffer.Rectangle(1, 1, 6, 4, filled);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+    [Fact]
     public void TestSimpleBox()
     {
         var buffer = GetBuffer();
@@ -64,6 +84,67 @@ public class SimpleDrawTests
             zero, box, box, box, zero,
         };
         buffer.Box(1, 1, 3, 4, box);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+        
+    [Fact]
+    public void TestSimpleBoxTooWide()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var box = new ConsoleBufferCell
+            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, box, box, box, box,
+            zero, box, zero, zero, zero,
+            zero, box, zero, zero, zero,
+            zero, box, box, box, box,
+        };
+        buffer.Box(1, 1, 6, 4, box);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+    [Fact]
+    public void TestSimpleBoxTooTall()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var box = new ConsoleBufferCell
+            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, box, box, box, zero,
+            zero, box, zero, box, zero,
+            zero, box, zero, box, zero,
+            zero, box, zero, box, zero,
+        };
+        buffer.Box(1, 1, 3, 8, box);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+        
+    [Fact]
+    public void TestSimpleBoxTooWideAndTall()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var box = new ConsoleBufferCell
+            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, box, box, box, box,
+            zero, box, zero, zero, zero,
+            zero, box, zero, zero, zero,
+            zero, box, zero, zero, zero,
+        };
+        buffer.Box(1, 1, 10, 10, box);
 
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
     }
@@ -111,6 +192,26 @@ public class SimpleDrawTests
 
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
     }
+    
+    [Fact]
+    public void TestHLineTooWide()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var filled = new ConsoleBufferCell
+            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            zero, filled, filled, filled, filled,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+        };
+        buffer.Line(1, 2, 8, LineDirection.Horizontal, filled);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
 
     [Fact]
     public void TestVLine()
@@ -128,6 +229,26 @@ public class SimpleDrawTests
             zero, filled, zero, zero, zero,
         };
         buffer.Line(1, 0, 5, LineDirection.Vertical, filled);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+    [Fact]
+    public void TestVLineTooLong()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var filled = new ConsoleBufferCell
+            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+        };
+        buffer.Line(1, 0, 8, LineDirection.Vertical, filled);
 
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
     }

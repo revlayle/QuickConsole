@@ -77,13 +77,14 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     {
         if (IsOutOfBounds(x, y)) return;
         cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
+        var actualWidth = Math.Min(Width - x, width);
+        var actualHeight = Math.Min(Height - y, height);
         var rowIdx = y * Width;
-        for (var i = 0; i < height; i++)
+        for (var i = 0; i < actualHeight; i++)
         {
-            for (var j = 0; j < width; j++)
+            for (var j = 0; j < actualWidth; j++)
             {
                 var idx = j + x + rowIdx;
-                if (idx >= Cells.Length) break;
                 Cells[idx] = cell;
             }
             rowIdx += Width;
@@ -133,10 +134,9 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         cell = cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var inc = direction == LineDirection.Horizontal ? 1 : Width;
         var idx = x + y * Width;
-        var maxLength = Math.Min(length, direction== LineDirection.Horizontal ? Width - x : Width - y);
+        var maxLength = Math.Min(length, direction == LineDirection.Horizontal ? Width - x : Width - y);
         for (var i = 0; i < maxLength; i++)
         {
-            if (idx >= Cells.Length) break;
             Cells[idx] = cell;
             idx += inc;
         }
