@@ -1,6 +1,6 @@
-namespace RevLayle;
+namespace RevLayle.QuickConsole;
 
-public enum QuickConsoleColor
+public enum AnsiColor
 {
     Default = 0,
     Black = 1,

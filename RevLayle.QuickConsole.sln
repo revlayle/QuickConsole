@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevLayle.QuickConsole", "RevLayle.QuickConsole\RevLayle.QuickConsole.csproj", "{25ABADD9-B39C-45A5-841D-E1BF47FAE4AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevLayle.QuickConsole.TestConsoleApplication", "RevLayle.QuickConsole.TestConsoleApplication\RevLayle.QuickConsole.TestConsoleApplication.csproj", "{7EEDF883-7C8F-4E2C-B946-0D88943C36FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevLayle.QuickConsole.ExampleApplication", "RevLayle.QuickConsole.ExampleApplication\RevLayle.QuickConsole.ExampleApplication.csproj", "{7EEDF883-7C8F-4E2C-B946-0D88943C36FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevLayle.QuickConsoleTests", "RevLayle.QuickConsoleTests\RevLayle.QuickConsoleTests.csproj", "{E22999DD-F34A-4AD8-A7CB-1A4DD02C2DEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevLayle.QuickConsole.Tests", "RevLayle.QuickConsole.Tests\RevLayle.QuickConsole.Tests.csproj", "{E22999DD-F34A-4AD8-A7CB-1A4DD02C2DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

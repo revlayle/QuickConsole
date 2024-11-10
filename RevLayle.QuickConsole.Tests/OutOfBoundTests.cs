@@ -1,4 +1,7 @@
-namespace RevLayle.QuickConsoleTests;
+using RevLayle.QuickConsole;
+using ConsoleColor = System.ConsoleColor;
+
+namespace RevLayle.QuickConsole.Tests;
 
 public class OutOfBoundTests
 {
@@ -8,7 +11,7 @@ public class OutOfBoundTests
         cell.Character == 0 && cell.Background == 0 && cell.Foreground == 0;
 
     private static readonly ConsoleBufferCell _someCell = new ConsoleBufferCell
-        { Character = 'A', Background = QuickConsoleColor.Black, Foreground = QuickConsoleColor.White };
+        { Character = 'A', Background = global::RevLayle.QuickConsole.AnsiColor.Black, Foreground = global::RevLayle.QuickConsole.AnsiColor.White };
 
     private static readonly ConsoleBufferCell[] _defaultBuffer =
     [

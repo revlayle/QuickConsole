@@ -1,14 +1,12 @@
-﻿using System.Text;
+﻿namespace RevLayle.QuickConsole;
 
-namespace RevLayle;
-
-public class QuickConsole
+public class InteractiveConsole : IConsoleBuffer
 {
-    public static QuickConsole FromSystemConsole(int width = 80, int height = 25) => 
+    public static InteractiveConsole FromSystemConsole(int width = 80, int height = 25) => 
         new(new DotNetSystemConsole(), width, height);
     
     private readonly ISystemConsole _systemConsole;
-    public QuickConsole(ISystemConsole systemConsole, int width = 80, int height = 25)
+    public InteractiveConsole(ISystemConsole systemConsole, int width = 80, int height = 25)
     { 
         _systemConsole = systemConsole;
         _systemConsole.CursorVisible = false;
@@ -16,23 +14,27 @@ public class QuickConsole
     }
 
     private IConsoleBuffer _buffer;
+    
+    public int Height => _buffer.Height;
+    public int Width => _buffer.Width;
+    public ConsoleBufferCell[] Cells => _buffer.Cells;
+    public bool IsOutOfBounds(int x, int y) => _buffer.IsOutOfBounds(x, y);
 
-    public void WriteBuffer()
-    {
-        _buffer.WriteBuffer(_systemConsole.Out);
-    }
+    public void WriteBuffer(TextWriter textWriter) => _buffer.WriteBuffer(textWriter);
+    
+    public void Update() => _buffer.WriteBuffer(_systemConsole.Out);
     
     public IConsoleBuffer GetBuffer() => _buffer;
 
     public bool KeyAvailable => _systemConsole.KeyAvailable;
     public ConsoleKeyInfo ReadKey() => _systemConsole.ReadKey();
 
-    public QuickConsoleColor CurrentForegroundColor
+    public AnsiColor CurrentForegroundColor
     {
         get => _buffer.CurrentForegroundColor;
         set => _buffer.CurrentForegroundColor = value;
     }
-    public QuickConsoleColor CurrentBackgroundColor
+    public AnsiColor CurrentBackgroundColor
     {
         get => _buffer.CurrentBackgroundColor;
         set => _buffer.CurrentBackgroundColor = value;
@@ -68,7 +70,7 @@ public class QuickConsole
             }
 
             _systemConsole.CursorVisible = false;
-            WriteBuffer();
+            Update();
             _systemConsole.CursorVisible = true;
             _systemConsole.SetCursorPosition(x + actualLength, y);
         }
@@ -78,8 +80,8 @@ public class QuickConsole
     }
 
     public void Text(int x, int y, string text) => _buffer.Text(x, y, text);
-    public void Text(int x, int y, string text, QuickConsoleColor color) => _buffer.Text(x, y, text, color);
-    public void Text(int x, int y, string text, QuickConsoleColor color, QuickConsoleColor background) =>
+    public void Text(int x, int y, string text, AnsiColor color) => _buffer.Text(x, y, text, color);
+    public void Text(int x, int y, string text, AnsiColor color, AnsiColor background) =>
         _buffer.Text(x, y, text, color, background);
     public void Cell(int x, int y, ConsoleBufferCell cell) => _buffer.Cell(x, y, cell);
     public void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cell) =>

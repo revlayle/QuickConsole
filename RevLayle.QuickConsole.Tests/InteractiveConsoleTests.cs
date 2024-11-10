@@ -1,10 +1,14 @@
 using System.Text;
+using RevLayle.QuickConsole;
+using Console = System.Console;
+using ConsoleColor = System.ConsoleColor;
 
-namespace RevLayle.QuickConsoleTests;
+namespace RevLayle.QuickConsole.Tests;
 
 public class QuickConsoleTestss
 {
-    private QuickConsole GetQuickConsole(int w, int h, ISystemConsole systemConsole) =>
+    private global::RevLayle.QuickConsole.InteractiveConsole
+        GetQuickConsole(int w, int h, ISystemConsole systemConsole) =>
         new(systemConsole, w, h);
 
     private IConsoleBuffer GetBuffer(int w = 5, int h = 5) => new ConsoleBuffer(w, h);
@@ -29,7 +33,10 @@ public class QuickConsoleTestss
         var mockConsole = new MockSystemConsole();
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var cell = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         quickConsole.Rectangle(0, 0, 5, 5, cell);
 
         Assert.True(quickConsole.GetBuffer().Cells.All(IsCellComparer(cell)));
@@ -42,7 +49,10 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var filled = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var cellsToMatch = new[]
         {
             zero, zero, zero, zero, zero,
@@ -63,7 +73,10 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var box = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var cellsToMatch = new[]
         {
             zero, zero, zero, zero, zero,
@@ -84,11 +97,20 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var corner = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var topBottom = new ConsoleBufferCell
-            { Character = 'y', Foreground = QuickConsoleColor.Magenta, Background = QuickConsoleColor.Yellow };
+        {
+            Character = 'y', Foreground = global::RevLayle.QuickConsole.AnsiColor.Magenta,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Yellow
+        };
         var sides = new ConsoleBufferCell
-            { Character = 'z', Foreground = QuickConsoleColor.Green, Background = QuickConsoleColor.Cyan };
+        {
+            Character = 'z', Foreground = global::RevLayle.QuickConsole.AnsiColor.Green,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Cyan
+        };
         var cellsToMatch = new[]
         {
             zero, zero, zero, zero, zero,
@@ -109,7 +131,10 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var filled = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var cellsToMatch = new[]
         {
             zero, zero, zero, zero, zero,
@@ -130,7 +155,10 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var filled = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var cellsToMatch = new[]
         {
             zero, filled, zero, zero, zero,
@@ -151,9 +179,15 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var line1 = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var line2 = new ConsoleBufferCell
-            { Character = 'y', Foreground = QuickConsoleColor.Yellow, Background = QuickConsoleColor.Magenta };
+        {
+            Character = 'y', Foreground = global::RevLayle.QuickConsole.AnsiColor.Yellow,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Magenta
+        };
         var cellsToMatch = new[]
         {
             zero, line1, zero, zero, zero,
@@ -175,7 +209,8 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         const string text = "what";
         var textCells = text.Select(x => ConsoleBufferCell.FromChar(x)
-            .OverrideDefaults(QuickConsoleColor.Red, QuickConsoleColor.Blue)).ToArray();
+            .OverrideDefaults(global::RevLayle.QuickConsole.AnsiColor.Red,
+                global::RevLayle.QuickConsole.AnsiColor.Blue)).ToArray();
         var zero = ConsoleBufferCell.Zero;
         var cellsToMatch = new[]
         {
@@ -186,8 +221,8 @@ public class QuickConsoleTestss
             zero, zero, zero, zero, zero,
         };
 
-        quickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
-        quickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
+        quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Red;
+        quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
         quickConsole.Text(0, 2, text);
 
         Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
@@ -201,7 +236,8 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         const string text = "what";
         var textCells = text.Select(x => ConsoleBufferCell.FromChar(x)
-            .OverrideDefaults(QuickConsoleColor.Cyan, QuickConsoleColor.Blue)).ToArray();
+            .OverrideDefaults(global::RevLayle.QuickConsole.AnsiColor.Cyan,
+                global::RevLayle.QuickConsole.AnsiColor.Blue)).ToArray();
         var zero = ConsoleBufferCell.Zero;
         var cellsToMatch = new[]
         {
@@ -212,9 +248,9 @@ public class QuickConsoleTestss
             zero, zero, zero, zero, zero,
         };
 
-        quickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
-        quickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
-        quickConsole.Text(0, 2, text, QuickConsoleColor.Cyan);
+        quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Red;
+        quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
+        quickConsole.Text(0, 2, text, global::RevLayle.QuickConsole.AnsiColor.Cyan);
 
         Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
@@ -226,7 +262,8 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         const string text = "what";
         var textCells = text.Select(x => ConsoleBufferCell.FromChar(x)
-            .OverrideDefaults(QuickConsoleColor.Cyan, QuickConsoleColor.Yellow)).ToArray();
+            .OverrideDefaults(global::RevLayle.QuickConsole.AnsiColor.Cyan,
+                global::RevLayle.QuickConsole.AnsiColor.Yellow)).ToArray();
         var zero = ConsoleBufferCell.Zero;
         var cellsToMatch = new[]
         {
@@ -237,13 +274,14 @@ public class QuickConsoleTestss
             zero, zero, zero, zero, zero,
         };
 
-        quickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
-        quickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
-        quickConsole.Text(0, 2, text, QuickConsoleColor.Cyan, QuickConsoleColor.Yellow);
+        quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Red;
+        quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
+        quickConsole.Text(0, 2, text, global::RevLayle.QuickConsole.AnsiColor.Cyan,
+            global::RevLayle.QuickConsole.AnsiColor.Yellow);
 
         Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
-    
+
     [Fact]
     public void TestCells()
     {
@@ -251,9 +289,15 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var x = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var y = new ConsoleBufferCell
-            { Character = 'y', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Yellow };
+        {
+            Character = 'y', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Yellow
+        };
         var cellsToMatch = new[]
         {
             zero, zero, x, zero, zero,
@@ -276,9 +320,15 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         var zero = ConsoleBufferCell.Zero;
         var x = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var y = new ConsoleBufferCell
-            { Character = 'y', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Yellow };
+        {
+            Character = 'y', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Yellow
+        };
 
         quickConsole.Cell(2, 0, x);
         quickConsole.Cell(4, 3, y);
@@ -301,8 +351,8 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         const string text = "what";
 
-        quickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
-        quickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
+        quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Red;
+        quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
         quickConsole.Text(0, 2, text);
 
         Assert.True(quickConsole.GetStringAt(0, 2, 4) == text);
@@ -319,7 +369,10 @@ public class QuickConsoleTestss
         var smallerBuffer = GetBuffer(3, 3);
         var zero = ConsoleBufferCell.Zero;
         var rbx = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         smallerBuffer.Rectangle(0, 0, 3, 3, rbx);
         quickConsole.Draw(1, 1, smallerBuffer);
         var cellsToMatch = new[]
@@ -347,13 +400,16 @@ public class QuickConsoleTestss
     {
         var zero = ConsoleBufferCell.Zero;
         var rbx = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        {
+            Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red,
+            Background = global::RevLayle.QuickConsole.AnsiColor.Blue
+        };
         var memoryStream = new MemoryStream();
         var textWriter = new StreamWriter(memoryStream);
         var mockConsole = new MockSystemConsole { Out = textWriter };
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
-        quickConsole.CurrentForegroundColor = QuickConsoleColor.White;
-        quickConsole.CurrentBackgroundColor = QuickConsoleColor.Black;
+        quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.White;
+        quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Black;
         PutBuffer(quickConsole.GetBuffer(), [
             rbx, rbx, rbx, rbx, rbx,
             rbx, rbx, rbx, rbx, rbx,
@@ -362,7 +418,7 @@ public class QuickConsoleTestss
             rbx, rbx, rbx, rbx, rbx,
         ]);
 
-        quickConsole.WriteBuffer();
+        quickConsole.Update();
         var ansiString = Encoding.UTF8.GetString(memoryStream.ToArray());
         Assert.True(ansiString ==
                     "\x1b[1;1H\x1b[31m\x1b[44mxxxxx\nxxxxx\n\x1b[37m\x1b[40m     \n\x1b[31m\x1b[44mxxxxx\nxxxxx");
@@ -379,7 +435,7 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         Assert.True(quickConsole.KeyAvailable);
     }
-    
+
     [Fact]
     public void TestReadKey()
     {
@@ -395,8 +451,8 @@ public class QuickConsoleTestss
         Assert.True(readKeyInfo.Modifiers == ConsoleModifiers.None);
         Assert.True(readKeyInfo.KeyChar == 'A');
     }
-    
-        
+
+
     [Fact]
     public void TestReadText()
     {
@@ -405,7 +461,7 @@ public class QuickConsoleTestss
         var text = "what";
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('h', ConsoleKey.H, false, false, false),
@@ -420,7 +476,7 @@ public class QuickConsoleTestss
         Assert.True(readText == text);
         Assert.True(quickConsole.GetStringAt(0, 2, 5) == text);
     }
-    
+
     [Fact]
     public void TestReadTextWithBackspace()
     {
@@ -429,7 +485,7 @@ public class QuickConsoleTestss
         var text = "what";
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('h', ConsoleKey.H, false, false, false),
@@ -446,7 +502,7 @@ public class QuickConsoleTestss
         Assert.True(readText == text);
         Assert.True(quickConsole.GetStringAt(0, 2, 5) == text);
     }
-    
+
     [Fact]
     public void TestReadTextWithTooManyBackspaces()
     {
@@ -455,7 +511,7 @@ public class QuickConsoleTestss
         var text = "what";
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('\0', ConsoleKey.Backspace, false, false, false),
@@ -485,7 +541,7 @@ public class QuickConsoleTestss
         var text = "what!";
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('h', ConsoleKey.H, false, false, false),
@@ -502,8 +558,8 @@ public class QuickConsoleTestss
         var readText = quickConsole.ReadText(0, 2, 5);
         Assert.True(readText == text);
         Assert.True(quickConsole.GetStringAt(0, 2, 5) == text);
-    }   
-    
+    }
+
 
     [Fact]
     public void TestReadTextTooWideForBuffer()
@@ -513,7 +569,7 @@ public class QuickConsoleTestss
         var text = "wha";
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('h', ConsoleKey.H, false, false, false),
@@ -527,8 +583,8 @@ public class QuickConsoleTestss
         var readText = quickConsole.ReadText(2, 2, 5);
         Assert.True(readText == text);
         Assert.True(quickConsole.GetStringAt(2, 2, 5) == text);
-    }   
-    
+    }
+
     [Fact]
     public void TestReadTextIgnoreControlChars()
     {
@@ -537,7 +593,7 @@ public class QuickConsoleTestss
         var text = "what";
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('h', ConsoleKey.H, false, false, false),
@@ -554,7 +610,7 @@ public class QuickConsoleTestss
         Assert.True(readText == text);
         Assert.True(quickConsole.GetStringAt(0, 2, 5) == text);
     }
-    
+
     [Fact]
     public void TestReadTextOutOfBounds()
     {
@@ -562,7 +618,7 @@ public class QuickConsoleTestss
         var textWriter = new StreamWriter(memoryStream);
         var mockConsole = new MockSystemConsole
         {
-            KeyBuffer = 
+            KeyBuffer =
             [
                 new('w', ConsoleKey.W, false, false, false),
                 new('h', ConsoleKey.H, false, false, false),
@@ -576,29 +632,73 @@ public class QuickConsoleTestss
         var readText = quickConsole.ReadText(-1, 2, 5);
         Assert.True(readText == string.Empty);
     }
-    
+
     // Misc tests
     [Fact]
     public void TestGetBackground()
     {
         var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
-        quickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
-        Assert.True(quickConsole.CurrentBackgroundColor == QuickConsoleColor.Blue);
+        quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
+        Assert.True(quickConsole.CurrentBackgroundColor == global::RevLayle.QuickConsole.AnsiColor.Blue);
     }
-    
+
     [Fact]
     public void TestGetForeground()
     {
         var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
-        quickConsole.CurrentForegroundColor = QuickConsoleColor.Blue;
-        Assert.True(quickConsole.CurrentForegroundColor == QuickConsoleColor.Blue);
+        quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
+        Assert.True(quickConsole.CurrentForegroundColor == global::RevLayle.QuickConsole.AnsiColor.Blue);
     }
-    
+
     // DotNetSystemConsole based QuickConsole creation - mainyl for coverage
     [Fact]
     public void TestFromSystemConsole()
     {
-        var quickConsole = QuickConsole.FromSystemConsole();
+        var quickConsole = global::RevLayle.QuickConsole.InteractiveConsole.FromSystemConsole();
         Assert.True(quickConsole != null);
+    }
+
+    // IConsoleBuffer implementation tests
+    [Fact]
+    public void TestCellsProperty()
+    {
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        Assert.True(quickConsole.Cells != null);
+        Assert.True(quickConsole.Cells.All(x => x == ConsoleBufferCell.Zero));
+    }
+
+    [Fact]
+    public void TestHeightProperty()
+    {
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        Assert.True(quickConsole.Height == 5);
+    }
+
+    [Fact]
+    public void TestWidthProperty()
+    {
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        Assert.True(quickConsole.Width == 5);
+    }
+
+    [Fact]
+    public void TestIsOutOfBounds()
+    {
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        Assert.True(quickConsole.IsOutOfBounds(-1, -1) == true);
+        Assert.True(quickConsole.IsOutOfBounds(4, 6) == true);
+        Assert.True(quickConsole.IsOutOfBounds(4, 4) == false);
+    }
+
+    [Fact]
+    public void TestWriteBuffer()
+    {
+        var memoryStream = new MemoryStream();
+        var textWriter = new StreamWriter(memoryStream);
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        quickConsole.WriteBuffer(textWriter);
+        var text = Encoding.UTF8.GetString(memoryStream.ToArray());
+        Assert.True(
+            text == "\x1b[1;1H\x1b[37m\x1b[40m     \n     \n     \n     \n     ");
     }
 }

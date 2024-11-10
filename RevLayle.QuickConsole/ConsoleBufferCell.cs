@@ -1,18 +1,18 @@
-namespace RevLayle;
+namespace RevLayle.QuickConsole;
 
 public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
 {
     public char Character { get; set; }
-    public QuickConsoleColor Foreground { get; set; }
-    public QuickConsoleColor Background { get; set; }
+    public AnsiColor Foreground { get; set; }
+    public AnsiColor Background { get; set; }
     public ConsoleBufferCell WithCharacter(char c) => this with { Character = c };
-    public ConsoleBufferCell WithForeground(QuickConsoleColor color) => this with { Foreground = color };
-    public ConsoleBufferCell WithBackground(QuickConsoleColor color) => this with { Background = color };
-    public ConsoleBufferCell OverrideDefaults(QuickConsoleColor foreground, QuickConsoleColor background) =>
+    public ConsoleBufferCell WithForeground(AnsiColor color) => this with { Foreground = color };
+    public ConsoleBufferCell WithBackground(AnsiColor color) => this with { Background = color };
+    public ConsoleBufferCell OverrideDefaults(AnsiColor foreground, AnsiColor background) =>
         this with
         {
-            Foreground = Foreground == QuickConsoleColor.Default ? foreground : Foreground, 
-            Background = Background == QuickConsoleColor.Default ? background : Background,
+            Foreground = Foreground == AnsiColor.Default ? foreground : Foreground, 
+            Background = Background == AnsiColor.Default ? background : Background,
         };
     
     public static readonly ConsoleBufferCell Zero = default;

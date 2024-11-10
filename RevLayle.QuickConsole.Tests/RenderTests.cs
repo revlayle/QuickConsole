@@ -1,6 +1,8 @@
 ﻿using System.Text;
+using RevLayle.QuickConsole;
+using ConsoleColor = System.ConsoleColor;
 
-namespace RevLayle.QuickConsoleTests;
+namespace RevLayle.QuickConsole.Tests;
 
 public class RenderTests
 {
@@ -17,10 +19,10 @@ public class RenderTests
     {
         var zero = ConsoleBufferCell.Zero;
         var rbx = new ConsoleBufferCell
-            { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+            { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
         var buffer = GetSmallBuffer();
-        buffer.CurrentForegroundColor = QuickConsoleColor.White;
-        buffer.CurrentBackgroundColor = QuickConsoleColor.Black;
+        buffer.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.White;
+        buffer.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Black;
         PutBuffer(buffer, new []
         {
             rbx, rbx, rbx, rbx, rbx,

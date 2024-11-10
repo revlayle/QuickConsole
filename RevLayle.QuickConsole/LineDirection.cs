@@ -1,4 +1,4 @@
-namespace RevLayle;
+namespace RevLayle.QuickConsole;
 
 public enum LineDirection
 {

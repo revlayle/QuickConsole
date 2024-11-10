@@ -1,6 +1,7 @@
 using System.Text;
+using RevLayle.QuickConsole;
 
-namespace RevLayle.QuickConsoleTests;
+namespace RevLayle.QuickConsole.Tests;
 
 public class MockSystemConsole : ISystemConsole
 {

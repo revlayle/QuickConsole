@@ -1,13 +1,13 @@
 using System.Text;
 
-namespace RevLayle;
+namespace RevLayle.QuickConsole;
 
 public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 {
     //private readonly IConsoleBufferData _buffer = new ConsoleBufferData(width * height);
 
-    public QuickConsoleColor CurrentForegroundColor { get; set; } = QuickConsoleColor.White;
-    public QuickConsoleColor CurrentBackgroundColor { get; set; } = QuickConsoleColor.Black;
+    public AnsiColor CurrentForegroundColor { get; set; } = AnsiColor.White;
+    public AnsiColor CurrentBackgroundColor { get; set; } = AnsiColor.Black;
 
     public ConsoleBufferCell[] Cells { get; } = new ConsoleBufferCell[width * height];
 
@@ -16,8 +16,8 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public void WriteBuffer(TextWriter textWriter)
     {
-        var currentForeground = CurrentForegroundColor == QuickConsoleColor.Default ? QuickConsoleColor.Black : CurrentForegroundColor;
-        var currentBackground = CurrentBackgroundColor == QuickConsoleColor.Default ? QuickConsoleColor.Black : CurrentBackgroundColor;
+        var currentForeground = CurrentForegroundColor == AnsiColor.Default ? AnsiColor.Black : CurrentForegroundColor;
+        var currentBackground = CurrentBackgroundColor == AnsiColor.Default ? AnsiColor.Black : CurrentBackgroundColor;
         var builder = new StringBuilder();
         var prevForegroundColor = -1;
         var prevBackgroundColor = -1;
@@ -27,8 +27,8 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             var cell = Cells[i];
             if (i > 0 && i % Width == 0)
                 builder.Append('\n');
-            var foreground = cell.Foreground == QuickConsoleColor.Default ? currentForeground : cell.Foreground;
-            var background = cell.Background == QuickConsoleColor.Default ? currentBackground : cell.Background;
+            var foreground = cell.Foreground == AnsiColor.Default ? currentForeground : cell.Foreground;
+            var background = cell.Background == AnsiColor.Default ? currentBackground : cell.Background;
             if ((int) foreground != prevForegroundColor)
             {
                 prevForegroundColor = (int) foreground;
@@ -48,9 +48,9 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public bool IsOutOfBounds(int x, int y) => x < 0 || x >= Width || y < 0 || y >= Height;
 
     public void Text(int x, int y, string text) => Text(x, y, text, CurrentForegroundColor, CurrentBackgroundColor);
-    public void Text(int x, int y, string text, QuickConsoleColor color) =>
+    public void Text(int x, int y, string text, AnsiColor color) =>
         Text(x, y, text, color, CurrentBackgroundColor);
-    public void Text(int x, int y, string text, QuickConsoleColor color, QuickConsoleColor background)
+    public void Text(int x, int y, string text, AnsiColor color, AnsiColor background)
     {
         if (IsOutOfBounds(x, y)) return;
         var textArray = text.ToCharArray();

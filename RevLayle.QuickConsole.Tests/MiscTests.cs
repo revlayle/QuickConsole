@@ -1,6 +1,7 @@
 ﻿using NuGet.Frameworks;
+using RevLayle.QuickConsole;
 
-namespace RevLayle.QuickConsoleTests;
+namespace RevLayle.QuickConsole.Tests;
 
 public class MiscTests
 {
