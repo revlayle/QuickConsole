@@ -12,11 +12,6 @@ public class RenderTests
             if (i < buffer.Cells.Length) buffer.Cells[i] = cells[i];
     }
 
-    private static bool IsZeroCell(ConsoleBufferCell cell) =>
-        cell.Character == 0 && cell.Background == 0 && cell.Foreground == 0;
-
-    private Func<ConsoleBufferCell, bool> IsCellComparer(ConsoleBufferCell sourceCell) =>
-        x => sourceCell.Character == x.Character && sourceCell.Background == x.Background;
     [Fact]
     public void RenderSimpleToStream()
     {
