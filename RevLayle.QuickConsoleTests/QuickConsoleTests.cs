@@ -4,12 +4,8 @@ namespace RevLayle.QuickConsoleTests;
 
 public class QuickConsoleTestss
 {
-    private QuickConsole GetQuickConsole(int w, int h, ISystemConsole systemConsole)
-    {
-        var ret = new QuickConsole(systemConsole);
-        ret.BufferSize(w, h);
-        return ret;
-    }
+    private QuickConsole GetQuickConsole(int w, int h, ISystemConsole systemConsole) =>
+        new(systemConsole, w, h);
 
     private IConsoleBuffer GetBuffer(int w = 5, int h = 5) => new ConsoleBuffer(w, h);
 
@@ -596,5 +592,13 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
         quickConsole.CurrentForegroundColor = QuickConsoleColor.Blue;
         Assert.True(quickConsole.CurrentForegroundColor == QuickConsoleColor.Blue);
+    }
+    
+    // DotNetSystemConsole based QuickConsole creation - mainyl for coverage
+    [Fact]
+    public void TestFromSystemConsole()
+    {
+        var quickConsole = QuickConsole.FromSystemConsole();
+        Assert.True(quickConsole != null);
     }
 }

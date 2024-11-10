@@ -4,20 +4,18 @@ namespace RevLayle;
 
 public class QuickConsole
 {
+    public static QuickConsole FromSystemConsole(int width = 80, int height = 25) => 
+        new(new DotNetSystemConsole(), width, height);
+    
     private readonly ISystemConsole _systemConsole;
-    public QuickConsole(ISystemConsole systemConsole)
+    public QuickConsole(ISystemConsole systemConsole, int width = 80, int height = 25)
     { 
         _systemConsole = systemConsole;
         _systemConsole.CursorVisible = false;
-        _buffer = new ConsoleBuffer(80, 25);
+        _buffer = new ConsoleBuffer(width, height);
     }
 
     private IConsoleBuffer _buffer;
-    
-    public void BufferSize(int width, int height)
-    {
-        _buffer = new ConsoleBuffer(width, height);
-    }
 
     public void WriteBuffer()
     {

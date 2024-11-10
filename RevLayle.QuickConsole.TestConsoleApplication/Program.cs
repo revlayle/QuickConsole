@@ -1,7 +1,6 @@
 ﻿using RevLayle;
 
-var quickConsole = new QuickConsole(new DotNetSystemConsole());
-quickConsole.BufferSize(60, 20);
+var quickConsole = new QuickConsole(new DotNetSystemConsole(), 60, 20);
 var vstart = 2;
 var vend = 18;
 
