@@ -152,7 +152,8 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     {
         if (IsOutOfBounds(x, y)) return string.Empty;
         var idx = x + y * Width;
-        return new string(Cells[idx..(idx + length)].Select(x => x.Character).ToArray()).Trim((char)0);
+        return new string(Cells[idx..(idx + length)].Select(cell => cell.Character)
+            .ToArray()).Trim((char)0);
     }
 
     public void Draw(int x, int y, IConsoleBuffer buffer)

@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace RevLayle;
 
 public class DotNetSystemConsole : ISystemConsole
 {
     public bool CursorVisible
     {
+        [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")] 
         get => Console.CursorVisible;
         set => Console.CursorVisible = value;
     }
