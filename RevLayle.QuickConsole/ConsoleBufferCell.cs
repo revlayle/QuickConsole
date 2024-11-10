@@ -2,13 +2,6 @@ namespace RevLayle;
 
 public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
 {
-    public ConsoleBufferCell()
-    {
-        Character = '\0';
-        Foreground = QuickConsoleColor.Default;
-        Background = QuickConsoleColor.Default;
-    }
-
     public char Character { get; set; }
     public QuickConsoleColor Foreground { get; set; }
     public QuickConsoleColor Background { get; set; }
@@ -23,7 +16,7 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
         };
     
     public static readonly ConsoleBufferCell Zero = default;
-    public static ConsoleBufferCell FromChar(char c) => new ConsoleBufferCell { Character = c };
+    public static ConsoleBufferCell FromChar(char c) => new() { Character = c };
 
     public static bool operator ==(ConsoleBufferCell left, ConsoleBufferCell right) => left.Equals(right);
 

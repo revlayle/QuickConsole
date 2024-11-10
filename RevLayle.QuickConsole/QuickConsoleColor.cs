@@ -2,13 +2,13 @@ namespace RevLayle;
 
 public enum QuickConsoleColor
 {
-    Black = 0,
-    Red = 1, 
-    Green = 2,
-    Yellow = 3,
-    Blue = 4,
-    Magenta = 5,
-    Cyan = 6,
-    White = 7,
-    Default = int.MaxValue,
+    Default = 0,
+    Black = 1,
+    Red = 2, 
+    Green = 3,
+    Yellow = 4,
+    Blue = 5,
+    Magenta = 6,
+    Cyan = 7,
+    White = 8,
 }

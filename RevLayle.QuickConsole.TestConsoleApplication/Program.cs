@@ -17,7 +17,7 @@ var coloredSpace = new ConsoleBufferCell { Character = ' ', Foreground = QuickCo
 while (true)
 {
     QuickConsole.Rectangle(0, 0, 60, 20, coloredSpace);
-    QuickConsole.Draw(2, currv, cardBuffer, true);
+    QuickConsole.Draw(2, currv, cardBuffer);
     QuickConsole.WriteBuffer();
     Thread.Sleep(200);
     currv++;

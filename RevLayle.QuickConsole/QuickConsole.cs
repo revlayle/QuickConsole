@@ -5,12 +5,25 @@ namespace RevLayle;
 public static class QuickConsole
 {
     static QuickConsole()
-    {
-        System.Console.CursorVisible = false;
+    { 
+        if (Environment.UserInteractive == true)
+            SetCursorVisible(false);
         _buffer = new ConsoleBuffer(80, 25);
     }
 
     private static IConsoleBuffer _buffer;
+
+    private static void SetCursorVisible(bool visible)
+    {
+        try
+        {
+            Console.CursorVisible = visible;
+        }
+        catch (IOException ioex)
+        {
+            // eat exception
+        }
+    }
 
     public static void BufferSize(int width, int height)
     {
@@ -19,9 +32,10 @@ public static class QuickConsole
 
     public static void WriteBuffer()
     {
-        var stream = Console.OpenStandardOutput();
-        _buffer.WriteBuffer(stream);
+        _buffer.WriteBuffer(Console.Out);
     }
+    
+    public static IConsoleBuffer GetBuffer() => _buffer;
 
     public static bool KeyAvailable => Console.KeyAvailable;
     public static ConsoleKeyInfo ReadKey() => Console.ReadKey(true);
@@ -65,9 +79,9 @@ public static class QuickConsole
                 actualLength++;
             }
 
-            Console.CursorVisible = false;
+            SetCursorVisible(false);
             WriteBuffer();
-            Console.CursorVisible = true;
+            SetCursorVisible(true);
             Console.SetCursorPosition(x + actualLength, y);
         }
 
@@ -91,6 +105,6 @@ public static class QuickConsole
         => _buffer.Line(x, y, length, direction, cell);
     public static ConsoleBufferCell GetCellAt(int x, int y) => _buffer.GetCellAt(x, y);
     public static string GetStringAt(int x, int y, int length) => _buffer.GetStringAt(x, y, length);
-    public static void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
-        => _buffer.Draw(x, y, buffer, zeroCharIsTransparent);
+    public static void Draw(int x, int y, IConsoleBuffer buffer)
+        => _buffer.Draw(x, y, buffer);
 }

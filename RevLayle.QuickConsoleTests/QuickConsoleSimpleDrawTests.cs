@@ -1,8 +1,9 @@
-namespace RevLayle.QuickConsole.Tests;
+namespace RevLayle.QuickConsoleTests;
 
-public class SimpleDrawTests
+public class QuickConsoleSimpleDrawTests
 {
-    private IConsoleBuffer GetSmallBuffer() => new ConsoleBuffer(5, 5);
+    private void SetQuickConsoleBuffer(int w, int h) => QuickConsole.BufferSize(w, h);
+    private IConsoleBuffer GetBuffer(int w = 5, int h = 5) => new ConsoleBuffer(w, h);
 
     private static bool IsZeroCell(ConsoleBufferCell cell) =>
         cell.Character == 0 && cell.Background == 0 && cell.Foreground == 0;
@@ -13,25 +14,25 @@ public class SimpleDrawTests
     [Fact]
     public void TestEmptyBuffer()
     {
-        var buffer = GetSmallBuffer();
-        Assert.True(buffer.Cells.All(IsZeroCell));
+        SetQuickConsoleBuffer(5, 5);
+        Assert.True(QuickConsole.GetBuffer().Cells.All(IsZeroCell));
     }
 
     [Fact]
     public void TestFullRectangle()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var cell = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
-        buffer.Rectangle(0, 0, 5, 5, cell);
+        QuickConsole.Rectangle(0, 0, 5, 5, cell);
 
-        Assert.True(buffer.Cells.All(IsCellComparer(cell)));
+        Assert.True(QuickConsole.GetBuffer().Cells.All(IsCellComparer(cell)));
     }
 
     [Fact]
     public void TestPartialRectangle()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var filled = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
@@ -43,15 +44,15 @@ public class SimpleDrawTests
             zero, filled, filled, filled, zero,
             zero, filled, filled, filled, zero,
         };
-        buffer.Rectangle(1, 1, 3, 4, filled);
+        QuickConsole.Rectangle(1, 1, 3, 4, filled);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
     
     [Fact]
     public void TestSimpleBox()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var box = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
@@ -63,15 +64,15 @@ public class SimpleDrawTests
             zero, box, zero, box, zero,
             zero, box, box, box, zero,
         };
-        buffer.Box(1, 1, 3, 4, box);
+        QuickConsole.Box(1, 1, 3, 4, box);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
     
     [Fact]
     public void TestDetailedBox()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var corner = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
@@ -87,15 +88,15 @@ public class SimpleDrawTests
             zero, sides, zero, sides, zero,
             zero, corner, topBottom, corner, zero,
         };
-        buffer.Box(1, 1, 3, 4, sides, topBottom, corner);
+        QuickConsole.Box(1, 1, 3, 4, sides, topBottom, corner);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
     public void TestHLine()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var filled = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
@@ -107,15 +108,15 @@ public class SimpleDrawTests
             zero, zero, zero, zero, zero,
             zero, zero, zero, zero, zero,
         };
-        buffer.Line(1, 2, 4, LineDirection.Horizontal, filled);
+        QuickConsole.Line(1, 2, 4, LineDirection.Horizontal, filled);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
     public void TestVLine()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var filled = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
@@ -127,15 +128,15 @@ public class SimpleDrawTests
             zero, filled, zero, zero, zero,
             zero, filled, zero, zero, zero,
         };
-        buffer.Line(1, 0, 5, LineDirection.Vertical, filled);
+        QuickConsole.Line(1, 0, 5, LineDirection.Vertical, filled);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
     public void TestCrossedLines()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var line1 = new ConsoleBufferCell
             { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
@@ -149,16 +150,16 @@ public class SimpleDrawTests
             line2, line2, line2, line2, line2,
             zero, line1, zero, zero, zero,
         };
-        buffer.Line(1, 0, 5, LineDirection.Vertical, line1);
-        buffer.Line(0, 3, 5, LineDirection.Horizontal, line2);
+        QuickConsole.Line(1, 0, 5, LineDirection.Vertical, line1);
+        QuickConsole.Line(0, 3, 5, LineDirection.Horizontal, line2);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
     
     [Fact]
     public void TestText()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         const string text = "what";
         var textCells = text.Select(x => ConsoleBufferCell.FromChar(x)
             .OverrideDefaults(QuickConsoleColor.Red, QuickConsoleColor.Blue)).ToArray();
@@ -172,17 +173,42 @@ public class SimpleDrawTests
             zero, zero, zero, zero, zero,
         };
         
-        buffer.CurrentForegroundColor = QuickConsoleColor.Red;
-        buffer.CurrentBackgroundColor = QuickConsoleColor.Blue;
-        buffer.Text(0, 2, text);
+        QuickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
+        QuickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
+        QuickConsole.Text(0, 2, text);
 
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+    }
+    
+    
+    [Fact]
+    public void TestTextWithForegroundColor()
+    {
+        SetQuickConsoleBuffer(5, 5);
+        const string text = "what";
+        var textCells = text.Select(x => ConsoleBufferCell.FromChar(x)
+            .OverrideDefaults(QuickConsoleColor.Cyan, QuickConsoleColor.Blue)).ToArray();
+        var zero = ConsoleBufferCell.Zero;
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            textCells[0], textCells[1], textCells[2], textCells[3], zero,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+        };
+        
+        QuickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
+        QuickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
+        QuickConsole.Text(0, 2, text, QuickConsoleColor.Cyan);
+
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
     public void TestCells()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var x = new ConsoleBufferCell { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
         var y = new ConsoleBufferCell { Character = 'y', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Yellow };
@@ -195,47 +221,68 @@ public class SimpleDrawTests
             zero, zero, zero, zero, zero,
         };
 
-        buffer.Cell(2, 0, x);
-        buffer.Cell(4, 3, y);
+        QuickConsole.Cell(2, 0, x);
+        QuickConsole.Cell(4, 3, y);
         
-        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
     
     [Fact]
     public void TestGetCells()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         var zero = ConsoleBufferCell.Zero;
         var x = new ConsoleBufferCell { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
         var y = new ConsoleBufferCell { Character = 'y', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Yellow };
 
-        buffer.Cell(2, 0, x);
-        buffer.Cell(4, 3, y);
+        QuickConsole.Cell(2, 0, x);
+        QuickConsole.Cell(4, 3, y);
         
-        Assert.True(buffer.GetCellAt(2, 0) == x);
-        Assert.True(buffer.GetCellAt(2, 0) != y);
-        Assert.True(buffer.GetCellAt(2, 0) != zero);
-        Assert.True(buffer.GetCellAt(4, 3) != x);
-        Assert.True(buffer.GetCellAt(4, 3) == y);
-        Assert.True(buffer.GetCellAt(4, 3) != zero);
-        Assert.True(buffer.GetCellAt(4, 4) != x);
-        Assert.True(buffer.GetCellAt(4, 4) != y);
-        Assert.True(buffer.GetCellAt(4, 4) == zero);
+        Assert.True(QuickConsole.GetCellAt(2, 0) == x);
+        Assert.True(QuickConsole.GetCellAt(2, 0) != y);
+        Assert.True(QuickConsole.GetCellAt(2, 0) != zero);
+        Assert.True(QuickConsole.GetCellAt(4, 3) != x);
+        Assert.True(QuickConsole.GetCellAt(4, 3) == y);
+        Assert.True(QuickConsole.GetCellAt(4, 3) != zero);
+        Assert.True(QuickConsole.GetCellAt(4, 4) != x);
+        Assert.True(QuickConsole.GetCellAt(4, 4) != y);
+        Assert.True(QuickConsole.GetCellAt(4, 4) == zero);
     }
     
     [Fact]
     public void TestGetText()
     {
-        var buffer = GetSmallBuffer();
+        SetQuickConsoleBuffer(5, 5);
         const string text = "what";
         
-        buffer.CurrentForegroundColor = QuickConsoleColor.Red;
-        buffer.CurrentBackgroundColor = QuickConsoleColor.Blue;
-        buffer.Text(0, 2, text);
+        QuickConsole.CurrentForegroundColor = QuickConsoleColor.Red;
+        QuickConsole.CurrentBackgroundColor = QuickConsoleColor.Blue;
+        QuickConsole.Text(0, 2, text);
 
-        Assert.True(buffer.GetStringAt(0, 2, 4) == text);
-        Assert.True(buffer.GetStringAt(0, 2, 5) == text);
-        Assert.True(buffer.GetStringAt(2, 2, 3) == text[2..]);
-        Assert.True(buffer.GetStringAt(0, 0, 3) == string.Empty);
+        Assert.True(QuickConsole.GetStringAt(0, 2, 4) == text);
+        Assert.True(QuickConsole.GetStringAt(0, 2, 5) == text);
+        Assert.True(QuickConsole.GetStringAt(2, 2, 3) == text[2..]);
+        Assert.True(QuickConsole.GetStringAt(0, 0, 3) == string.Empty);
+    }
+
+    [Fact]
+    public void DrawBufferTest()
+    {
+        SetQuickConsoleBuffer(5, 5);
+        var smallerBuffer = GetBuffer(3, 3);
+        var zero = ConsoleBufferCell.Zero;
+        var rbx = new ConsoleBufferCell { Character = 'x', Foreground = QuickConsoleColor.Red, Background = QuickConsoleColor.Blue };
+        smallerBuffer.Rectangle(0, 0, 3, 3, rbx);
+        QuickConsole.Draw(1, 1, smallerBuffer);
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, rbx, rbx, rbx, zero,
+            zero, rbx, rbx, rbx, zero,
+            zero, rbx, rbx, rbx, zero,
+            zero, zero, zero, zero, zero,
+        };
+        
+        Assert.True(QuickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
     }
 }

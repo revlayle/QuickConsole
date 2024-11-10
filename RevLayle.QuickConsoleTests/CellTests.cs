@@ -1,4 +1,4 @@
-namespace RevLayle.QuickConsole.Tests;
+namespace RevLayle.QuickConsoleTests;
 
 public class CellTests
 {

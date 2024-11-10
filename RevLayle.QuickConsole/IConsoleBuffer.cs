@@ -9,7 +9,7 @@ public interface IConsoleBuffer
     int Height { get; }
     QuickConsoleColor CurrentForegroundColor { get; set; }
     QuickConsoleColor CurrentBackgroundColor { get; set; }
-    void WriteBuffer(Stream stream);
+    void WriteBuffer(TextWriter textWriter);
     bool IsOutOfBounds(int x, int y);
     void Text(int x, int y, string text);
     void Text(int x, int y, string text, QuickConsoleColor color);
@@ -21,5 +21,5 @@ public interface IConsoleBuffer
     void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell);
     ConsoleBufferCell GetCellAt(int x, int y);
     string GetStringAt(int x, int y, int length);
-    void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent);
+    void Draw(int x, int y, IConsoleBuffer buffer);
 }

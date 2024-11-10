@@ -11,11 +11,13 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public ConsoleBufferCell[] Cells { get; } = new ConsoleBufferCell[width * height];
 
-    public int Width { get; private set; } = width;
-    public int Height  { get; private set; } = height;
+    public int Width { get; } = width;
+    public int Height  { get; } = height;
 
-    public void WriteBuffer(Stream stream)
+    public void WriteBuffer(TextWriter textWriter)
     {
+        var currentForeground = CurrentForegroundColor == QuickConsoleColor.Default ? QuickConsoleColor.Black : CurrentForegroundColor;
+        var currentBackground = CurrentBackgroundColor == QuickConsoleColor.Default ? QuickConsoleColor.Black : CurrentBackgroundColor;
         var builder = new StringBuilder();
         var prevForegroundColor = -1;
         var prevBackgroundColor = -1;
@@ -25,20 +27,22 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             var cell = Cells[i];
             if (i > 0 && i % Width == 0)
                 builder.Append('\n');
-            if ((int) cell.Foreground != prevForegroundColor)
+            var foreground = cell.Foreground == QuickConsoleColor.Default ? currentForeground : cell.Foreground;
+            var background = cell.Background == QuickConsoleColor.Default ? currentBackground : cell.Background;
+            if ((int) foreground != prevForegroundColor)
             {
-                prevForegroundColor = (int) cell.Foreground;
-                builder.Append($"\x1b[{30 + prevForegroundColor}m");
+                prevForegroundColor = (int) foreground;
+                builder.Append($"\x1b[{30 + prevForegroundColor - 1}m");
             }
-            if ((int) cell.Background != prevBackgroundColor)
+            if ((int) background != prevBackgroundColor)
             {
-                prevBackgroundColor = (int) cell.Background;
-                builder.Append($"\x1b[{40 + prevBackgroundColor}m");
+                prevBackgroundColor = (int) background;
+                builder.Append($"\x1b[{40 + prevBackgroundColor - 1}m");
             }
             builder.Append(char.IsControl(cell.Character) ? ' ' : cell.Character);
         }
-        stream.Write(Encoding.ASCII.GetBytes(builder.ToString()));
-        stream.Flush();
+        textWriter.Write(builder.ToString());
+        textWriter.Flush();
     }
     
     public bool IsOutOfBounds(int x, int y) => x < 0 || x >= Width || y < 0 || y >= Height;
@@ -151,7 +155,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         return new string(Cells[idx..(idx + length)].Select(x => x.Character).ToArray()).Trim((char)0);
     }
 
-    public void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)
+    public void Draw(int x, int y, IConsoleBuffer buffer)
     {
         if (IsOutOfBounds(x, y)) return;
         var idx = x + y * Width;
@@ -162,7 +166,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             if (bufferX == 0 && bufferIdx > 0)
                 idx += Width - buffer.Width;
             var sourceCell = buffer.Cells[bufferIdx];
-            if (bufferX < maxWidth && idx < Cells.Length && (zeroCharIsTransparent == false || sourceCell.Character > 0))
+            if (bufferX < maxWidth && idx < Cells.Length && sourceCell.Character > 0)
                 Cells[idx] = sourceCell;
             idx++;
         }
