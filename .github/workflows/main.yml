@@ -1,3 +1,5 @@
+name: Main Build
+
 #Workflow triggered when a tag is pushed that looks like 'v1.0.0'
 on:
   push:
