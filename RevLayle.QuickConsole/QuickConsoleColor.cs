@@ -10,4 +10,5 @@ public enum QuickConsoleColor
     Magenta = 5,
     Cyan = 6,
     White = 7,
+    Default = int.MaxValue,
 }

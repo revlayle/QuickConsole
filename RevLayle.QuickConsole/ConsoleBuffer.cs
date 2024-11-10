@@ -62,28 +62,17 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             };
         }
     }
-
-    public void Char(int x, int y, char c) => Char(x, y, c, CurrentForegroundColor, CurrentBackgroundColor);
-    public void Char(int x, int y, char c, QuickConsoleColor color) =>
-        Char(x, y, c, color, CurrentBackgroundColor);
-    public void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background)
+    
+    public void Cell(int x, int y, ConsoleBufferCell cell)
     {
         if (IsOutOfBounds(x, y)) return;
-        Cells[x + y * Width] = new ConsoleBufferCell
-        {
-            Character = c,
-            Foreground = color,
-            Background = background,
-        };
+        Cells[x + y * Width] = cell;
     }
 
-    public void Rectangle(int x, int y, int width, int height, char c) =>
-        Rectangle(x, y, width, height, c, CurrentForegroundColor, CurrentBackgroundColor);
-    public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
-        Rectangle(x, y, width, height, c, color, CurrentBackgroundColor);
-    public void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background)
+    public void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cell)
     {
         if (IsOutOfBounds(x, y)) return;
+        cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var rowIdx = y * Width;
         for (var i = 0; i < height; i++)
         {
@@ -91,84 +80,60 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             {
                 var idx = j + x + rowIdx;
                 if (idx >= Cells.Length) break;
-                Cells[idx] = new ConsoleBufferCell
-                {
-                    Character = c,
-                    Foreground = color,
-                    Background = background,
-                };
+                Cells[idx] = cell;
             }
             rowIdx += Width;
         }
     }
-
-    public void Box(int x, int y, int width, int height, char c) =>
-        Box(x, y, width, height, c, c, c, CurrentForegroundColor, CurrentBackgroundColor);
-    public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
-        Box(x, y, width, height, c, c, c, color, CurrentBackgroundColor);
-    public void Box(int x, int y, int width, int height, char c, QuickConsoleColor color, QuickConsoleColor background) =>
-        Box(x, y, width, height, c, c, c, color, background);
-    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner) =>
-        Box(x, y, width, height, cSides, cTopBottom, cCorner, CurrentForegroundColor, CurrentBackgroundColor);
-    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color) =>
-        Box(x, y, width, height, cSides, cTopBottom, cCorner, color, CurrentBackgroundColor);
-    public void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner, QuickConsoleColor color,
-        QuickConsoleColor background)
+    
+    public void Box(int x, int y, int width, int height, ConsoleBufferCell cell) =>
+        Box(x, y, width, height, cell, cell, cell);
+    public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, ConsoleBufferCell cellTopBottom, ConsoleBufferCell cellCorner)
     {
         if (IsOutOfBounds(x, y)) return;
+        cellSides = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
+        cellTopBottom = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
+        cellCorner = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var rowIdx = y * Width;
         for (var i = 0; i < height; i++)
         {
             for (var j = 0; j < width; j++)
             {
-                var ch = (i, j) switch
+                var cell = (i, j) switch
                 {
-                    (0, 0) => cCorner,
-                    (0, var tj) when tj == width - 1 => cCorner,
-                    (0, _) => cTopBottom,
-                    (var ti, 0) when ti == height - 1 => cCorner,
-                    (_, 0) => cSides,
-                    var (ti, tj) when tj == width - 1 && ti == height - 1 => cCorner,
-                    var (ti, _) when ti == height - 1 => cTopBottom,
-                    var (_, tj) when tj == width - 1 => cSides,
-                    _ => (char)0,
+                    (0, 0) => cellCorner,
+                    (0, var tj) when tj == width - 1 => cellCorner,
+                    (0, _) => cellTopBottom,
+                    (var ti, 0) when ti == height - 1 => cellCorner,
+                    (_, 0) => cellSides,
+                    var (ti, tj) when tj == width - 1 && ti == height - 1 => cellCorner,
+                    var (ti, _) when ti == height - 1 => cellTopBottom,
+                    var (_, tj) when tj == width - 1 => cellSides,
+                    _ => ConsoleBufferCell.Zero,
                 };
-                if (ch == 0)
+                if (cell == ConsoleBufferCell.Zero)
                     continue;
                 if ((j + x) >= Width || (i + y) >= Height)
                     continue;
                 var idx = j + x + rowIdx;
-                Cells[idx] = new ConsoleBufferCell
-                {
-                    Character = ch,
-                    Foreground = color,
-                    Background = background,
-                };
+                Cells[idx] = cell;
             }
 
             rowIdx += Width;
         }
     }
-
-    public void Line(int x, int y, int length, LineDirection direction, char c) =>
-        Line(x, y, length, direction, c, CurrentForegroundColor, CurrentBackgroundColor);
-    public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color) =>
-        Line(x, y, length, direction, c, color, CurrentBackgroundColor);
-    public void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color, QuickConsoleColor background)
+    
+    public void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell)
     {
         if (IsOutOfBounds(x, y)) return;
+        cell = cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var inc = direction == LineDirection.Horizontal ? 1 : Width;
         var idx = x + y * Width;
         var maxLength = Math.Min(length, direction== LineDirection.Horizontal ? Width - x : Width - y);
         for (var i = 0; i < maxLength; i++)
         {
             if (idx >= Cells.Length) break;
-            Cells[idx] = new ConsoleBufferCell
-            {
-                Character = c,
-                Foreground = color,
-                Background = background,
-            };
+            Cells[idx] = cell;
             idx += inc;
         }
     }

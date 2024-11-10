@@ -12,7 +12,7 @@ public static class QuickConsole
 
     private static IConsoleBuffer _buffer;
 
-    public static void BufferSize(int width, int height, bool keepOriginalBuffer = false)
+    public static void BufferSize(int width, int height)
     {
         _buffer = new ConsoleBuffer(width, height);
     }
@@ -23,8 +23,8 @@ public static class QuickConsole
         _buffer.WriteBuffer(stream);
     }
 
-    public static bool KeyAvailable => System.Console.KeyAvailable;
-    public static ConsoleKeyInfo ReadKey() => System.Console.ReadKey(true);
+    public static bool KeyAvailable => Console.KeyAvailable;
+    public static ConsoleKeyInfo ReadKey() => Console.ReadKey(true);
 
     public static QuickConsoleColor CurrentForegroundColor
     {
@@ -40,7 +40,6 @@ public static class QuickConsole
     {
         if (_buffer.IsOutOfBounds(x, y)) return string.Empty;
         var actualLength = 0;
-        var rowOffset = y * _buffer.Width;
         Console.CursorVisible = true;
 
         ConsoleKeyInfo info;
@@ -52,7 +51,7 @@ public static class QuickConsole
                 if (actualLength > 0)
                 {
                     actualLength--;
-                    _buffer.Char(x + actualLength, y, (char)0);
+                    _buffer.Cell(x + actualLength, y, ConsoleBufferCell.Zero);
                 }
                 else continue;
             }
@@ -62,7 +61,7 @@ public static class QuickConsole
                 continue;
             else
             {
-                _buffer.Char(x + actualLength, y, info.KeyChar);
+                _buffer.Cell(x + actualLength, y, ConsoleBufferCell.FromChar(info.KeyChar));
                 actualLength++;
             }
 
@@ -80,35 +79,16 @@ public static class QuickConsole
     public static void Text(int x, int y, string text, QuickConsoleColor color) => _buffer.Text(x, y, text, color);
     public static void Text(int x, int y, string text, QuickConsoleColor color, QuickConsoleColor background) =>
         _buffer.Text(x, y, text, color, background);
-    public static void Char(int x, int y, char c) => _buffer.Char(x, y, c);
-    public static void Char(int x, int y, char c, QuickConsoleColor color) => _buffer.Char(x, y, c, color);
-    public static void Char(int x, int y, char c, QuickConsoleColor color, QuickConsoleColor background) =>
-        _buffer.Char(x, y, c, color, background);
-    public static void Rectangle(int x, int y, int width, int height, char c) =>
-        _buffer.Rectangle(x, y, width, height, c);
-    public static void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
-        _buffer.Rectangle(x, y, width, height, c, color);
-    public static void Rectangle(int x, int y, int width, int height, char c, QuickConsoleColor color,
-        QuickConsoleColor background) => _buffer.Rectangle(x, y, width, height, c, color, background);
-    public static void Box(int x, int y, int width, int height, char c) => _buffer.Box(x, y, width, height, c);
-    public static void Box(int x, int y, int width, int height, char c, QuickConsoleColor color) =>
-        _buffer.Box(x, y, width, height, c, color);
-    public static void Box(int x, int y, int width, int height, char c, QuickConsoleColor color,
-        QuickConsoleColor background) => _buffer.Box(x, y, width, height, c, color, background);
-    public static void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner) =>
-        _buffer.Box(x, y, width, height, cSides, cTopBottom, cCorner);
-    public static void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner,
-        QuickConsoleColor color) => _buffer.Box(x, y, width, height, cSides, cTopBottom, cCorner, color);
-    public static void Box(int x, int y, int width, int height, char cSides, char cTopBottom, char cCorner,
-        QuickConsoleColor color, QuickConsoleColor background) =>
-        _buffer.Box(x, y, width, height, cSides, cTopBottom, cCorner, color, background);
-    public static void Line(int x, int y, int length, LineDirection direction, char c) =>
-        _buffer.Line(x, y, length, direction, c);
-    public static void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color) =>
-        _buffer.Line(x, y, length, direction, c, color);
-    public static void Line(int x, int y, int length, LineDirection direction, char c, QuickConsoleColor color,
-        QuickConsoleColor background)
-        => _buffer.Line(x, y, length, direction, c, color, background);
+    public static void Cell(int x, int y, ConsoleBufferCell cell) => _buffer.Cell(x, y, cell);
+    public static void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cell) =>
+        _buffer.Rectangle(x, y, width, height, cell);
+    public static void Box(int x, int y, int width, int height, ConsoleBufferCell cell) => _buffer.Box(x, y, width, height, cell);
+    public static void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, ConsoleBufferCell cellTopBottom,
+        ConsoleBufferCell cellCorners) =>
+        _buffer.Box(x, y, width, height, cellSides, cellTopBottom, cellCorners);
+
+    public static void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell)
+        => _buffer.Line(x, y, length, direction, cell);
     public static ConsoleBufferCell GetCellAt(int x, int y) => _buffer.GetCellAt(x, y);
     public static string GetStringAt(int x, int y, int length) => _buffer.GetStringAt(x, y, length);
     public static void Draw(int x, int y, IConsoleBuffer buffer, bool zeroCharIsTransparent)

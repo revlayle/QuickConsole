@@ -26,8 +26,8 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} #Use the github action provided token
       - name: Build
         run: dotnet build ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}}
-      #- name: Test
-      #  run: dotnet test ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}} --no-build
+      - name: Test
+        run: dotnet test ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}} --no-build
       - name: Pack
         run: dotnet pack ${CSPROJ_FILE} --configuration Release /p:Version=${{steps.version-number.outputs.result}} --no-build --output nupkgs
       - name: Push
@@ -35,3 +35,4 @@ jobs:
         env:
           PACKAGE_ID: "RevLayle.QuickConsole"
           CSPROJ_FILE: "./RevLayle.QuickConsole/RevLayle.QuickConsole.csproj"
+          CSPROJ_TEST: "./RevLayle.QuickConsole.Tests/RevLayle.QuickConsole.Tests.csproj"
