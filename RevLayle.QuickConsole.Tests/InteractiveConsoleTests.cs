@@ -24,7 +24,7 @@ public class QuickConsoleTestss
     {
         var mockConsole = new MockSystemConsole();
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
-        Assert.True(quickConsole.GetBuffer().Cells.All(IsZeroCell));
+        Assert.True(quickConsole.Cells.All(IsZeroCell));
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class QuickConsoleTestss
         };
         quickConsole.Rectangle(0, 0, 5, 5, cell);
 
-        Assert.True(quickConsole.GetBuffer().Cells.All(IsCellComparer(cell)));
+        Assert.True(quickConsole.Cells.All(IsCellComparer(cell)));
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class QuickConsoleTestss
         };
         quickConsole.Rectangle(1, 1, 3, 4, filled);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -87,7 +87,7 @@ public class QuickConsoleTestss
         };
         quickConsole.Box(1, 1, 3, 4, box);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -121,7 +121,7 @@ public class QuickConsoleTestss
         };
         quickConsole.Box(1, 1, 3, 4, sides, topBottom, corner);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -145,7 +145,7 @@ public class QuickConsoleTestss
         };
         quickConsole.Line(1, 2, 4, LineDirection.Horizontal, filled);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -169,7 +169,7 @@ public class QuickConsoleTestss
         };
         quickConsole.Line(1, 0, 5, LineDirection.Vertical, filled);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -199,7 +199,7 @@ public class QuickConsoleTestss
         quickConsole.Line(1, 0, 5, LineDirection.Vertical, line1);
         quickConsole.Line(0, 3, 5, LineDirection.Horizontal, line2);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -225,7 +225,7 @@ public class QuickConsoleTestss
         quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
         quickConsole.Text(0, 2, text);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
 
@@ -252,7 +252,7 @@ public class QuickConsoleTestss
         quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
         quickConsole.Text(0, 2, text, global::RevLayle.QuickConsole.AnsiColor.Cyan);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -279,7 +279,7 @@ public class QuickConsoleTestss
         quickConsole.Text(0, 2, text, global::RevLayle.QuickConsole.AnsiColor.Cyan,
             global::RevLayle.QuickConsole.AnsiColor.Yellow);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -310,7 +310,7 @@ public class QuickConsoleTestss
         quickConsole.Cell(2, 0, x);
         quickConsole.Cell(4, 3, y);
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     [Fact]
@@ -384,7 +384,7 @@ public class QuickConsoleTestss
             zero, zero, zero, zero, zero,
         };
 
-        Assert.True(quickConsole.GetBuffer().Cells.SequenceEqual(cellsToMatch));
+        Assert.True(quickConsole.Cells.SequenceEqual(cellsToMatch));
     }
 
     // Rendering tests
@@ -410,7 +410,7 @@ public class QuickConsoleTestss
         var quickConsole = GetQuickConsole(5, 5, mockConsole);
         quickConsole.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.White;
         quickConsole.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Black;
-        PutBuffer(quickConsole.GetBuffer(), [
+        PutBuffer(quickConsole, [
             rbx, rbx, rbx, rbx, rbx,
             rbx, rbx, rbx, rbx, rbx,
             zero, zero, zero, zero, zero,

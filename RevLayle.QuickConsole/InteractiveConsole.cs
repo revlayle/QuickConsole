@@ -15,19 +15,17 @@ public class InteractiveConsole : IConsoleBuffer
 
     private IConsoleBuffer _buffer;
     
+    public void Update() => _buffer.WriteBuffer(_systemConsole.Out);
+    public bool KeyAvailable => _systemConsole.KeyAvailable;
+    public ConsoleKeyInfo ReadKey() => _systemConsole.ReadKey();
+
+    // IConsoleBuffer implementations
     public int Height => _buffer.Height;
     public int Width => _buffer.Width;
     public ConsoleBufferCell[] Cells => _buffer.Cells;
     public bool IsOutOfBounds(int x, int y) => _buffer.IsOutOfBounds(x, y);
 
     public void WriteBuffer(TextWriter textWriter) => _buffer.WriteBuffer(textWriter);
-    
-    public void Update() => _buffer.WriteBuffer(_systemConsole.Out);
-    
-    public IConsoleBuffer GetBuffer() => _buffer;
-
-    public bool KeyAvailable => _systemConsole.KeyAvailable;
-    public ConsoleKeyInfo ReadKey() => _systemConsole.ReadKey();
 
     public AnsiColor CurrentForegroundColor
     {
