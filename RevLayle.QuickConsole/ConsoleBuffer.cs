@@ -172,4 +172,81 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             idx++;
         }
     }
+
+    public void Scroll(int xd, int yd)
+    {
+        if (xd != 0)
+        {
+            var axd = Math.Abs(xd);
+            var count = Height * axd;
+            var tempBuffer = new ConsoleBufferCell[count];
+            for (int i = 0, x = 0; i < Cells.Length; i += Width, x += axd)
+                Array.Copy(Cells, i + (xd < 0 ? 0 : Width - axd), tempBuffer, x, axd);
+            Array.Copy(Cells, xd < 0 ? axd : 0, Cells, xd < 0 ? 0 : axd, Cells.Length - axd);
+            for (int i = 0, x = 0; i < Cells.Length; i += Width, x += axd)
+                Array.Copy(tempBuffer, x, Cells, i + (xd < 0 ? Width - axd : 0), axd);
+        }
+
+        if (yd != 0)
+        {
+            var count = Math.Abs(Width * yd);
+            var tempBuffer = new ConsoleBufferCell[count];
+            Array.Copy(Cells, yd < 0 ? 0 : Cells.Length - count, tempBuffer, 0, count);
+            Array.Copy(Cells, yd < 0 ? count : 0, Cells, yd < 0 ? 0 : count, Cells.Length - count);
+            Array.Copy(tempBuffer, 0, Cells, yd < 0 ? Cells.Length - count : 0, count);
+        }
+    }
+
+    public void Flip(bool horizontal, bool vertical)
+    {
+        var tempBuffer = new ConsoleBufferCell[Width];
+        for (int i = 0, j = Cells.Length - Width; i < Cells.Length; i += Width, j -= Width)
+        {
+            if (vertical && i < j)
+            {
+                Array.Copy(Cells, i, tempBuffer, 0, Width);
+                Array.Copy(Cells, j, Cells, i, Width);
+                Array.Copy(tempBuffer, 0, Cells, j, Width);
+            }
+            if (horizontal)
+                Array.Reverse(Cells, i, Width);
+        }
+    }
+
+    public void Rotate(int x, int y, int width, bool clockWise)
+    {
+        if (IsOutOfBounds(x, y)) return;
+        var rotateCopy = Copy(x, y, width, width);
+        if (rotateCopy.Width != rotateCopy.Height) return;
+        var sourceOffset = 0;
+        for (var i = 0; i < width; i++)
+        {
+            for (var j = 0; j < width; j++)
+            {
+                var offset = clockWise ? (width - i - 1 + x) + (j + y) * Width : x + i + (width - j - 1 + y) * Width;
+                Cells[offset] = rotateCopy.Cells[sourceOffset];
+                sourceOffset++;
+            }
+        }
+    }
+
+    public IConsoleBuffer Copy(int x, int y, int width, int height)
+    {
+        if (IsOutOfBounds(x, y))
+            throw new ArgumentException("X and/or Y out of bounds of console buffer");
+
+        var actualWidth = Math.Min(width, Width - x);
+        var actualHeight = Math.Min(height, Height - y);
+
+        var copy = new ConsoleBuffer(actualWidth, actualHeight);
+        var sourceIdx = x + y * Width;
+        var copyIdx = 0;
+        for (var i = 0; i < actualHeight; i++)
+        {
+            Array.Copy(Cells, sourceIdx, copy.Cells, copyIdx, actualWidth);
+            copyIdx += actualWidth;
+            sourceIdx += Width;
+        }
+        return copy;
+    }
 }

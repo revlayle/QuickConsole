@@ -99,4 +99,20 @@ public class OutOfBoundTests
         buffer.Text(0, 6, "hello");
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
     }
+
+    [Fact]
+    public void TestRotate()
+    {
+        var buffer = GetBuffer();
+        buffer.Rotate(-1, 0, 3, true);
+        buffer.Rotate(2, 3, 4, true);
+        Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
+    }
+    
+    [Fact]
+    public void TestCopy()
+    {
+        var buffer = GetBuffer();
+        Assert.Throws<ArgumentException>(() => buffer.Copy(-1, 0, 3, 3));
+    }
 }

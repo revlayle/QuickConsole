@@ -20,4 +20,8 @@ public interface IConsoleBuffer
     ConsoleBufferCell GetCellAt(int x, int y);
     string GetStringAt(int x, int y, int length);
     void Draw(int x, int y, IConsoleBuffer buffer);
+    void Scroll(int xd, int yd);
+    void Flip(bool horizontal, bool vertical);
+    void Rotate(int x, int y, int width, bool clockWise);
+    IConsoleBuffer Copy(int x, int y, int width, int height);
 }

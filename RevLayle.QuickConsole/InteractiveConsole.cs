@@ -95,4 +95,8 @@ public class InteractiveConsole : IConsoleBuffer
     public string GetStringAt(int x, int y, int length) => _buffer.GetStringAt(x, y, length);
     public void Draw(int x, int y, IConsoleBuffer buffer)
         => _buffer.Draw(x, y, buffer);
+    public void Scroll(int xd, int yd) => _buffer.Scroll(xd, yd);
+    public void Flip(bool horizontal, bool vertical) => _buffer.Flip(horizontal, vertical);
+    public void Rotate(int x, int y, int width, bool clockWise) => _buffer.Rotate(x, y, width, clockWise);
+    public IConsoleBuffer Copy(int x, int y, int width, int height) => _buffer.Copy(x, y, width, height);
 }
