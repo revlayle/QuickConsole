@@ -200,7 +200,7 @@ public class TransformTests
     [Fact]
     public void CopyTest()
     {
-        var buffer = GetBuffer();
+        var buffer = GetBuffer(5, 5);
         buffer.CurrentForegroundColor = AnsiColor.Blue;
         buffer.CurrentBackgroundColor = AnsiColor.Red;
         ConsoleBufferCell FromChar(char c) => ConsoleBufferCell.FromChar(c).OverrideDefaults(AnsiColor.Blue, AnsiColor.Red);
@@ -221,7 +221,7 @@ public class TransformTests
     [Fact]
     public void InteractiveCopyTest()
     {
-        var buffer = GetInteractiveBuffer();
+        var buffer = GetInteractiveBuffer(5, 5);
         buffer.CurrentForegroundColor = AnsiColor.Blue;
         buffer.CurrentBackgroundColor = AnsiColor.Red;
         ConsoleBufferCell FromChar(char c) => ConsoleBufferCell.FromChar(c).OverrideDefaults(AnsiColor.Blue, AnsiColor.Red);
