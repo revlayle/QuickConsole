@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace RevLayle.QuickConsole;
 
 /// <summary>
-/// Implementation of ISystemConsole that uses System.Console
+/// Implementation of ISystemConsole that uses <see cref="System.Console">System.Console</see>
 /// </summary>
 public class DotNetSystemConsole : ISystemConsole
 {

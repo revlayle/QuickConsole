@@ -10,10 +10,10 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
 
 | name | description |
 | --- | --- |
-| static readonly [Zero](ConsoleBufferCell/Zero.md) | A ConsoleBuffer cell where Character = 0, Foreground = AnsiColor.Default, and Background = AnsiColor.Default |
+| static readonly [Zero](ConsoleBufferCell/Zero.md) | A ConsoleBuffer cell where Character = `\0`, Foreground = AnsiColor.Default, and Background = AnsiColor.Default |
 | static [FromChar](ConsoleBufferCell/FromChar.md)(…) | Creates a new ConsoleBufferCell with the provided character, but Foreground and Background are AnsiColor.Default. |
 | [Background](ConsoleBufferCell/Background.md) { get; set; } | Background color of the cell. Defaults to AnsiColor.Default. |
-| [Character](ConsoleBufferCell/Character.md) { get; set; } | The character for this cell. Defaults to (char)0. |
+| [Character](ConsoleBufferCell/Character.md) { get; set; } | The character for this cell. Defaults to `'\0'` |
 | [Foreground](ConsoleBufferCell/Foreground.md) { get; set; } | Foreground color of the cell. Defaults to AnsiColor.Default. |
 | [Equals](ConsoleBufferCell/Equals.md)(…) | Actual quality test of this cell value against a different cell value. Cells are equal if Color, Foreground and Background all equal. |
 | override [Equals](ConsoleBufferCell/Equals.md)(…) | Actual quality test of this cell value against a different cell value. Cells are equal if Color, Foreground and Background all equal. |

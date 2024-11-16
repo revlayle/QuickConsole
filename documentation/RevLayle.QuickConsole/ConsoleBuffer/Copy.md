@@ -15,7 +15,7 @@ public IConsoleBuffer Copy(int x, int y, int width, int height)
 
 ## Return Value
 
-A new instance implementing IConsoleBuffer with the copies cells and the width and height provided. Note, if the width and/or height go beyond the console buffer's boundaries, you will get a smaller buffer copy.
+A new instance implementing [`IConsoleBuffer`](../IConsoleBuffer.md) with the copies cells and the width and height provided. Note, if the width and/or height go beyond the console buffer's boundaries, you will get a smaller buffer copy.
 
 ## Exceptions
 

@@ -1,6 +1,6 @@
 # ConsoleBuffer.Draw method
 
-Draws an external buffer onto this buffer. Any cells in the provided buffer that have a null character value are considered "transparent" and will not draw onto this buffer. If the width/height are beyond the boundary of this console buffer, the provided buffer is drawn truncated.
+Draws an external buffer onto this buffer. Any cells in the provided buffer that have a `\0` character value are considered "transparent" and will not draw onto this buffer. If the width/height are beyond the boundary of this console buffer, the provided buffer is drawn truncated.
 
 ```csharp
 public void Draw(int x, int y, IConsoleBuffer buffer)

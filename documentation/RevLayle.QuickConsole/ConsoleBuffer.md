@@ -21,10 +21,10 @@ public class ConsoleBuffer : IConsoleBuffer
 | [CurrentForegroundColor](ConsoleBuffer/CurrentForegroundColor.md) { get; set; } | Current foreground color of the console buffer. When rendering a buffer, if a cell has no defined foreground color (i.e. AnsiColor.Default), then this color is rendered. |
 | [Height](ConsoleBuffer/Height.md) { get; } | Height of the buffer in cells |
 | [Width](ConsoleBuffer/Width.md) { get; } | Width of the buffer in cells |
-| [Box](ConsoleBuffer/Box.md)(…) | Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawm. (2 methods) |
+| [Box](ConsoleBuffer/Box.md)(…) | Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawn. (2 methods) |
 | [Cell](ConsoleBuffer/Cell.md)(…) | Set a single cell in a console buffer. |
 | [Copy](ConsoleBuffer/Copy.md)(…) | Get a copy of a rectangular area of the console buffer |
-| [Draw](ConsoleBuffer/Draw.md)(…) | Draws an external buffer onto this buffer. Any cells in the provided buffer that have a null character value are considered "transparent" and will not draw onto this buffer. If the width/height are beyond the boundary of this console buffer, the provided buffer is drawn truncated. |
+| [Draw](ConsoleBuffer/Draw.md)(…) | Draws an external buffer onto this buffer. Any cells in the provided buffer that have a `\0` character value are considered "transparent" and will not draw onto this buffer. If the width/height are beyond the boundary of this console buffer, the provided buffer is drawn truncated. |
 | [Flip](ConsoleBuffer/Flip.md)(…) | Mirrors the content of a console buffer horizontally and/or vertically |
 | [GetCellAt](ConsoleBuffer/GetCellAt.md)(…) | Gets the ConsoleBufferCell value from the console buffer at position provided. |
 | [GetStringAt](ConsoleBuffer/GetStringAt.md)(…) | Gets a text string from the console buffer. |

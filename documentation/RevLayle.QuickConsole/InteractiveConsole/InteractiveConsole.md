@@ -1,8 +1,19 @@
 # InteractiveConsole constructor
 
+Creates an [`InteractiveConsole`](../InteractiveConsole.md) instance (with the provided width and height) that uses a provided implementation of [`ISystemConsole`](../ISystemConsole.md). This allows rendering to happen to an actual terminal.
+
 ```csharp
 public InteractiveConsole(ISystemConsole systemConsole, int width = 80, int height = 25)
 ```
+
+| parameter | description |
+| --- | --- |
+| width | Width of buffer, does not have to be the same as the actual width of the console. |
+| height | Height of buffer, does not have to be the same as the actual height of the console. |
+
+## Return Value
+
+A new [`InteractiveConsole`](../InteractiveConsole.md)
 
 ## See Also
 

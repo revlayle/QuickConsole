@@ -1,8 +1,14 @@
 # InteractiveConsole.ReadKey method
 
+Calls the [`InteractiveConsole`](../InteractiveConsole.md)'s buffer to it's [`ISystemConsole`](../ISystemConsole.md)'s [`ReadKey`](../ISystemConsole/ReadKey.md) method.
+
 ```csharp
 public ConsoleKeyInfo ReadKey()
 ```
+
+## Return Value
+
+A ConsoleKeyInfo value of the key read
 
 ## See Also
 

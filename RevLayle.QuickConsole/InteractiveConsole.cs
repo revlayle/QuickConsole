@@ -6,16 +6,24 @@
 public class InteractiveConsole : IConsoleBuffer
 {
     /// <summary>
-    /// Creates an InteractiveConsole instance (with the provided width and height) that uses DotNetSystemConsole
-    /// implementation of ISystemConsole.  This allows rendering to happen to an actual terminal.
+    /// Creates an <see cref="InteractiveConsole">InteractiveConsole</see> instance (with the provided width and height) that uses DotNetSystemConsole
+    /// implementation of <see cref="ISystemConsole">ISystemConsole</see>.  This allows rendering to happen to an actual terminal.
     /// </summary>
     /// <param name="width">Width of buffer, does not have to be the same as the actual width of the console.</param>
     /// <param name="height">Height of buffer, does not have to be the same as the actual height of the console.</param>
-    /// <returns>A new InteractiveConsole</returns>
+    /// <returns>A new <see cref="InteractiveConsole">InteractiveConsole</see></returns>
     public static InteractiveConsole FromSystemConsole(int width = 80, int height = 25) => 
         new(new DotNetSystemConsole(), width, height);
     
     private readonly ISystemConsole _systemConsole;
+    
+    /// <summary>
+    /// Creates an <see cref="InteractiveConsole">InteractiveConsole</see> instance (with the provided width and height) that uses a provided implementation of
+    /// <see cref="ISystemConsole">ISystemConsole</see>.  This allows rendering to happen to an actual terminal.
+    /// </summary>
+    /// <param name="width">Width of buffer, does not have to be the same as the actual width of the console.</param>
+    /// <param name="height">Height of buffer, does not have to be the same as the actual height of the console.</param>
+    /// <returns>A new <see cref="InteractiveConsole">InteractiveConsole</see></returns>
     public InteractiveConsole(ISystemConsole systemConsole, int width = 80, int height = 25)
     { 
         _systemConsole = systemConsole;
@@ -25,8 +33,21 @@ public class InteractiveConsole : IConsoleBuffer
 
     private IConsoleBuffer _buffer;
     
+    /// <summary>
+    /// Renders the current state of the <see cref="InteractiveConsole">InteractiveConsole</see>'s buffer to it's
+    /// <see cref="ISystemConsole">ISystemConsole</see>'s <see cref="ISystemConsole.Out">Out</see> property.
+    /// </summary>
     public void Update() => _buffer.WriteBuffer(_systemConsole.Out);
+    /// <summary>
+    /// Get the value of the <see cref="InteractiveConsole">InteractiveConsole</see>'s buffer to it's
+    /// <see cref="ISystemConsole">ISystemConsole</see>'s <see cref="ISystemConsole.KeyAvailable">KeyAvailable</see> property.
+    /// </summary>
     public bool KeyAvailable => _systemConsole.KeyAvailable;
+    /// <summary>
+    /// Calls the <see cref="InteractiveConsole">InteractiveConsole</see>'s buffer to it's
+    /// <see cref="ISystemConsole">ISystemConsole</see>'s <see cref="ISystemConsole.ReadKey">ReadKey</see> method.
+    /// </summary>
+    /// <returns>A ConsoleKeyInfo value of the key read</returns>
     public ConsoleKeyInfo ReadKey() => _systemConsole.ReadKey();
 
     // IConsoleBuffer implementations
@@ -47,6 +68,16 @@ public class InteractiveConsole : IConsoleBuffer
         get => _buffer.CurrentBackgroundColor;
         set => _buffer.CurrentBackgroundColor = value;
     }
+    /// <summary>
+    /// Reads text interactively from the console represented by the internal <see cref="ISystemConsole">ISystemConsole</see> implementation.
+    /// The result is kept in the console buffer and as a return value.  Backspace key is recognized to delete
+    /// characters input. The enter key read from the input signals the end of input and the string is returned.
+    /// </summary>
+    /// <param name="x">X position in the terminal and console buffer to output text being read from the input</param>
+    /// <param name="y">Y position in the terminal and console buffer to output text being read from the input</param>
+    /// <param name="maxLength">Maximum length of string to read. Once the cursor of the console reaches this length
+    /// or the width of the console buffer, no more keys are read for the string.</param>
+    /// <returns>The string read (and output to the buffer) until enter is pressed.</returns>
     public string ReadText(int x, int y, int maxLength)
     {
         if (_buffer.IsOutOfBounds(x, y)) return string.Empty;

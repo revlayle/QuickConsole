@@ -1,6 +1,6 @@
 # ConsoleBuffer.Box method (1 of 2)
 
-Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawm.
+Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawn.
 
 ```csharp
 public void Box(int x, int y, int width, int height, ConsoleBufferCell cell)
@@ -24,7 +24,7 @@ public void Box(int x, int y, int width, int height, ConsoleBufferCell cell)
 
 # ConsoleBuffer.Box method (2 of 2)
 
-Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawm.
+Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawn.
 
 ```csharp
 public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, 

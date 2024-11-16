@@ -11,12 +11,12 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 {
     /// <summary>
     /// Current foreground color of the console buffer. When rendering a buffer, if a cell has no defined foreground
-    /// color (i.e. AnsiColor.Default), then this color is rendered.
+    /// color (i.e. <see cref="AnsiColor.Default">AnsiColor.Default</see>), then this color is rendered.
     /// </summary>
     public AnsiColor CurrentForegroundColor { get; set; } = AnsiColor.White;
     /// <summary>
     /// Current background color of the console buffer. When rendering a buffer, if a cell has no defined background
-    /// color (i.e. AnsiColor.Default), then this color is rendered.
+    /// color (i.e. <see cref="AnsiColor.Default">AnsiColor.Default</see>), then this color is rendered.
     /// </summary>
     public AnsiColor CurrentBackgroundColor { get; set; } = AnsiColor.Black;
 
@@ -167,7 +167,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     
     /// <summary>
     /// Draws a box in the console buffer.  Only the frame is drawn, none of the cells inside the box are affected.
-    /// If the width and/or height go outside the boundary of the console buffer, those edges are not drawm.
+    /// If the width and/or height go outside the boundary of the console buffer, those edges are not drawn.
     /// </summary>
     /// <param name="x">X position of the top-left corner of the box</param>
     /// <param name="y">Y position of the top-left corner of the box</param>
@@ -178,7 +178,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         Box(x, y, width, height, cell, cell, cell);
     /// <summary>
     /// Draws a box in the console buffer.  Only the frame is drawn, none of the cells inside the box are affected.
-    /// If the width and/or height go outside the boundary of the console buffer, those edges are not drawm.
+    /// If the width and/or height go outside the boundary of the console buffer, those edges are not drawn.
     /// </summary>
     /// <param name="x">X position of the top-left corner of the box</param>
     /// <param name="y">Y position of the top-left corner of the box</param>
@@ -254,7 +254,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="x">X position of the cell to get the value for</param>
     /// <param name="y">X position of the cell to get the value for</param>
     /// <returns>ConsoleBufferCell value of the cell</returns>
-    /// <exception cref="ArgumentException">X o Y value is out-of-bounds of the console buffer.</exception>
+    /// <exception cref="ArgumentException">X and/or Y value is out-of-bounds of the console buffer.</exception>
     public ConsoleBufferCell GetCellAt(int x, int y)
     {
         if (IsOutOfBounds(x, y)) throw new ArgumentException("X and/or Y out of bounds of console buffer");
@@ -269,7 +269,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="length">How many cells to read.  If length go outside the boundary of the console buffer, read
     /// length is truncated.</param>
     /// <returns>Text string read from the buffer, sans any color information. Out-of-bounds coordinates return an
-    /// empty string.  0 or negative length values return an empty string.  Returned strings with null character values
+    /// empty string.  0 or negative length values return an empty string.  Returned strings with <c>\0</c> character values
     /// are trimmed from the string.</returns>
     public string GetStringAt(int x, int y, int length)
     {
@@ -281,7 +281,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     }
 
     /// <summary>
-    /// Draws an external buffer onto this buffer.  Any cells in the provided buffer that have a null character value
+    /// Draws an external buffer onto this buffer.  Any cells in the provided buffer that have a <c>\0</c> character value
     /// are considered "transparent" and will not draw onto this buffer.  If the width/height are beyond the boundary
     /// of this console buffer, the provided buffer is drawn truncated.
     /// </summary>
@@ -393,7 +393,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="y">Y position of the top-left rectangular area to get a copy</param>
     /// <param name="width">Width of the area to copy</param>
     /// <param name="height">Height of the area to copy</param>
-    /// <returns>A new instance implementing IConsoleBuffer with the copies cells and the width and height
+    /// <returns>A new instance implementing <see cref="IConsoleBuffer">IConsoleBuffer</see> with the copies cells and the width and height
     /// provided. Note, if the width and/or height go beyond the console buffer's boundaries, you will get a smaller
     /// buffer copy.</returns>
     /// <exception cref="ArgumentException">X and/or Y are out-of-bounds, or width and height are not both greater than

@@ -1,5 +1,7 @@
 # InteractiveConsole.Update method
 
+Renders the current state of the [`InteractiveConsole`](../InteractiveConsole.md)'s buffer to it's [`ISystemConsole`](../ISystemConsole.md)'s [`Out`](../ISystemConsole/Out.md) property.
+
 ```csharp
 public void Update()
 ```

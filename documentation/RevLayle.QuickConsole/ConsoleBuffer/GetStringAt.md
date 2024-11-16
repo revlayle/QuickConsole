@@ -14,7 +14,7 @@ public string GetStringAt(int x, int y, int length)
 
 ## Return Value
 
-Text string read from the buffer, sans any color information. Out-of-bounds coordinates return an empty string. 0 or negative length values return an empty string. Returned strings with null character values are trimmed from the string.
+Text string read from the buffer, sans any color information. Out-of-bounds coordinates return an empty string. 0 or negative length values return an empty string. Returned strings with `\0` character values are trimmed from the string.
 
 ## See Also
 

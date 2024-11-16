@@ -1,5 +1,7 @@
 # InteractiveConsole.KeyAvailable property
 
+Get the value of the [`InteractiveConsole`](../InteractiveConsole.md)'s buffer to it's [`ISystemConsole`](../ISystemConsole.md)'s [`KeyAvailable`](../ISystemConsole/KeyAvailable.md) property.
+
 ```csharp
 public bool KeyAvailable { get; }
 ```

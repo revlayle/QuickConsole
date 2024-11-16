@@ -10,13 +10,13 @@ public class InteractiveConsole : IConsoleBuffer
 
 | name | description |
 | --- | --- |
-| [InteractiveConsole](InteractiveConsole/InteractiveConsole.md)(…) |  |
-| static [FromSystemConsole](InteractiveConsole/FromSystemConsole.md)(…) | Creates an InteractiveConsole instance (with the provided width and height) that uses DotNetSystemConsole implementation of ISystemConsole. This allows rendering to happen to an actual terminal. |
+| [InteractiveConsole](InteractiveConsole/InteractiveConsole.md)(…) | Creates an [`InteractiveConsole`](./InteractiveConsole.md) instance (with the provided width and height) that uses a provided implementation of [`ISystemConsole`](./ISystemConsole.md). This allows rendering to happen to an actual terminal. |
+| static [FromSystemConsole](InteractiveConsole/FromSystemConsole.md)(…) | Creates an [`InteractiveConsole`](./InteractiveConsole.md) instance (with the provided width and height) that uses DotNetSystemConsole implementation of [`ISystemConsole`](./ISystemConsole.md). This allows rendering to happen to an actual terminal. |
 | [Cells](InteractiveConsole/Cells.md) { get; } |  |
 | [CurrentBackgroundColor](InteractiveConsole/CurrentBackgroundColor.md) { get; set; } |  |
 | [CurrentForegroundColor](InteractiveConsole/CurrentForegroundColor.md) { get; set; } |  |
 | [Height](InteractiveConsole/Height.md) { get; } |  |
-| [KeyAvailable](InteractiveConsole/KeyAvailable.md) { get; } |  |
+| [KeyAvailable](InteractiveConsole/KeyAvailable.md) { get; } | Get the value of the [`InteractiveConsole`](./InteractiveConsole.md)'s buffer to it's [`ISystemConsole`](./ISystemConsole.md)'s [`KeyAvailable`](./ISystemConsole/KeyAvailable.md) property. |
 | [Width](InteractiveConsole/Width.md) { get; } |  |
 | [Box](InteractiveConsole/Box.md)(…) |  (2 methods) |
 | [Cell](InteractiveConsole/Cell.md)(…) |  |
@@ -27,13 +27,13 @@ public class InteractiveConsole : IConsoleBuffer
 | [GetStringAt](InteractiveConsole/GetStringAt.md)(…) |  |
 | [IsOutOfBounds](InteractiveConsole/IsOutOfBounds.md)(…) |  |
 | [Line](InteractiveConsole/Line.md)(…) |  |
-| [ReadKey](InteractiveConsole/ReadKey.md)() |  |
-| [ReadText](InteractiveConsole/ReadText.md)(…) |  |
+| [ReadKey](InteractiveConsole/ReadKey.md)() | Calls the [`InteractiveConsole`](./InteractiveConsole.md)'s buffer to it's [`ISystemConsole`](./ISystemConsole.md)'s [`ReadKey`](./ISystemConsole/ReadKey.md) method. |
+| [ReadText](InteractiveConsole/ReadText.md)(…) | Reads text interactively from the console represented by the internal [`ISystemConsole`](./ISystemConsole.md) implementation. The result is kept in the console buffer and as a return value. Backspace key is recognized to delete characters input. The enter key read from the input signals the end of input and the string is returned. |
 | [Rectangle](InteractiveConsole/Rectangle.md)(…) |  |
 | [Rotate](InteractiveConsole/Rotate.md)(…) |  |
 | [Scroll](InteractiveConsole/Scroll.md)(…) |  |
 | [Text](InteractiveConsole/Text.md)(…) |  (3 methods) |
-| [Update](InteractiveConsole/Update.md)() |  |
+| [Update](InteractiveConsole/Update.md)() | Renders the current state of the [`InteractiveConsole`](./InteractiveConsole.md)'s buffer to it's [`ISystemConsole`](./ISystemConsole.md)'s [`Out`](./ISystemConsole/Out.md) property. |
 | [WriteBuffer](InteractiveConsole/WriteBuffer.md)(…) |  |
 
 ## See Also

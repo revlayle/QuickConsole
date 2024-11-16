@@ -1,6 +1,6 @@
 # InteractiveConsole.FromSystemConsole method
 
-Creates an InteractiveConsole instance (with the provided width and height) that uses DotNetSystemConsole implementation of ISystemConsole. This allows rendering to happen to an actual terminal.
+Creates an [`InteractiveConsole`](../InteractiveConsole.md) instance (with the provided width and height) that uses DotNetSystemConsole implementation of [`ISystemConsole`](../ISystemConsole.md). This allows rendering to happen to an actual terminal.
 
 ```csharp
 public static InteractiveConsole FromSystemConsole(int width = 80, int height = 25)
@@ -13,7 +13,7 @@ public static InteractiveConsole FromSystemConsole(int width = 80, int height = 
 
 ## Return Value
 
-A new InteractiveConsole
+A new [`InteractiveConsole`](../InteractiveConsole.md)
 
 ## See Also
 

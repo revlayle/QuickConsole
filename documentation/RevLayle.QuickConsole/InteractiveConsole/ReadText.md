@@ -1,8 +1,20 @@
 # InteractiveConsole.ReadText method
 
+Reads text interactively from the console represented by the internal [`ISystemConsole`](../ISystemConsole.md) implementation. The result is kept in the console buffer and as a return value. Backspace key is recognized to delete characters input. The enter key read from the input signals the end of input and the string is returned.
+
 ```csharp
 public string ReadText(int x, int y, int maxLength)
 ```
+
+| parameter | description |
+| --- | --- |
+| x | X position in the terminal and console buffer to output text being read from the input |
+| y | Y position in the terminal and console buffer to output text being read from the input |
+| maxLength | Maximum length of string to read. Once the cursor of the console reaches this length or the width of the console buffer, no more keys are read for the string. |
+
+## Return Value
+
+The string read (and output to the buffer) until enter is pressed.
 
 ## See Also
 

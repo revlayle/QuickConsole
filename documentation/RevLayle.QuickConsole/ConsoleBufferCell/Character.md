@@ -1,6 +1,6 @@
 # ConsoleBufferCell.Character property
 
-The character for this cell. Defaults to (char)0.
+The character for this cell. Defaults to `'\0'`
 
 ```csharp
 public char Character { get; set; }

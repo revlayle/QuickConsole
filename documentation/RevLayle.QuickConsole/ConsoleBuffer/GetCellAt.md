@@ -19,7 +19,7 @@ ConsoleBufferCell value of the cell
 
 | exception | condition |
 | --- | --- |
-| ArgumentException | X o Y value is out-of-bounds of the console buffer. |
+| ArgumentException | X and/or Y value is out-of-bounds of the console buffer. |
 
 ## See Also
 
