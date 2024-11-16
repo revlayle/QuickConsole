@@ -2,4 +2,4 @@
 # QuickConsole
 QuickConsole provides a portable console buffer and an interactive buffer display.
 
-More to come...
+[Library documentation (auto-generated)](./documentation/RevLayle.QuickConsole.md)

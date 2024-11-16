@@ -1,7 +1,17 @@
 ﻿namespace RevLayle.QuickConsole;
 
+/// <summary>
+/// An IConsoleBuffer compatible class that can read data from an instance of ISystemConsole.
+/// </summary>
 public class InteractiveConsole : IConsoleBuffer
 {
+    /// <summary>
+    /// Creates an InteractiveConsole instance (with the provided width and height) that uses DotNetSystemConsole
+    /// implementation of ISystemConsole.  This allows rendering to happen to an actual terminal.
+    /// </summary>
+    /// <param name="width">Width of buffer, does not have to be the same as the actual width of the console.</param>
+    /// <param name="height">Height of buffer, does not have to be the same as the actual height of the console.</param>
+    /// <returns>A new InteractiveConsole</returns>
     public static InteractiveConsole FromSystemConsole(int width = 80, int height = 25) => 
         new(new DotNetSystemConsole(), width, height);
     
