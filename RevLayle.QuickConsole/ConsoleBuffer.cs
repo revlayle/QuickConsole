@@ -75,6 +75,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cell)
     {
+        if (width <= 0 || height <= 0) return;
         if (IsOutOfBounds(x, y)) return;
         cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var actualWidth = Math.Min(Width - x, width);
@@ -95,6 +96,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
         Box(x, y, width, height, cell, cell, cell);
     public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, ConsoleBufferCell cellTopBottom, ConsoleBufferCell cellCorner)
     {
+        if (width <= 0 || height <= 0) return;
         if (IsOutOfBounds(x, y)) return;
         cellSides = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         cellTopBottom = cellTopBottom.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
@@ -130,6 +132,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     
     public void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell)
     {
+        if (length <=0) return;
         if (IsOutOfBounds(x, y)) return;
         cell = cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var inc = direction == LineDirection.Horizontal ? 1 : Width;
@@ -150,6 +153,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public string GetStringAt(int x, int y, int length)
     {
+        if (length <= 0) return string.Empty;
         if (IsOutOfBounds(x, y)) return string.Empty;
         var idx = x + y * Width;
         return new string(Cells[idx..(idx + length)].Select(cell => cell.Character)
@@ -215,6 +219,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public void Rotate(int x, int y, int width, bool clockWise)
     {
+        if (width <= 0) return;
         if (IsOutOfBounds(x, y)) return;
         var rotateCopy = Copy(x, y, width, width);
         if (rotateCopy.Width != rotateCopy.Height) return;
@@ -232,6 +237,8 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     public IConsoleBuffer Copy(int x, int y, int width, int height)
     {
+        if (width <= 0 || height <= 0) 
+            throw new ArgumentException("Width and height must be greater than 0");
         if (IsOutOfBounds(x, y))
             throw new ArgumentException("X and/or Y out of bounds of console buffer");
 

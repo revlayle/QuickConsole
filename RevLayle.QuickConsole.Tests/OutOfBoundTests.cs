@@ -32,6 +32,8 @@ public class OutOfBoundTests
     {
         var buffer = GetBuffer();
         buffer.Box(-1, -1, 5, 5, _someCell);
+        buffer.Box(0, 0, 5, 0, _someCell);
+        buffer.Box(0, 0, -1, 0, _someCell);
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
     }
 
@@ -71,6 +73,10 @@ public class OutOfBoundTests
         buffer.Text(0, 0, "x");
         var text = buffer.GetStringAt(-1, 0, 3);
         Assert.True(text == string.Empty);
+        text = buffer.GetStringAt(0, 0, 0);
+        Assert.True(text == string.Empty);
+        text = buffer.GetStringAt(0, 0, -1);
+        Assert.True(text == string.Empty);
     }
 
     [Fact]
@@ -79,6 +85,8 @@ public class OutOfBoundTests
         var buffer = GetBuffer();
         buffer.Line(-1, -1, 3, LineDirection.Vertical, _someCell);
         buffer.Line(0, 6, 3, LineDirection.Horizontal, _someCell);
+        buffer.Line(2, 1, -2, LineDirection.Horizontal, _someCell);
+        buffer.Line(1, 1, -2, LineDirection.Vertical, _someCell);
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
     }
     
@@ -88,6 +96,8 @@ public class OutOfBoundTests
         var buffer = GetBuffer();
         buffer.Rectangle(-1, -1, 3, 5, _someCell);
         buffer.Rectangle(0, 6, 3, 5, _someCell);
+        buffer.Rectangle(0, 0, 0, 5, _someCell);
+        buffer.Rectangle(0, 0, 3, -1, _someCell);
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
     }
     
@@ -105,7 +115,8 @@ public class OutOfBoundTests
     {
         var buffer = GetBuffer();
         buffer.Rotate(-1, 0, 3, true);
-        buffer.Rotate(2, 3, 4, true);
+        buffer.Rotate(2, 3, 4, true);       
+        buffer.Rotate(2, 3, -1, true);
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
     }
     
@@ -114,5 +125,7 @@ public class OutOfBoundTests
     {
         var buffer = GetBuffer();
         Assert.Throws<ArgumentException>(() => buffer.Copy(-1, 0, 3, 3));
+        Assert.Throws<ArgumentException>(() => buffer.Copy(0, 0, 0, 3));
+        Assert.Throws<ArgumentException>(() => buffer.Copy(0, 0, 3, -1));
     }
 }
