@@ -1,6 +1,6 @@
 # InteractiveConsole.Height property
 
-Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Height`](../IConsoleBuffer/Height.md)
+Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Height`](../IConsoleBuffer/Height.md)
 
 ```csharp
 public int Height { get; }

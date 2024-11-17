@@ -1,6 +1,6 @@
 # InteractiveConsole.Draw method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Draw`](../IConsoleBuffer/Draw.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Draw`](../IConsoleBuffer/Draw.md)
 
 ```csharp
 public void Draw(int x, int y, IConsoleBuffer buffer)

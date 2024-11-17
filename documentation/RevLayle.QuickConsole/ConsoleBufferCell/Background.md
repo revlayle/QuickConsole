@@ -1,6 +1,6 @@
 # ConsoleBufferCell.Background property
 
-Background color of the cell. Defaults to Default.
+Background color of the cell. Defaults to [`AnsiColor`](../AnsiColor.md).Default.
 
 ```csharp
 public AnsiColor Background { get; set; }

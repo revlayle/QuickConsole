@@ -1,6 +1,6 @@
 # InteractiveConsole.GetCellAt method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`GetCellAt`](../IConsoleBuffer/GetCellAt.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`GetCellAt`](../IConsoleBuffer/GetCellAt.md)
 
 ```csharp
 public ConsoleBufferCell GetCellAt(int x, int y)

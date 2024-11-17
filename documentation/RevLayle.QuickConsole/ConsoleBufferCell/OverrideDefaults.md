@@ -1,6 +1,6 @@
 # ConsoleBufferCell.OverrideDefaults method
 
-Generate a new cell using the provided foreground color if this foreground is Ansi.Default and the provided background if this background is Default.
+Generate a new cell using the provided foreground color if this foreground is [`AnsiColor`](../AnsiColor.md).Default and the provided background if this background is [`AnsiColor`](../AnsiColor.md).Default.
 
 ```csharp
 public ConsoleBufferCell OverrideDefaults(AnsiColor foreground, AnsiColor background)
@@ -8,8 +8,8 @@ public ConsoleBufferCell OverrideDefaults(AnsiColor foreground, AnsiColor backgr
 
 | parameter | description |
 | --- | --- |
-| foreground | Foreground color to override Ansi.Default with. |
-| background | Background color to override Ansi.Default with. |
+| foreground | Foreground color to override [`AnsiColor`](../AnsiColor.md).Default with. |
+| background | Background color to override [`AnsiColor`](../AnsiColor.md).Default with. |
 
 ## Return Value
 

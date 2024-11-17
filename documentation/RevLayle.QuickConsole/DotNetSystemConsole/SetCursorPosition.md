@@ -1,6 +1,6 @@
 # DotNetSystemConsole.SetCursorPosition method
 
-This calls Int32)
+This calls System.Console.SetCursorPosition(int, int)
 
 ```csharp
 public void SetCursorPosition(int left, int top)

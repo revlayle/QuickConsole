@@ -1,6 +1,6 @@
 # InteractiveConsole.Scroll method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Scroll`](../IConsoleBuffer/Scroll.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Scroll`](../IConsoleBuffer/Scroll.md)
 
 ```csharp
 public void Scroll(int xd, int yd)

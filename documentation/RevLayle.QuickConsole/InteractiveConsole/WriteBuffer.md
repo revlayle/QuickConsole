@@ -1,6 +1,6 @@
 # InteractiveConsole.WriteBuffer method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`WriteBuffer`](../IConsoleBuffer/WriteBuffer.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`WriteBuffer`](../IConsoleBuffer/WriteBuffer.md)
 
 ```csharp
 public void WriteBuffer(TextWriter textWriter)

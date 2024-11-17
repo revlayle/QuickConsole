@@ -11,11 +11,11 @@ public class DotNetSystemConsole : ISystemConsole
 | name | description |
 | --- | --- |
 | [DotNetSystemConsole](DotNetSystemConsole/DotNetSystemConsole.md)() | The default constructor. |
-| [CursorVisible](DotNetSystemConsole/CursorVisible.md) { get; set; } | This gets/sets CursorVisible |
-| [KeyAvailable](DotNetSystemConsole/KeyAvailable.md) { get; } | This gets KeyAvailable |
-| [Out](DotNetSystemConsole/Out.md) { get; } | This gets Out |
-| [ReadKey](DotNetSystemConsole/ReadKey.md)() | This calls Boolean) where `intercept = true` |
-| [SetCursorPosition](DotNetSystemConsole/SetCursorPosition.md)(…) | This calls Int32) |
+| [CursorVisible](DotNetSystemConsole/CursorVisible.md) { get; set; } | This gets/sets System.Console.CursorVisible |
+| [KeyAvailable](DotNetSystemConsole/KeyAvailable.md) { get; } | This gets System.Console.KeyAvailable |
+| [Out](DotNetSystemConsole/Out.md) { get; } | This gets System.Console.Out |
+| [ReadKey](DotNetSystemConsole/ReadKey.md)() | This calls System.Console.ReadKey(true) |
+| [SetCursorPosition](DotNetSystemConsole/SetCursorPosition.md)(…) | This calls System.Console.SetCursorPosition(int, int) |
 
 ## See Also
 

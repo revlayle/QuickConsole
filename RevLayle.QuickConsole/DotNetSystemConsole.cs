@@ -8,7 +8,7 @@ namespace RevLayle.QuickConsole;
 public class DotNetSystemConsole : ISystemConsole
 {
     /// <summary>
-    /// This gets/sets <see cref="System.Console.CursorVisible"/>
+    /// This gets/sets <see cref="System.Console.CursorVisible">System.Console.CursorVisible</see>
     /// </summary>
     public bool CursorVisible
     {
@@ -17,20 +17,20 @@ public class DotNetSystemConsole : ISystemConsole
         set => System.Console.CursorVisible = value;
     }
     /// <summary>
-    /// This gets <see cref="System.Console.KeyAvailable"/>
+    /// This gets <see cref="System.Console.KeyAvailable">System.Console.KeyAvailable</see>
     /// </summary>
     public bool KeyAvailable => Console.KeyAvailable;
     /// <summary>
-    /// This calls <see cref="System.Console.ReadKey(bool)" /> where <c>intercept = true</c>
+    /// This calls <see cref="System.Console.ReadKey(bool)">System.Console.ReadKey(true)</see>
     /// </summary>
     /// <returns>Returns the System.ConsoleKeyInfo value from the method call</returns>
     public ConsoleKeyInfo ReadKey() => Console.ReadKey(true);
     /// <summary>
-    /// This gets <see cref="System.Console.Out" />
+    /// This gets <see cref="System.Console.Out">System.Console.Out</see>
     /// </summary>
     public TextWriter Out => Console.Out;
     /// <summary>
-    /// This calls <see cref="System.Console.SetCursorPosition(int, int)"/>
+    /// This calls <see cref="System.Console.SetCursorPosition(int, int)">System.Console.SetCursorPosition(int, int)</see>
     /// </summary>
     /// <param name="left">"left" parameter passed to methods</param>
     /// <param name="top">"top" parameter passed to method</param>

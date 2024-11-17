@@ -1,6 +1,6 @@
 # InteractiveConsole.Width property
 
-Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Width`](../IConsoleBuffer/Width.md)
+Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Width`](../IConsoleBuffer/Width.md)
 
 ```csharp
 public int Width { get; }

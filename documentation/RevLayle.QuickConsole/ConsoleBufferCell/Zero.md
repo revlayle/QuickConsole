@@ -1,6 +1,6 @@
 # ConsoleBufferCell.Zero field
 
-A ConsoleBuffer cell where Character = `\0`, Foreground = Default, and Background = Default
+A ConsoleBuffer cell where Character = `\0`, Foreground = [`AnsiColor`](../AnsiColor.md).Default, and Background = [`AnsiColor`](../AnsiColor.md).Default.
 
 ```csharp
 public static readonly ConsoleBufferCell Zero;

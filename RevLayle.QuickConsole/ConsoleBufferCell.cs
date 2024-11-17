@@ -9,52 +9,58 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
     /// The character for this cell.  Defaults to <c>'\0'</c>
     /// </summary>
     public char Character { get; set; }
+
     /// <summary>
-    /// Foreground color of the cell. Defaults to <see cref="AnsiColor.Default"/>.
+    /// Foreground color of the cell. Defaults to <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/>.
     /// </summary>
     public AnsiColor Foreground { get; set; }
+
     /// <summary>
-    /// Background color of the cell. Defaults to <see cref="AnsiColor.Default"/>.
+    /// Background color of the cell. Defaults to <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/>.
     /// </summary>
     public AnsiColor Background { get; set; }
-    
+
     /// <summary>
     /// Generate a new cell with a different character, but the same foreground and background as the current cell.
     /// </summary>
     /// <param name="c">New character of the returned cell.</param>
     /// <returns>New ConsoleBufferCell.</returns>
     public ConsoleBufferCell WithCharacter(char c) => this with { Character = c };
+
     /// <summary>
     /// Generate a new cell with a different foreground color, but the same character and background as the current cell.
     /// </summary>
     /// <param name="color">New foreground of the returned cell.</param>
     /// <returns>New ConsoleBufferCell.</returns>
     public ConsoleBufferCell WithForeground(AnsiColor color) => this with { Foreground = color };
+
     /// <summary>
     /// Generate a new cell with a different background color, but the same character and foreground as the current cell.
     /// </summary>
     /// <param name="color">New background of the returned cell.</param>
     /// <returns>New ConsoleBufferCell.</returns> 
     public ConsoleBufferCell WithBackground(AnsiColor color) => this with { Background = color };
+
     /// <summary>
-    /// Generate a new cell using the provided foreground color if this foreground is Ansi.Default and the provided
-    /// background if this background is <see cref="AnsiColor.Default"/>.
+    /// Generate a new cell using the provided foreground color if this foreground is <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/>
+    /// and the provided background if this background is <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/>.
     /// </summary>
-    /// <param name="foreground">Foreground color to override Ansi.Default with.</param>
-    /// <param name="background">Background color to override Ansi.Default with.</param>
+    /// <param name="foreground">Foreground color to override <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/> with.</param>
+    /// <param name="background">Background color to override <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/> with.</param>
     /// <returns>New ConsoleBufferCell.</returns>
     public ConsoleBufferCell OverrideDefaults(AnsiColor foreground, AnsiColor background) =>
         this with
         {
-            Foreground = Foreground == AnsiColor.Default ? foreground : Foreground, 
+            Foreground = Foreground == AnsiColor.Default ? foreground : Foreground,
             Background = Background == AnsiColor.Default ? background : Background,
         };
-    
+
     /// <summary>
-    /// A ConsoleBuffer cell where Character = <c>\0</c>, Foreground = <see cref="AnsiColor.Default"/>,
-    /// and Background = <see cref="AnsiColor.Default"/>
+    /// A ConsoleBuffer cell where Character = <c>\0</c>, Foreground = <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/>,
+    /// and Background = <see cref="AnsiColor"/>.<see cref="AnsiColor.Default"/>.
     /// </summary>
     public static readonly ConsoleBufferCell Zero = default;
+
     /// <summary>
     /// Creates a new ConsoleBufferCell with the provided character, but Foreground and Background are AnsiColor.Default.
     /// </summary>
@@ -69,6 +75,7 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
     /// <param name="right">A console buffer cell value</param>
     /// <returns>True, if equal. False, if not equal.</returns>
     public static bool operator ==(ConsoleBufferCell left, ConsoleBufferCell right) => left.Equals(right);
+
     /// <summary>
     /// Operator to check for inequality of two ConsoleBufferCell values
     /// </summary>

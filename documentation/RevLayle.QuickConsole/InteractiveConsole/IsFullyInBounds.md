@@ -1,6 +1,6 @@
 # InteractiveConsole.IsFullyInBounds method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IsFullyInBounds`](../IConsoleBuffer/IsFullyInBounds.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`IsFullyInBounds`](../IConsoleBuffer/IsFullyInBounds.md)
 
 ```csharp
 public bool IsFullyInBounds(int x, int y, int width, int height)

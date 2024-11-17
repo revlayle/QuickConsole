@@ -1,6 +1,6 @@
 # InteractiveConsole.Line method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Line`](../IConsoleBuffer/Line.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Line`](../IConsoleBuffer/Line.md)
 
 ```csharp
 public void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell)

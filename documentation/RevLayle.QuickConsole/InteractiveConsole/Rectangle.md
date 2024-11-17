@@ -1,6 +1,6 @@
 # InteractiveConsole.Rectangle method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Rectangle`](../IConsoleBuffer/Rectangle.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Rectangle`](../IConsoleBuffer/Rectangle.md)
 
 ```csharp
 public void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cell)

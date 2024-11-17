@@ -1,6 +1,6 @@
 # InteractiveConsole.GetStringAt method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`GetStringAt`](../IConsoleBuffer/GetStringAt.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`GetStringAt`](../IConsoleBuffer/GetStringAt.md)
 
 ```csharp
 public string GetStringAt(int x, int y, int length)

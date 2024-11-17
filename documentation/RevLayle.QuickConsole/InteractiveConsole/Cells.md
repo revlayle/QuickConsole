@@ -1,6 +1,6 @@
 # InteractiveConsole.Cells property
 
-Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Cells`](../IConsoleBuffer/Cells.md)
+Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Cells`](../IConsoleBuffer/Cells.md)
 
 ```csharp
 public ConsoleBufferCell[] Cells { get; }

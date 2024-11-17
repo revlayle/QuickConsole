@@ -1,6 +1,6 @@
 # InteractiveConsole.Box method (1 of 2)
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Box`](../IConsoleBuffer/Box.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Box`](../IConsoleBuffer/Box.md)
 
 ```csharp
 public void Box(int x, int y, int width, int height, ConsoleBufferCell cell)
@@ -16,7 +16,7 @@ public void Box(int x, int y, int width, int height, ConsoleBufferCell cell)
 
 # InteractiveConsole.Box method (2 of 2)
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Box`](../IConsoleBuffer/Box.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Box`](../IConsoleBuffer/Box.md)
 
 ```csharp
 public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, 

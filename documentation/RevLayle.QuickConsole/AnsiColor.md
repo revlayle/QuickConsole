@@ -11,14 +11,14 @@ public enum AnsiColor
 | name | value | description |
 | --- | --- | --- |
 | Default | `0` | AnsiColor.Default is a non-color value. ConsoleBuffer will replace cells with this value with the buffer's current foreground or background color respectively. |
-| Black | `1` |  |
-| Red | `2` |  |
-| Green | `3` |  |
-| Yellow | `4` |  |
-| Blue | `5` |  |
-| Magenta | `6` |  |
-| Cyan | `7` |  |
-| White | `8` |  |
+| Black | `1` | Black |
+| Red | `2` | Red |
+| Green | `3` | Green |
+| Yellow | `4` | Yellow |
+| Blue | `5` | Blue |
+| Magenta | `6` | Magenta |
+| Cyan | `7` | Cyan |
+| White | `8` | White |
 
 ## See Also
 

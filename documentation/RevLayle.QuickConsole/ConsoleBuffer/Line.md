@@ -12,7 +12,7 @@ public void Line(int x, int y, int length, LineDirection direction, ConsoleBuffe
 | y | Y position of the start (top for vertical, left for horizontal) of the line |
 | length | How many cells long the line will be drawn for. Vertical lines draw down. Horizontal lines draw right. |
 | direction | A valid LineDirection to indicate if the line is horizontal or vertical |
-| cell | The ConsoleBufferCell value to draw the line with |
+| cell | The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value to draw the line with |
 
 ## See Also
 

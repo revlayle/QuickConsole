@@ -1,6 +1,6 @@
 # InteractiveConsole.IsOutOfBounds method (1 of 2)
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IsOutOfBounds`](../IConsoleBuffer/IsOutOfBounds.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`IsOutOfBounds`](../IConsoleBuffer/IsOutOfBounds.md)
 
 ```csharp
 public bool IsOutOfBounds(int x, int y)
@@ -15,7 +15,7 @@ public bool IsOutOfBounds(int x, int y)
 
 # InteractiveConsole.IsOutOfBounds method (2 of 2)
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IsOutOfBounds`](../IConsoleBuffer/IsOutOfBounds.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`IsOutOfBounds`](../IConsoleBuffer/IsOutOfBounds.md)
 
 ```csharp
 public bool IsOutOfBounds(int x, int y, int width, int height)

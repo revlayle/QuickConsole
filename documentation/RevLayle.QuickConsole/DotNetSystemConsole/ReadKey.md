@@ -1,6 +1,6 @@
 # DotNetSystemConsole.ReadKey method
 
-This calls Boolean) where `intercept = true`
+This calls System.Console.ReadKey(true)
 
 ```csharp
 public ConsoleKeyInfo ReadKey()

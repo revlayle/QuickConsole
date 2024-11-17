@@ -1,6 +1,6 @@
 # InteractiveConsole.Rotate method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Rotate`](../IConsoleBuffer/Rotate.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Rotate`](../IConsoleBuffer/Rotate.md)
 
 ```csharp
 public void Rotate(int x, int y, int width, bool clockWise)

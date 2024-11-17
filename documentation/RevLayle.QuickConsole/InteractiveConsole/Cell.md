@@ -1,6 +1,6 @@
 # InteractiveConsole.Cell method
 
-Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Cell`](../IConsoleBuffer/Cell.md)
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IConsoleBuffer`](../IConsoleBuffer.md).[`Cell`](../IConsoleBuffer/Cell.md)
 
 ```csharp
 public void Cell(int x, int y, ConsoleBufferCell cell)

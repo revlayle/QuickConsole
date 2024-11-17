@@ -262,7 +262,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="length">How many cells long the line will be drawn for.  Vertical lines draw down.
     /// Horizontal lines draw right.</param>
     /// <param name="direction">A valid LineDirection to indicate if the line is horizontal or vertical</param>
-    /// <param name="cell">The ConsoleBufferCell value to draw the line with</param>
+    /// <param name="cell">The <see cref="ConsoleBufferCell" /> value to draw the line with</param>
     public void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell)
     {
         if (length <= 0) return;
