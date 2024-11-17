@@ -1,6 +1,6 @@
 # ConsoleBuffer.Rotate method
 
-Rotate a square section of the console buffer 90 degrees clockwise or counter-clockwise. If the square area is truncated because of boundaries and is no longer square, no rotation is done.
+Rotate a square section of the console buffer 90 degrees clockwise or counter-clockwise. If the square area is not fully in-bounds, no rotation is done.
 
 ```csharp
 public void Rotate(int x, int y, int width, bool clockWise)

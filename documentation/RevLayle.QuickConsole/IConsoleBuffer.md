@@ -20,9 +20,10 @@ public interface IConsoleBuffer
 | [Copy](IConsoleBuffer/Copy.md)(…) | Get a copy of a rectangular area of the console buffer |
 | [Draw](IConsoleBuffer/Draw.md)(…) | Draws an external buffer onto this buffer. |
 | [Flip](IConsoleBuffer/Flip.md)(…) | Mirrors the content of a console buffer horizontally and/or vertically |
-| [GetCellAt](IConsoleBuffer/GetCellAt.md)(…) | Gets the ConsoleBufferCell value from the console buffer at position provided. |
+| [GetCellAt](IConsoleBuffer/GetCellAt.md)(…) | Gets The [`ConsoleBufferCell`](./ConsoleBufferCell.md) value from the console buffer at position provided. |
 | [GetStringAt](IConsoleBuffer/GetStringAt.md)(…) | Gets a text string from the console buffer. |
-| [IsOutOfBounds](IConsoleBuffer/IsOutOfBounds.md)(…) | Given an X and a Y position, is that position out-of-bounds? |
+| [IsFullyInBounds](IConsoleBuffer/IsFullyInBounds.md)(…) | Given an X position, Y position, width and height is that area fully in-bounds? |
+| [IsOutOfBounds](IConsoleBuffer/IsOutOfBounds.md)(…) | Given an X and a Y position, is that position out-of-bounds? (2 methods) |
 | [Line](IConsoleBuffer/Line.md)(…) | Draws a horizontal or vertical line in the console buffer. |
 | [Rectangle](IConsoleBuffer/Rectangle.md)(…) | Draws a filled rectangle in the console buffer. |
 | [Rotate](IConsoleBuffer/Rotate.md)(…) | Rotate a square section of the console buffer 90 degrees clockwise or counter-clockwise. |

@@ -10,15 +10,15 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
 
 | name | description |
 | --- | --- |
-| static readonly [Zero](ConsoleBufferCell/Zero.md) | A ConsoleBuffer cell where Character = `\0`, Foreground = AnsiColor.Default, and Background = AnsiColor.Default |
+| static readonly [Zero](ConsoleBufferCell/Zero.md) | A ConsoleBuffer cell where Character = `\0`, Foreground = Default, and Background = Default |
 | static [FromChar](ConsoleBufferCell/FromChar.md)(…) | Creates a new ConsoleBufferCell with the provided character, but Foreground and Background are AnsiColor.Default. |
-| [Background](ConsoleBufferCell/Background.md) { get; set; } | Background color of the cell. Defaults to AnsiColor.Default. |
+| [Background](ConsoleBufferCell/Background.md) { get; set; } | Background color of the cell. Defaults to Default. |
 | [Character](ConsoleBufferCell/Character.md) { get; set; } | The character for this cell. Defaults to `'\0'` |
-| [Foreground](ConsoleBufferCell/Foreground.md) { get; set; } | Foreground color of the cell. Defaults to AnsiColor.Default. |
+| [Foreground](ConsoleBufferCell/Foreground.md) { get; set; } | Foreground color of the cell. Defaults to Default. |
 | [Equals](ConsoleBufferCell/Equals.md)(…) | Actual quality test of this cell value against a different cell value. Cells are equal if Color, Foreground and Background all equal. |
 | override [Equals](ConsoleBufferCell/Equals.md)(…) | Actual quality test of this cell value against a different cell value. Cells are equal if Color, Foreground and Background all equal. |
 | override [GetHashCode](ConsoleBufferCell/GetHashCode.md)() | Generate a hash code of this cell value. |
-| [OverrideDefaults](ConsoleBufferCell/OverrideDefaults.md)(…) | Generate a new cell using the provided foreground color if this foreground is Ansi.Default and the provided background if this background is AnsiColor.Default. |
+| [OverrideDefaults](ConsoleBufferCell/OverrideDefaults.md)(…) | Generate a new cell using the provided foreground color if this foreground is Ansi.Default and the provided background if this background is Default. |
 | [WithBackground](ConsoleBufferCell/WithBackground.md)(…) | Generate a new cell with a different background color, but the same character and foreground as the current cell. |
 | [WithCharacter](ConsoleBufferCell/WithCharacter.md)(…) | Generate a new cell with a different character, but the same foreground and background as the current cell. |
 | [WithForeground](ConsoleBufferCell/WithForeground.md)(…) | Generate a new cell with a different foreground color, but the same character and background as the current cell. |

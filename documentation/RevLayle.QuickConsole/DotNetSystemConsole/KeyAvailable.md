@@ -1,6 +1,6 @@
 # DotNetSystemConsole.KeyAvailable property
 
-This gets System.Console.KeyAvailable
+This gets KeyAvailable
 
 ```csharp
 public bool KeyAvailable { get; }

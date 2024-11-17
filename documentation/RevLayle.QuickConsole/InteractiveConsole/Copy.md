@@ -1,5 +1,7 @@
 # InteractiveConsole.Copy method
 
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Copy`](../IConsoleBuffer/Copy.md)
+
 ```csharp
 public IConsoleBuffer Copy(int x, int y, int width, int height)
 ```

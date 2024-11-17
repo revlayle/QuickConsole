@@ -17,8 +17,8 @@ public class ConsoleBuffer : IConsoleBuffer
 | --- | --- |
 | [ConsoleBuffer](ConsoleBuffer/ConsoleBuffer.md)(…) | An in-memory buffer representing an ANSI console |
 | [Cells](ConsoleBuffer/Cells.md) { get; } | All the cells in this console buffer. This array should always contain Width x Height elements. |
-| [CurrentBackgroundColor](ConsoleBuffer/CurrentBackgroundColor.md) { get; set; } | Current background color of the console buffer. When rendering a buffer, if a cell has no defined background color (i.e. AnsiColor.Default), then this color is rendered. |
-| [CurrentForegroundColor](ConsoleBuffer/CurrentForegroundColor.md) { get; set; } | Current foreground color of the console buffer. When rendering a buffer, if a cell has no defined foreground color (i.e. AnsiColor.Default), then this color is rendered. |
+| [CurrentBackgroundColor](ConsoleBuffer/CurrentBackgroundColor.md) { get; set; } | Current background color of the console buffer. When rendering a buffer, if a cell has no defined background color (i.e. Default), then this color is rendered. |
+| [CurrentForegroundColor](ConsoleBuffer/CurrentForegroundColor.md) { get; set; } | Current foreground color of the console buffer. When rendering a buffer, if a cell has no defined foreground color (i.e. Default), then this color is rendered. |
 | [Height](ConsoleBuffer/Height.md) { get; } | Height of the buffer in cells |
 | [Width](ConsoleBuffer/Width.md) { get; } | Width of the buffer in cells |
 | [Box](ConsoleBuffer/Box.md)(…) | Draws a box in the console buffer. Only the frame is drawn, none of the cells inside the box are affected. If the width and/or height go outside the boundary of the console buffer, those edges are not drawn. (2 methods) |
@@ -28,10 +28,11 @@ public class ConsoleBuffer : IConsoleBuffer
 | [Flip](ConsoleBuffer/Flip.md)(…) | Mirrors the content of a console buffer horizontally and/or vertically |
 | [GetCellAt](ConsoleBuffer/GetCellAt.md)(…) | Gets the ConsoleBufferCell value from the console buffer at position provided. |
 | [GetStringAt](ConsoleBuffer/GetStringAt.md)(…) | Gets a text string from the console buffer. |
-| [IsOutOfBounds](ConsoleBuffer/IsOutOfBounds.md)(…) | Given an X and a Y position, is that location considered out-of-bounds? Out of bounds is either X or Y is zero or less, or, X is greater than or equal to Width or Y is greater than or equal to Height. |
+| [IsFullyInBounds](ConsoleBuffer/IsFullyInBounds.md)(…) | Given an X position, Y position, width and height is that area fully in-bounds? |
+| [IsOutOfBounds](ConsoleBuffer/IsOutOfBounds.md)(…) | Given an X and a Y position, is that location considered out-of-bounds? Out of bounds is either X or Y is zero or less, or, X is greater than or equal to Width or Y is greater than or equal to Height. (2 methods) |
 | [Line](ConsoleBuffer/Line.md)(…) | Draws a horizontal or vertical line in the console buffer. If the length of the line goes outside the boundary of the console buffer, the line is truncated. |
 | [Rectangle](ConsoleBuffer/Rectangle.md)(…) | Draws a filled rectangle in the console buffer. If the width and/or height go outside the boundary of the console buffer, the rectangle is simply truncated at the corresponding edges. |
-| [Rotate](ConsoleBuffer/Rotate.md)(…) | Rotate a square section of the console buffer 90 degrees clockwise or counter-clockwise. If the square area is truncated because of boundaries and is no longer square, no rotation is done. |
+| [Rotate](ConsoleBuffer/Rotate.md)(…) | Rotate a square section of the console buffer 90 degrees clockwise or counter-clockwise. If the square area is not fully in-bounds, no rotation is done. |
 | [Scroll](ConsoleBuffer/Scroll.md)(…) | Scrolls a buffer horizontally and/or vertically. |
 | [Text](ConsoleBuffer/Text.md)(…) | Write text to the buffer at location x/y. If x or y is out-of-bounds, nothing is written. If the length of the text go beyond the width of the console buffer, the text will be truncated. The console's CurrentForegroundColor and CurrentBackgroundColor colors are used for the cell colors of the text. (3 methods) |
 | [WriteBuffer](ConsoleBuffer/WriteBuffer.md)(…) | Output the console buffer using ANSI console string escapes to a TextWriter. |

@@ -1,6 +1,6 @@
 # DotNetSystemConsole.Out property
 
-This gets System.Console.Out
+This gets Out
 
 ```csharp
 public TextWriter Out { get; }

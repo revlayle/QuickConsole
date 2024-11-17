@@ -8,6 +8,7 @@ public InteractiveConsole(ISystemConsole systemConsole, int width = 80, int heig
 
 | parameter | description |
 | --- | --- |
+| systemConsole | An instance implementing [`ISystemConsole`](../ISystemConsole.md). |
 | width | Width of buffer, does not have to be the same as the actual width of the console. |
 | height | Height of buffer, does not have to be the same as the actual height of the console. |
 

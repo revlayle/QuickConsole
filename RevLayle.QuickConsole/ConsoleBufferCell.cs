@@ -10,11 +10,11 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
     /// </summary>
     public char Character { get; set; }
     /// <summary>
-    /// Foreground color of the cell. Defaults to <see cref="AnsiColor.Default">AnsiColor.Default</see>.
+    /// Foreground color of the cell. Defaults to <see cref="AnsiColor.Default"/>.
     /// </summary>
     public AnsiColor Foreground { get; set; }
     /// <summary>
-    /// Background color of the cell. Defaults to <see cref="AnsiColor.Default">AnsiColor.Default</see>.
+    /// Background color of the cell. Defaults to <see cref="AnsiColor.Default"/>.
     /// </summary>
     public AnsiColor Background { get; set; }
     
@@ -38,7 +38,7 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
     public ConsoleBufferCell WithBackground(AnsiColor color) => this with { Background = color };
     /// <summary>
     /// Generate a new cell using the provided foreground color if this foreground is Ansi.Default and the provided
-    /// background if this background is <see cref="AnsiColor.Default">AnsiColor.Default</see>.
+    /// background if this background is <see cref="AnsiColor.Default"/>.
     /// </summary>
     /// <param name="foreground">Foreground color to override Ansi.Default with.</param>
     /// <param name="background">Background color to override Ansi.Default with.</param>
@@ -51,8 +51,8 @@ public struct ConsoleBufferCell : IEquatable<ConsoleBufferCell>
         };
     
     /// <summary>
-    /// A ConsoleBuffer cell where Character = <c>\0</c>, Foreground = <see cref="AnsiColor.Default">AnsiColor.Default</see>,
-    /// and Background = <see cref="AnsiColor.Default">AnsiColor.Default</see>
+    /// A ConsoleBuffer cell where Character = <c>\0</c>, Foreground = <see cref="AnsiColor.Default"/>,
+    /// and Background = <see cref="AnsiColor.Default"/>
     /// </summary>
     public static readonly ConsoleBufferCell Zero = default;
     /// <summary>

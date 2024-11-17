@@ -1,5 +1,7 @@
 # InteractiveConsole.Text method (1 of 3)
 
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Text`](../IConsoleBuffer/Text.md)
+
 ```csharp
 public void Text(int x, int y, string text)
 ```
@@ -12,6 +14,8 @@ public void Text(int x, int y, string text)
 ---
 
 # InteractiveConsole.Text method (2 of 3)
+
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Text`](../IConsoleBuffer/Text.md)
 
 ```csharp
 public void Text(int x, int y, string text, AnsiColor color)
@@ -26,6 +30,8 @@ public void Text(int x, int y, string text, AnsiColor color)
 ---
 
 # InteractiveConsole.Text method (3 of 3)
+
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`Text`](../IConsoleBuffer/Text.md)
 
 ```csharp
 public void Text(int x, int y, string text, AnsiColor color, AnsiColor background)

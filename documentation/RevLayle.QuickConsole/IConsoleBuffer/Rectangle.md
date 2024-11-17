@@ -12,7 +12,7 @@ public void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cel
 | y | Y position of the top-left corner of the rectangle |
 | width | Width of the rectangle. |
 | height | Height of the rectangle |
-| cell | The ConsoleBufferCell value to fill the rectangle with |
+| cell | The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value to fill the rectangle with |
 
 ## See Also
 

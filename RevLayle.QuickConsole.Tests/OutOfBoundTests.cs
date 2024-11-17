@@ -31,9 +31,11 @@ public class OutOfBoundTests
     public void TestBox()
     {
         var buffer = GetBuffer();
-        buffer.Box(-1, -1, 5, 5, _someCell);
+        //buffer.Box(-1, -1, 5, 5, _someCell);
         buffer.Box(0, 0, 5, 0, _someCell);
         buffer.Box(0, 0, -1, 0, _someCell);
+        buffer.Box(5, 5, 2, 2, _someCell);
+        buffer.Box(-2, -2, 2, 2, _someCell);
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
     }
 
@@ -52,7 +54,7 @@ public class OutOfBoundTests
         var buffer = GetBuffer();
         var otherBuffer = GetBuffer(2, 2);
         otherBuffer.Box(0,0,2,2, _someCell);
-        buffer.Draw(-1, -1, otherBuffer);
+        //buffer.Draw(-1, -1, otherBuffer);
         buffer.Draw(0, 6, otherBuffer);
         Assert.True(buffer.Cells.SequenceEqual(_defaultBuffer));
         // to verify other buffer actually had cells set
@@ -72,10 +74,12 @@ public class OutOfBoundTests
         var buffer = GetBuffer();
         buffer.Text(0, 0, "x");
         var text = buffer.GetStringAt(-1, 0, 3);
-        Assert.True(text == string.Empty);
+        Assert.True(text == "x");
         text = buffer.GetStringAt(0, 0, 0);
         Assert.True(text == string.Empty);
         text = buffer.GetStringAt(0, 0, -1);
+        Assert.True(text == string.Empty);        
+        text = buffer.GetStringAt(-5, 0, 5);
         Assert.True(text == string.Empty);
     }
 
@@ -94,7 +98,7 @@ public class OutOfBoundTests
     public void TestRectangle()
     {
         var buffer = GetBuffer();
-        buffer.Rectangle(-1, -1, 3, 5, _someCell);
+        //buffer.Rectangle(-1, -1, 3, 5, _someCell);
         buffer.Rectangle(0, 6, 3, 5, _someCell);
         buffer.Rectangle(0, 0, 0, 5, _someCell);
         buffer.Rectangle(0, 0, 3, -1, _someCell);

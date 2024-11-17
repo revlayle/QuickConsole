@@ -10,7 +10,7 @@ public void Cell(int x, int y, ConsoleBufferCell cell)
 | --- | --- |
 | x | X position to set |
 | y | Y position to set |
-| cell | A ConsoleBufferCell value to put in the cell |
+| cell | A [`ConsoleBufferCell`](../ConsoleBufferCell.md) value to put in the cell |
 
 ## See Also
 

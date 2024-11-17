@@ -1,5 +1,7 @@
 # InteractiveConsole.CurrentForegroundColor property
 
+Gets the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`CurrentForegroundColor`](../IConsoleBuffer/CurrentForegroundColor.md)
+
 ```csharp
 public AnsiColor CurrentForegroundColor { get; set; }
 ```

@@ -1,6 +1,6 @@
 # IConsoleBuffer.GetCellAt method
 
-Gets the ConsoleBufferCell value from the console buffer at position provided.
+Gets The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value from the console buffer at position provided.
 
 ```csharp
 public ConsoleBufferCell GetCellAt(int x, int y)
@@ -13,7 +13,7 @@ public ConsoleBufferCell GetCellAt(int x, int y)
 
 ## Return Value
 
-ConsoleBufferCell value of the cell
+[`ConsoleBufferCell`](../ConsoleBufferCell.md) value of the cell
 
 ## See Also
 

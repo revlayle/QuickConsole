@@ -689,6 +689,26 @@ public class QuickConsoleTestss
         Assert.True(quickConsole.IsOutOfBounds(4, 6) == true);
         Assert.True(quickConsole.IsOutOfBounds(4, 4) == false);
     }
+    
+    [Fact]
+    public void TestIsOutOfBounds2()
+    {
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        Assert.True(quickConsole.IsOutOfBounds(-1, -1, 1, 1) == true);
+        Assert.True(quickConsole.IsOutOfBounds(4, 6, 5, 5) == true);
+        Assert.True(quickConsole.IsOutOfBounds(4, 4, 4, 4) == false);
+    }
+    
+    [Fact]
+    public void TestIsFullyInBounds()
+    {
+        var quickConsole = GetQuickConsole(5, 5, new MockSystemConsole());
+        Assert.True(quickConsole.IsFullyInBounds(-1, -1, 1, 1) == false);
+        Assert.True(quickConsole.IsFullyInBounds(4, 6, 5, 5) == false);
+        Assert.True(quickConsole.IsFullyInBounds(4, 4, 4, 4) == false);
+        Assert.True(quickConsole.IsFullyInBounds(4, 4, 1, 1) == true);
+        Assert.True(quickConsole.IsFullyInBounds(0, 0, 5, 5) == true);
+    }
 
     [Fact]
     public void TestWriteBuffer()

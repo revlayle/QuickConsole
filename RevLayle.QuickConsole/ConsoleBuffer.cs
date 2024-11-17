@@ -11,12 +11,13 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 {
     /// <summary>
     /// Current foreground color of the console buffer. When rendering a buffer, if a cell has no defined foreground
-    /// color (i.e. <see cref="AnsiColor.Default">AnsiColor.Default</see>), then this color is rendered.
+    /// color (i.e. <see cref="AnsiColor.Default"/>), then this color is rendered.
     /// </summary>
     public AnsiColor CurrentForegroundColor { get; set; } = AnsiColor.White;
+
     /// <summary>
     /// Current background color of the console buffer. When rendering a buffer, if a cell has no defined background
-    /// color (i.e. <see cref="AnsiColor.Default">AnsiColor.Default</see>), then this color is rendered.
+    /// color (i.e. <see cref="AnsiColor.Default"/>), then this color is rendered.
     /// </summary>
     public AnsiColor CurrentBackgroundColor { get; set; } = AnsiColor.Black;
 
@@ -29,10 +30,11 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// Width of the buffer in cells
     /// </summary>
     public int Width { get; } = width;
+
     /// <summary>
     /// Height of the buffer in cells
     /// </summary>
-    public int Height  { get; } = height;
+    public int Height { get; } = height;
 
     /// <summary>
     /// Output the console buffer using ANSI console string escapes to a TextWriter.
@@ -53,22 +55,25 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
                 builder.Append('\n');
             var foreground = cell.Foreground == AnsiColor.Default ? currentForeground : cell.Foreground;
             var background = cell.Background == AnsiColor.Default ? currentBackground : cell.Background;
-            if ((int) foreground != prevForegroundColor)
+            if ((int)foreground != prevForegroundColor)
             {
-                prevForegroundColor = (int) foreground;
+                prevForegroundColor = (int)foreground;
                 builder.Append($"\x1b[{30 + prevForegroundColor - 1}m");
             }
-            if ((int) background != prevBackgroundColor)
+
+            if ((int)background != prevBackgroundColor)
             {
-                prevBackgroundColor = (int) background;
+                prevBackgroundColor = (int)background;
                 builder.Append($"\x1b[{40 + prevBackgroundColor - 1}m");
             }
+
             builder.Append(char.IsControl(cell.Character) ? ' ' : cell.Character);
         }
+
         textWriter.Write(builder.ToString());
         textWriter.Flush();
     }
-    
+
     /// <summary>
     /// Given an X and a Y position, is that location considered out-of-bounds?  Out of bounds is either X or Y is
     /// zero or less, or, X is greater than or equal to Width or Y is greater than or equal to Height.
@@ -79,6 +84,29 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public bool IsOutOfBounds(int x, int y) => x < 0 || x >= Width || y < 0 || y >= Height;
 
     /// <summary>
+    /// Given an X position, Y position, width and height is that area completely out-of-bounds?
+    /// </summary>
+    /// <param name="x">X position to check</param>
+    /// <param name="y">Y position to check</param>
+    /// <param name="width">Width to check</param>
+    /// <param name="height">Height check</param>
+    /// <returns>True, area is completely out-of-bounds.  False, position is fully or partially in-bounds.</returns>
+    public bool IsOutOfBounds(int x, int y, int width, int height) =>
+        x >= Width || y >= Height || width < 0 || height < 0 ||
+        (x < 0 && x + width <= 0) || (y < 0 && y + height <= 0);
+    
+    /// <summary>
+    /// Given an X position, Y position, width and height is that area fully in-bounds?
+    /// </summary>
+    /// <param name="x">X position to check</param>
+    /// <param name="y">Y position to check</param>
+    /// <param name="width">Width to check</param>
+    /// <param name="height">Height check</param>
+    /// <returns>True, area is fully in-bounds.  False, position is fully or partially out-of-bounds.</returns>
+    public bool IsFullyInBounds(int x, int y, int width, int height) =>
+        x >= 0 && x + width <= Width && y >= 0 && y + height <= Height;
+
+    /// <summary>
     /// Write text to the buffer at location x/y.  If x or y is out-of-bounds, nothing is written.  If the length
     /// of the text go beyond the width of the console buffer, the text will be truncated.  The console's
     /// CurrentForegroundColor and CurrentBackgroundColor colors are used for the cell colors of the text.
@@ -87,6 +115,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="y">Y position to draw at</param>
     /// <param name="text">Text to draw</param>
     public void Text(int x, int y, string text) => Text(x, y, text, CurrentForegroundColor, CurrentBackgroundColor);
+
     /// <summary>
     /// Write text to the buffer at location x/y.  If x or y is out-of-bounds, nothing is written.  If the length
     /// of the text go beyond the width of the console buffer, the text will be truncated.  The color provided will be
@@ -98,6 +127,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="color">Foreground color to draw on the cells</param>
     public void Text(int x, int y, string text, AnsiColor color) =>
         Text(x, y, text, color, CurrentBackgroundColor);
+
     /// <summary>
     /// Write text to the buffer at location x/y.  If x or y is out-of-bounds, nothing is written.  If the length
     /// of the text go beyond the width of the console buffer, the text will be truncated.  The provided color and
@@ -110,12 +140,13 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="background">Background color to draw on the cells</param>
     public void Text(int x, int y, string text, AnsiColor color, AnsiColor background)
     {
-        if (IsOutOfBounds(x, y)) return;
+        if (IsOutOfBounds(x, y, text.Length, 0)) return;
         var textArray = text.ToCharArray();
         var idx = x + y * Width;
         var maxLength = Math.Min(textArray.Length, Width - x);
         for (var i = 0; i < maxLength; i++)
         {
+            if (x + i < 0) continue;
             Cells[idx + i] = new ConsoleBufferCell
             {
                 Character = textArray[i],
@@ -124,7 +155,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             };
         }
     }
-    
+
     /// <summary>
     /// Set a single cell in a console buffer.
     /// </summary>
@@ -149,22 +180,21 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public void Rectangle(int x, int y, int width, int height, ConsoleBufferCell cell)
     {
         if (width <= 0 || height <= 0) return;
-        if (IsOutOfBounds(x, y)) return;
+        if (IsOutOfBounds(x, y, width, height)) return;
         cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
-        var actualWidth = Math.Min(Width - x, width);
-        var actualHeight = Math.Min(Height - y, height);
-        var rowIdx = y * Width;
-        for (var i = 0; i < actualHeight; i++)
+
+        for (int i = 0, rowIdx = y * Width; i < height; i++, rowIdx += Width)
         {
-            for (var j = 0; j < actualWidth; j++)
+            if (rowIdx < 0 || rowIdx >= Cells.Length) continue;
+            for (var j = 0; j < width; j++)
             {
+                if (x + j < 0 || x + j >= Width) continue;
                 var idx = j + x + rowIdx;
                 Cells[idx] = cell;
             }
-            rowIdx += Width;
         }
     }
-    
+
     /// <summary>
     /// Draws a box in the console buffer.  Only the frame is drawn, none of the cells inside the box are affected.
     /// If the width and/or height go outside the boundary of the console buffer, those edges are not drawn.
@@ -176,6 +206,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="cell">The ConsoleBufferCell value tto draw the box frame with</param>
     public void Box(int x, int y, int width, int height, ConsoleBufferCell cell) =>
         Box(x, y, width, height, cell, cell, cell);
+
     /// <summary>
     /// Draws a box in the console buffer.  Only the frame is drawn, none of the cells inside the box are affected.
     /// If the width and/or height go outside the boundary of the console buffer, those edges are not drawn.
@@ -187,18 +218,21 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="cellSides">The ConsoleBufferCell value to draw the left and right box frame sides with</param>
     /// <param name="cellTopBottom">The ConsoleBufferCell value to draw the top and bottom box frame sides with</param>
     /// <param name="cellCorner">The ConsoleBufferCell value tto draw the box corners with</param>
-    public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, ConsoleBufferCell cellTopBottom, ConsoleBufferCell cellCorner)
+    public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides, ConsoleBufferCell cellTopBottom,
+        ConsoleBufferCell cellCorner)
     {
         if (width <= 0 || height <= 0) return;
-        if (IsOutOfBounds(x, y)) return;
+        if (IsOutOfBounds(x, y, width, height)) return;
         cellSides = cellSides.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         cellTopBottom = cellTopBottom.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         cellCorner = cellCorner.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
-        var rowIdx = y * Width;
-        for (var i = 0; i < height; i++)
+
+        for (int i = 0, rowIdx = y * Width; i < height; i++, rowIdx += Width)
         {
+            if (rowIdx < 0 || rowIdx >= Cells.Length) continue;
             for (var j = 0; j < width; j++)
             {
+                if (x + j < 0 || x + j >= Width) continue;
                 var cell = (i, j) switch
                 {
                     (0, 0) => cellCorner,
@@ -213,16 +247,12 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
                 };
                 if (cell == ConsoleBufferCell.Zero)
                     continue;
-                if ((j + x) >= Width || (i + y) >= Height)
-                    continue;
                 var idx = j + x + rowIdx;
                 Cells[idx] = cell;
             }
-
-            rowIdx += Width;
         }
     }
-    
+
     /// <summary>
     /// Draws a horizontal or vertical line in the console buffer.  If the length of the line goes outside the boundary
     /// of the console buffer, the line is truncated.
@@ -235,15 +265,17 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="cell">The ConsoleBufferCell value to draw the line with</param>
     public void Line(int x, int y, int length, LineDirection direction, ConsoleBufferCell cell)
     {
-        if (length <=0) return;
-        if (IsOutOfBounds(x, y)) return;
+        if (length <= 0) return;
+        if (IsOutOfBounds(x, y, direction == LineDirection.Horizontal ? length : 0,
+                direction == LineDirection.Vertical ? length : 0)) return;
         cell = cell.OverrideDefaults(CurrentForegroundColor, CurrentBackgroundColor);
         var inc = direction == LineDirection.Horizontal ? 1 : Width;
         var idx = x + y * Width;
         var maxLength = Math.Min(length, direction == LineDirection.Horizontal ? Width - x : Width - y);
         for (var i = 0; i < maxLength; i++)
         {
-            Cells[idx] = cell;
+            if (idx >= 0)
+                Cells[idx] = cell;
             idx += inc;
         }
     }
@@ -274,9 +306,10 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public string GetStringAt(int x, int y, int length)
     {
         if (length <= 0) return string.Empty;
-        if (IsOutOfBounds(x, y)) return string.Empty;
-        var idx = x + y * Width;
-        return new string(Cells[idx..(idx + length)].Select(cell => cell.Character)
+        if (IsOutOfBounds(x, y, length, 0)) return string.Empty;
+        var idx = Math.Max(0, x) + y * Width;
+        var end = idx + Math.Min(Width - x, length + Math.Min(0, x));
+        return new string(Cells[idx..end].Select(cell => cell.Character)
             .ToArray()).Trim((char)0);
     }
 
@@ -290,18 +323,18 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="buffer">An external object, implementing IConsoleBuffer, that will be drawn onto this buffer</param>
     public void Draw(int x, int y, IConsoleBuffer buffer)
     {
-        if (IsOutOfBounds(x, y)) return;
-        var idx = x + y * Width;
-        var maxWidth = Math.Min(Width - x, buffer.Width);
+        if (IsOutOfBounds(x, y, buffer.Width, buffer.Height)) return;
+        var rowIdx = y * Width;
         for (var bufferIdx = 0; bufferIdx < buffer.Cells.Length; bufferIdx++)
         {
             var bufferX = bufferIdx % buffer.Width;
             if (bufferX == 0 && bufferIdx > 0)
-                idx += Width - buffer.Width;
+                rowIdx += Width;
+            if (rowIdx < 0 || rowIdx >= Cells.Length) continue;
+            if (x + bufferX < 0 || x + bufferX >= Width) continue;
             var sourceCell = buffer.Cells[bufferIdx];
-            if (bufferX < maxWidth && idx < Cells.Length && sourceCell.Character > 0)
-                Cells[idx] = sourceCell;
-            idx++;
+            if ( sourceCell.Character > 0)
+                Cells[rowIdx + x + bufferX] = sourceCell;
         }
     }
 
@@ -354,6 +387,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
                 Array.Copy(Cells, j, Cells, i, Width);
                 Array.Copy(tempBuffer, 0, Cells, j, Width);
             }
+
             if (horizontal)
                 Array.Reverse(Cells, i, Width);
         }
@@ -361,7 +395,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
 
     /// <summary>
     /// Rotate a square section of the console buffer 90 degrees clockwise or counter-clockwise.  If the square area
-    /// is truncated because of boundaries and is no longer square, no rotation is done.
+    /// is not fully in-bounds, no rotation is done.
     /// </summary>
     /// <param name="x">X position of the top-left square area to rotate</param>
     /// <param name="y">Y position of the top-left square area to rotate</param>
@@ -371,9 +405,8 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     public void Rotate(int x, int y, int width, bool clockWise)
     {
         if (width <= 0) return;
-        if (IsOutOfBounds(x, y)) return;
+        if (IsFullyInBounds(x, y, width, width) == false) return;
         var rotateCopy = Copy(x, y, width, width);
-        if (rotateCopy.Width != rotateCopy.Height) return;
         var sourceOffset = 0;
         for (var i = 0; i < width; i++)
         {
@@ -393,17 +426,16 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
     /// <param name="y">Y position of the top-left rectangular area to get a copy</param>
     /// <param name="width">Width of the area to copy</param>
     /// <param name="height">Height of the area to copy</param>
-    /// <returns>A new instance implementing <see cref="IConsoleBuffer">IConsoleBuffer</see> with the copies cells and the width and height
+    /// <returns>A new instance implementing <see cref="IConsoleBuffer"/> with the copies cells and the width and height
     /// provided. Note, if the width and/or height go beyond the console buffer's boundaries, you will get a smaller
     /// buffer copy.</returns>
-    /// <exception cref="ArgumentException">X and/or Y are out-of-bounds, or width and height are not both greater than
-    /// zero.</exception>
+    /// <exception cref="ArgumentException">X, y, height and width represent and area not fully in-bounds.</exception>
     public IConsoleBuffer Copy(int x, int y, int width, int height)
     {
-        if (width <= 0 || height <= 0) 
+        if (width <= 0 || height <= 0)
             throw new ArgumentException("Width and height must be greater than 0");
-        if (IsOutOfBounds(x, y))
-            throw new ArgumentException("X and/or Y out of bounds of console buffer");
+        if (IsFullyInBounds(x, y, width, height) == false)
+            throw new ArgumentException("Area represented by x, y, width and height are not fully in-bounds.");
 
         var actualWidth = Math.Min(width, Width - x);
         var actualHeight = Math.Min(height, Height - y);
@@ -417,6 +449,7 @@ public class ConsoleBuffer(int width, int height) : IConsoleBuffer
             copyIdx += actualWidth;
             sourceIdx += Width;
         }
+
         return copy;
     }
 }

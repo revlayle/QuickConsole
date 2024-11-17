@@ -21,7 +21,7 @@ A new instance implementing [`IConsoleBuffer`](../IConsoleBuffer.md) with the co
 
 | exception | condition |
 | --- | --- |
-| ArgumentException | X and/or Y are out-of-bounds, or width and height are not both greater than zero. |
+| ArgumentException | X, y, height and width represent and area not fully in-bounds. |
 
 ## See Also
 

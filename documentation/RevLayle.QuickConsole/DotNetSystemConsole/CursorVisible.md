@@ -1,6 +1,6 @@
 # DotNetSystemConsole.CursorVisible property
 
-This gets/sets System.Console.CursorVisible
+This gets/sets CursorVisible
 
 ```csharp
 public bool CursorVisible { get; set; }

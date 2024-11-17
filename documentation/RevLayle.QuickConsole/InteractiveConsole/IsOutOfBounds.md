@@ -1,7 +1,24 @@
-# InteractiveConsole.IsOutOfBounds method
+# InteractiveConsole.IsOutOfBounds method (1 of 2)
+
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IsOutOfBounds`](../IConsoleBuffer/IsOutOfBounds.md)
 
 ```csharp
 public bool IsOutOfBounds(int x, int y)
+```
+
+## See Also
+
+* class [InteractiveConsole](../InteractiveConsole.md)
+* namespace [RevLayle.QuickConsole](../../RevLayle.QuickConsole.md)
+
+---
+
+# InteractiveConsole.IsOutOfBounds method (2 of 2)
+
+Calls the internal implementation of the [`InteractiveConsole`](../InteractiveConsole.md)'s [`IsOutOfBounds`](../IConsoleBuffer/IsOutOfBounds.md)
+
+```csharp
+public bool IsOutOfBounds(int x, int y, int width, int height)
 ```
 
 ## See Also

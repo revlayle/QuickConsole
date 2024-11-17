@@ -1,6 +1,6 @@
 # ConsoleBuffer.CurrentBackgroundColor property
 
-Current background color of the console buffer. When rendering a buffer, if a cell has no defined background color (i.e. AnsiColor.Default), then this color is rendered.
+Current background color of the console buffer. When rendering a buffer, if a cell has no defined background color (i.e. Default), then this color is rendered.
 
 ```csharp
 public AnsiColor CurrentBackgroundColor { get; set; }

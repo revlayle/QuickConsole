@@ -1,4 +1,4 @@
-# ConsoleBuffer.IsOutOfBounds method
+# ConsoleBuffer.IsOutOfBounds method (1 of 2)
 
 Given an X and a Y position, is that location considered out-of-bounds? Out of bounds is either X or Y is zero or less, or, X is greater than or equal to Width or Y is greater than or equal to Height.
 
@@ -14,6 +14,32 @@ public bool IsOutOfBounds(int x, int y)
 ## Return Value
 
 True, position is out-of-bounds. False, positions is in-bounds.
+
+## See Also
+
+* class [ConsoleBuffer](../ConsoleBuffer.md)
+* namespace [RevLayle.QuickConsole](../../RevLayle.QuickConsole.md)
+
+---
+
+# ConsoleBuffer.IsOutOfBounds method (2 of 2)
+
+Given an X position, Y position, width and height is that area completely out-of-bounds?
+
+```csharp
+public bool IsOutOfBounds(int x, int y, int width, int height)
+```
+
+| parameter | description |
+| --- | --- |
+| x | X position to check |
+| y | Y position to check |
+| width | Width to check |
+| height | Height check |
+
+## Return Value
+
+True, area is completely out-of-bounds. False, position is fully or partially in-bounds.
 
 ## See Also
 

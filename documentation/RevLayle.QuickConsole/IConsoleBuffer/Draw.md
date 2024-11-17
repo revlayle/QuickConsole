@@ -10,7 +10,7 @@ public void Draw(int x, int y, IConsoleBuffer buffer)
 | --- | --- |
 | x | X position to draw provided buffer |
 | y | Y position to draw provided buffer |
-| buffer | An external object, implementing IConsoleBuffer, that will be drawn onto this buffer |
+| buffer | An external object, implementing [`IConsoleBuffer`](../IConsoleBuffer.md), that will be drawn onto this buffer |
 
 ## See Also
 

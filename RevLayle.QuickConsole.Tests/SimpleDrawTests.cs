@@ -71,6 +71,27 @@ public class SimpleDrawTests
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
     }
     
+        
+    [Fact]
+    public void TestPartialRectangleOob()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var filled = new ConsoleBufferCell
+            { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        var cellsToMatch = new[]
+        {
+            filled, filled, filled, filled, filled,
+            filled, filled, filled, filled, filled,
+            filled, filled, filled, filled, filled,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+        };
+        buffer.Rectangle(-1, -1, 6, 4, filled);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
     [Fact]
     public void TestSimpleBox()
     {
@@ -255,6 +276,46 @@ public class SimpleDrawTests
 
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
     }
+    
+    [Fact]
+    public void TestVLinePartiallyOob1()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var filled = new ConsoleBufferCell
+            { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+        };
+        buffer.Line(1, -2, 8, LineDirection.Vertical, filled);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+            
+    [Fact]
+    public void TestVLinePartiallyOob2()
+    {
+        var buffer = GetBuffer();
+        var zero = ConsoleBufferCell.Zero;
+        var filled = new ConsoleBufferCell
+            { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        var cellsToMatch = new[]
+        {
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, filled, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+        };
+        buffer.Line(1, -2, 6, LineDirection.Vertical, filled);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
 
     [Fact]
     public void TestCrossedLines()
@@ -303,6 +364,31 @@ public class SimpleDrawTests
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
     }
     
+        
+    [Fact]
+    public void TestTextOob()
+    {
+        var buffer = GetBuffer();
+        const string text = "what";
+        var textCells = text.Select(x => ConsoleBufferCell.FromChar(x)
+            .OverrideDefaults(global::RevLayle.QuickConsole.AnsiColor.Red, global::RevLayle.QuickConsole.AnsiColor.Blue)).ToArray();
+        var zero = ConsoleBufferCell.Zero;
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            textCells[2], textCells[3], zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+        };
+        
+        buffer.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Red;
+        buffer.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
+        buffer.Text(-2, 2, text);
+
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+
     
     [Fact]
     public void TestTextWithForegroundColor()
@@ -381,10 +467,13 @@ public class SimpleDrawTests
         buffer.CurrentForegroundColor = global::RevLayle.QuickConsole.AnsiColor.Red;
         buffer.CurrentBackgroundColor = global::RevLayle.QuickConsole.AnsiColor.Blue;
         buffer.Text(0, 2, text);
+        buffer.Text(0, 4, "bad");
 
         Assert.True(buffer.GetStringAt(0, 2, 4) == text);
         Assert.True(buffer.GetStringAt(0, 2, 5) == text);
         Assert.True(buffer.GetStringAt(2, 2, 3) == text[2..]);
+        Assert.True(buffer.GetStringAt(-1, 2, 3) == text[..2]);
+        Assert.True(buffer.GetStringAt(-1, 2, 40) == text);
         Assert.True(buffer.GetStringAt(0, 0, 3) == string.Empty);
     }
 
@@ -404,6 +493,113 @@ public class SimpleDrawTests
             zero, rbx, rbx, rbx, zero,
             zero, rbx, rbx, rbx, zero,
             zero, zero, zero, zero, zero,
+        };
+        
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+    
+    [Fact]
+    public void DrawBufferTestPartiallyOob1()
+    {
+        var buffer = GetBuffer();
+        var smallerBuffer = GetBuffer(3, 3);
+        var zero = ConsoleBufferCell.Zero;
+        var rbx = new ConsoleBufferCell { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        smallerBuffer.Rectangle(0, 0, 3, 3, rbx);
+        buffer.Draw(-1, -1, smallerBuffer);
+        var cellsToMatch = new[]
+        {
+            rbx, rbx, zero, zero, zero,
+            rbx, rbx, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+        };
+        
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+        
+    [Fact]
+    public void DrawBufferTestPartiallyOob2()
+    {
+        var buffer = GetBuffer();
+        var smallerBuffer = GetBuffer(3, 3);
+        var zero = ConsoleBufferCell.Zero;
+        var rbx = new ConsoleBufferCell { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        smallerBuffer.Rectangle(0, 0, 3, 3, rbx);
+        buffer.Draw(3, 3, smallerBuffer);
+        var cellsToMatch = new[]
+        {
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, zero, zero,
+            zero, zero, zero, rbx, rbx,
+            zero, zero, zero, rbx, rbx,
+        };
+        
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+            
+    [Fact]
+    public void DrawBufferTestPartiallyOob3()
+    {
+        var buffer = GetBuffer();
+        var biggerBuffer = GetBuffer(7, 7);
+        var zero = ConsoleBufferCell.Zero;
+        var rbx = new ConsoleBufferCell { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        biggerBuffer.Rectangle(0, 0, 7, 7, rbx);
+        buffer.Draw(-1, -3, biggerBuffer);
+        var cellsToMatch = new[]
+        {
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
+            zero, zero, zero, zero, zero,
+        };
+        
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }            
+    
+    [Fact]
+    public void DrawBufferTestPartiallyOob4()
+    {
+        var buffer = GetBuffer();
+        var biggerBuffer = GetBuffer(7, 7);
+        var zero = ConsoleBufferCell.Zero;
+        var rbx = new ConsoleBufferCell { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        biggerBuffer.Rectangle(0, 0, 7, 7, rbx);
+        buffer.Draw(-3, -1, biggerBuffer);
+        var cellsToMatch = new[]
+        {
+            rbx, rbx, rbx, rbx, zero,
+            rbx, rbx, rbx, rbx, zero,
+            rbx, rbx, rbx, rbx, zero,
+            rbx, rbx, rbx, rbx, zero,
+            rbx, rbx, rbx, rbx, zero,
+        };
+        
+        Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));
+    }
+    
+    [Fact]
+    public void DrawBufferTestPartiallyOob5()
+    {
+        var buffer = GetBuffer();
+        var biggerBuffer = GetBuffer(7, 7);
+        var zero = ConsoleBufferCell.Zero;
+        var rbx = new ConsoleBufferCell { Character = 'x', Foreground = global::RevLayle.QuickConsole.AnsiColor.Red, Background = global::RevLayle.QuickConsole.AnsiColor.Blue };
+        biggerBuffer.Rectangle(0, 0, 7, 7, rbx);
+        buffer.Draw(-1, -1, biggerBuffer);
+        var cellsToMatch = new[]
+        {
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
+            rbx, rbx, rbx, rbx, rbx,
         };
         
         Assert.True(buffer.Cells.SequenceEqual(cellsToMatch));

@@ -12,7 +12,7 @@ public void Box(int x, int y, int width, int height, ConsoleBufferCell cell)
 | y | Y position of the top-left corner of the box |
 | width | Width of the box. |
 | height | Height of the box |
-| cell | The ConsoleBufferCell value tto draw the box frame with |
+| cell | The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value tto draw the box frame with |
 
 ## See Also
 
@@ -37,9 +37,9 @@ public void Box(int x, int y, int width, int height, ConsoleBufferCell cellSides
 | y | Y position of the top-left corner of the box |
 | width | Width of the box. |
 | height | Height of the box |
-| cellSides | The ConsoleBufferCell value to draw the left and right box frame sides with |
-| cellTopBottom | The ConsoleBufferCell value to draw the top and bottom box frame sides with |
-| cellCorner | The ConsoleBufferCell value tto draw the box corners with |
+| cellSides | The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value to draw the left and right box frame sides with |
+| cellTopBottom | The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value to draw the top and bottom box frame sides with |
+| cellCorner | The [`ConsoleBufferCell`](../ConsoleBufferCell.md) value tto draw the box corners with |
 
 ## See Also
 
